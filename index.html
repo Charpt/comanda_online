@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UFT-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDV C.A.C</title>
+    
+
+
+</head>
+
+<body >
+
+   
+
+    <div class="centralizar">
+        <form>
+            <div><label class="titulo_pagina">PONTO DE VENDA C.A.C</label></div>
+            <div><label class="sub_titulo_pagina">Seja bem vindo.</label></div>
+            <br>
+        </form>
+    </div>  
+
+<section class="centralizar">
+    <section>
+        <form>
+            <div class="form_fild">
+                <div><label>Email</label></div>
+                <input type="email" name="email" id="email_id" onchange="OnchangeEmail()" placeholder="seu@email.com">
+                <div class="error" id="email_obrigatorio_id">e-mail Obrigatorio</div>
+                <div class="error" id="email_invalido_id">e-mail Invalido</div>
+            
+            </div>
+    
+            <div class="form_fild">
+                <div><label>Senha</label></div>
+                <input type="password" name="password" id="password_id" onchange="OnchangePassword()" placeholder="Senha">
+                <div class="error" id="senha_obrigatorio_id">senha Obrigatorio</div>
+                
+            </div>
+            
+            <div>
+                <button type="button" id="recuperar_password_button_id" class="clear" disabled="true" onclick="Recuperar_Senha()">Esqueci a senha</button>
+            </div>
+    
+            <div>
+                <button type="button" class="solid"  id="login_button_id" disabled="true"  onclick="Login()">Entrar</button>
+            </div>
+           
+            <div>
+                <button type="button" class="outline" onclick=" Registrar()" >Registrar</button>
+            </div>
+        </form>
+    </section>
+</section>
+
+
+    
+            
+    
+    <footer>
+        &copy; 2025 CharptArtCode Todos os direitos reservados.
+    </footer>
+    
+</body>
+
+
+
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="global.css">
+
+
+
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js";></script>
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
+<script src="firebase_init.js"></script>
+
+<script src="index.js"></script>
+<script src="validacao.js"></script>
+<script src="loading.js"></script>
+
+
+</html>

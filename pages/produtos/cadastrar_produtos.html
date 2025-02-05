@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UFT-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CADASTRAR NOVO PRODUTO</title>
+</head>
+
+<body >
+
+    <header>
+        
+        <div> <button class="clear" id="btn_sair" onclick="deslogar()">Sair</button></div>
+    </header>
+
+    <main class="centralizar">
+        <form>
+            <div><label>CADASTRAR NOVO PRODUTO</label></div>
+            <br>
+           
+            <div class="form_fild">
+            <div><label>Status:</label></div>
+            
+            <input type="radio"  name="type" checked id="status_ativo_id"> <label for="status_ativo_id">ativo</label>
+
+            <input type="radio"  name="type"  id="status_desativado_id"> <label for="status_desativado_id">desativado</label>
+
+            <input type="radio"  name="type"  id="status_falta_id"> <label for="status_falta_id">falta</label>
+
+            <input type="radio"  name="type"  id="status_pausado_id"> <label for="status_pausado_id">pausado</label>
+            </div>
+            
+            <div class="form_fild">
+                <div><label>Codigo:</label></div>
+                <input type="number" name="codigo"  id="codigo_id" onchange="OnChangeCodigo()" placeholder="ex: 123">
+                <div class="error" id="codigo_obrigatorio_id">Codigo é Obrigatorio</div>
+                <div class="error" id="codigo_invalido_id">codigo Invalido</div>
+            </div>
+
+            <div class="form_fild">
+                <div><label>Produto:</label></div>
+                <input type="text" name="produto_nome" id="produto_nome_id" onchange="OnChangeProduto()" placeholder="Nome do Produto">
+                <div class="error" id="produto_nome_obrigatorio_id">Nome do Produto é Obrigatorio</div>
+                <div class="error" id="produto_nome_invalido_id">Produto deve ter ao menos 3 caracteres</div>
+            </div>
+
+
+            <div class="form_fild">
+                <div><label>Unidade de Medida:</label></div>
+            <select id="selecao_unidade_medida_id">
+                <option selected>MARMITEX NORMAL</option>
+                <option>ADICIONAL</option>
+                <option>UNIDADE</option>
+            </select>
+            </div>
+
+            <div class="form_fild">
+                <div><label>Quantidade:</label></div>
+                <input type="number" name="quantidade" id="quantidade_id" onchange="OnChangeQuantidade()" placeholder="ex.. 1 MARMITEX NORMAL">
+                <div class="error" id="quantidade_obrigatorio_id">quantidade é Obrigatorio</div>
+                <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
+            </div>          
+            
+
+            <div class="form_fild">
+                <div><label>Observação:</label></div>
+                <input type="text" name="observacao" id="observacao_id" placeholder="ex.: o produto danificado mas pode ser vendido">
+            </div>
+
+
+
+            
+            <div>
+                <button type="button" class="solid"  id="btnCadastrarProduto_id" disabled="true" onclick="CadastrarProduto()">Cadastrar Produto</button>
+            </div>
+    
+            <div>
+                <button type="button" id="Login_id" class="clear" onclick="LoginPage()">voltar</button>
+            </div>
+            
+            
+        </form>
+    </main>
+    <button class="fab fixo baixo direita" onclick="CadastrarProdutoPage()">+</button>
+
+
+    <footer>
+        &copy; 2025 CharptArtCode Todos os direitos reservados.
+    </footer>
+
+</body>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js";></script>
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
+<script src="../../firebase_init.js"></script>
+
+<script src="cadastrar_produtos.js"></script>
+<script src="../../auth_guard.js"></script>
+<script src="../../validacao.js"></script>
+<script src="../../loading.js"></script>
+
+
+<link rel="stylesheet" href="../../global.css">
+<link rel="stylesheet" href="cadastrar_produtos.css">
+
+
+</html>

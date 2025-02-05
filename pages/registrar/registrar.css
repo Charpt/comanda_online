@@ -1,0 +1,19 @@
+body{
+    background-color: darkolivegreen;
+    margin: 0;
+    height: 100vh;
+  }
+  input{
+    border: none;
+  }
+
+
+  label{
+    color: white;
+  }
+  
+  button{
+    cursor: pointer;
+    margin-bottom: 10px;
+    
+  }

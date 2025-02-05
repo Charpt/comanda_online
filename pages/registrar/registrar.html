@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UFT-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Rn Pets</title>
+    
+    
+
+
+</head>
+
+<body class="centralizar">
+
+
+    
+    <form>
+
+        <div class="centralizar">
+            <label class="titulo_pagina">Registrar</label>
+            </div>
+        <div class="form_fild">
+        <div><label>Email:</label></div>
+        <input type="email" name="email" id="email_id" onchange="ToggleEmailErrors()" placeholder="seu@email.com">
+        <div class="error" id="email_obrigatorio_id">e-mail Obrigatorio</div>
+        <div class="error" id="email_invalido_id">e-mail Invalido</div>
+        </div>
+        
+        
+        <div  class="form_fild">
+        <div><label>Digite Novamente Email:</label></div>
+        <div><input type="email" placeholder="seu@email.com" id="confirm_email_id" onchange="ToggleConfirmEmailErrors()"></div>
+        <div class="error" id="confirm_email_obrigatorio_id">confirmar e-mail Obrigatorio</div>
+        <div class="error" id="confirm_email_invalido_id">e-mail estão diferentes</div>
+        </div>
+        
+
+        
+        
+        <div class="form_fild">
+        <div><label>Senha:</label></div>
+        <div><input type="password" placeholder="senha" id="password_id" onchange="TogglePasswordErrors()"></div>
+        <div class="error" id="password_obrigatorio_id">senha Obrigatorio</div>
+        <div class="error" id="confirm_min_password_id">A Senha deve ter No Minimo 6 Digitos</div>
+
+        </div>
+        
+        
+        
+        <div   class="form_fild">
+        <div><label>Digite Novamente Senha:</label></div>
+        <div><input type="password" placeholder="senha" id="confirm_password_id" onchange="ToggleConfirmPasswordErrors()"></div>
+        <div class="error" id="confirm_password_invalido_id">senhas estao diferentes</div>
+        </div>
+        
+    
+        
+
+        <div>
+            <button type="button" class="solid"  id="registrar_id" disabled="true" onclick="Registrar()">Registrar</button>
+        </div>
+        <div>
+            <button type="button" id="Login_id" class="clear" onclick="LoginPage()">Login</button>
+        </div>
+        
+        
+    </form>
+
+    <footer>
+        &copy; 2025 CharptArtCode Todos os direitos reservados.
+    </footer>
+</body>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js";></script>
+<script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
+
+<script src="../../firebase_init.js"></script>
+
+<script src="registrar.js"></script>
+<script src="../../validacao.js"></script>
+<script src="../../loading.js"></script>
+
+
+<link rel="stylesheet" href="../../global.css">
+<link rel="stylesheet" href="registrar.css">
+
+
+</html>
