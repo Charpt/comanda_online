@@ -11,17 +11,79 @@
 }
 
 body{
-  background-color: #0e9271;
+  background-color: #eac09a;
   margin: 0;
   height: 100vh;
 }
 
+
+
+
 header{
-  text-align: right;
+  width: 100%;
+  background-color: #faa854;
 }
+
 header button{
   width: auto;
 }
+
+.top_header{
+  background-color: #bb8e61;
+}
+
+
+.top_header .logo_img img{
+
+  max-width: 210px;
+  
+}
+
+
+.interface{
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.top_header > .interface{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.top_header .botoes_social button{
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid white;
+
+}
+
+.bottom_header nav ul{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style-type: none;
+
+
+}
+
+.bottom_header nav ul li a{
+  color: white;
+  padding: 20px 40px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+
+
+
+
+
+
 
 button:active{
     opacity: 0.8;
@@ -54,12 +116,13 @@ button:active{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .clear{
     background-color: transparent;
     border: none;
-    color: white;
+    color: rgb(65, 62, 62);
   }
   
   .solid{
@@ -98,9 +161,13 @@ button:active{
 
   footer{
 
-    color: beige;
+    color: rgb(3, 3, 2);
     margin: 10px;
     justify-self: center;
     
 
   }
+
+
+
+  

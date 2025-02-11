@@ -10,13 +10,30 @@ body{
 }
 
 label{
-  color: white;
+  color: rgb(65, 62, 62);
 }
 
 button{
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+.titulo_pagina_central{
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin-top: 50px;
+}
+.titulo_pagina_central .titulo_pagina{
+  font-size: 25pt;
+}
+.titulo_pagina_central .sub_titulo_pagina{
+  font-size: 15pt;
+  color: rgb(0, 0, 0);
+}
+
+
+
 
 
 
