@@ -73,7 +73,7 @@ header button{
 
 .bottom_header nav ul li a{
   color: white;
-  padding: 20px 40px;
+  padding: 5px 15px;
   text-decoration: none;
   font-size: 20px;
 }
@@ -164,6 +164,7 @@ button:active{
     color: rgb(3, 3, 2);
     margin: 10px;
     justify-self: center;
+    font-size: 10pt;
     
 
   }
