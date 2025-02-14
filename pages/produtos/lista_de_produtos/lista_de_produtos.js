@@ -75,6 +75,10 @@ dados.forEach(dados => {
     quantidade.innerHTML =  "<b>QUANT:<b/> "+dados.quantidade;
     li.appendChild(quantidade);
 
+    const preco = document.createElement('P');
+    preco.innerHTML =  "<b>PREÇO:</b> "+dados.preco;
+    li.appendChild(preco);
+
     const observacao = document.createElement('p');    
     observacao.innerHTML =  "<b>OBS:</b> "+dados.observacao;
     li.appendChild(observacao);
@@ -83,13 +87,10 @@ dados.forEach(dados => {
     unidade_medida.innerHTML =  "<b>UNIDADE DE MEDIDA:</b> "+dados.unidade_medida;
     li.appendChild(unidade_medida);
 
-    const data_criacao = document.createElement('p');
-    data_criacao.innerHTML =  "<b>CRIADO:</b> "+formatar_data(dados.data_criacao);
-    li.appendChild(data_criacao);
+    const date_criacao = document.createElement('p');
+    date_criacao.innerHTML =  "<b>CRIADO:</b> "+formatar_date(dados.date_criacao);
+    li.appendChild(date_criacao);
 
-    const data_edicao = document.createElement('p');
-    data_edicao.innerHTML = "<b>EDITADO:</b> "+formatar_data(dados.data_edicao);
-    li.appendChild(data_edicao);
 
     const botao = document.createElement('button');
     botao.innerHTML =  "mais informações";
@@ -101,7 +102,7 @@ dados.forEach(dados => {
 
 }
 
-function formatar_data(data){
-    return new Date(data).toLocaleString('pt-br');
+function formatar_date(date){
+    return new Date(date).toLocaleString('pt-br');
 
 }

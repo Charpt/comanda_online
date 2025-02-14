@@ -1,6 +1,6 @@
 function deslogar(){
     firebase.auth().signOut().then(() =>{
-        window.location.href ="../../index.html";
+        window.location.href ="../../../index.html";
     }).catch(() =>{
         alert("Erro ao deslogar");
     })
@@ -17,7 +17,7 @@ function CadastrarProduto(){
      .add(dados)
      .then(()=>{
         removeLoading();
-        window.location.href = "../home/home.html";
+        window.location.href = "../lista_de_produtos/lista_de_produtos.html";
 
      }).catch(()=>{
         removeLoading();
@@ -60,13 +60,14 @@ function criarProduto(){
         produto: form.produto().value,
         unidade_medida: form.unidade_medida().value,
         quantidade: form.quantidade().value,
+        preco: form.preco().value,
         observacao: form.observacao().value,
         user:{
             uid: firebase.auth().currentUser.uid
 
         },
-        data_criacao: new Date(),
-        data_edicao: new Date()
+        date_criacao: form.date_criacao().value
+       
 
         
 
@@ -95,6 +96,23 @@ function OnChangeQuantidade(){
     ToggleCadastrarProdutoButton();
 }
 
+function OnChangePreco(){
+    const preco = form.preco().value;
+    form.precoObrigatorio().style.display = preco ? "none":"block";
+    form.precoInvalido().style.display = preco  <= 0 ? "block": "none";   
+    ToggleCadastrarProdutoButton();
+}
+
+function OnChangeDate_criacao(){
+    
+       const date_criacao = form.date_criacao().value;
+       form.date_criacaoInvalido().style.display = !date_criacao ? "block" : "none";
+    
+}
+
+
+
+
 function ToggleCadastrarProdutoButton(){
     form.btnCadastrar().disabled = !isFromValid();
     
@@ -113,6 +131,11 @@ function isFromValid(){
 
     const quantidade = form.quantidade().value;
     if(!quantidade || quantidade <= 0){
+        return false;
+    }
+
+    const preco = form.preco().value;
+    if(!preco || preco <= 0){
         return false;
     }
    
@@ -146,8 +169,14 @@ const form = {
     quantidadeObrigatorio:() => document.getElementById('quantidade_obrigatorio_id'),
     quantidadeInvalido:() => document.getElementById('quantidade_invalida_id'),
 
+    preco:() => document.getElementById('preco_id'),
+    precoObrigatorio:() => document.getElementById('preco_obrigatorio_id'),
+    precoInvalido:() => document.getElementById('preco_invalido_id'),
+
     observacao:() => document.getElementById('observacao_id'),
 
-    btnCadastrar:() => document.getElementById('btnCadastrarProduto_id')
-
+    btnCadastrar:() => document.getElementById('btnCadastrarProduto_id'),
+   
+    date_criacao:() => document.getElementById('date_criacao_id'),
+    date_criacaoInvalido:() => document.getElementById('date_criacao_invalido_id'),
 }

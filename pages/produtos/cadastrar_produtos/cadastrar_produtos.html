@@ -33,8 +33,8 @@
                <nav>
                    <ul>
                     <li><a href="../../home/home.html">INICIO</a></li>
-                    <li><a href="../produtos/lista_de_produtos/lista_de_produtos.html">PRODUTOS</a></li>
-                    <li><a href="#">CAIXAS</a></li>
+                    <li><a href="../lista_de_produtos/lista_de_produtos.html">PRODUTOS</a></li>
+                    <li><a href="../../nova_venda/carrinho_compras.html">NOVA VENDA</a></li>
                     <li><button id="btn_sair" onclick="deslogar()">Sair</button></li>
                        
                    </ul>
@@ -53,6 +53,13 @@
             <div><label>CADASTRAR NOVO PRODUTO</label></div>
             <br>
            
+            <div class="form_fild">
+                <div><label>DATA:</label></div>
+                <input type="date"  id="date_criacao_id" onchange="OnChangeDate_criacao()">
+                <div class="error" id="date_invalido_id">data Invalido</div>
+            </div>
+
+
             <div class="form_fild">
             <div><label>Status:</label></div>
             
@@ -96,6 +103,12 @@
                 <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
             </div>          
             
+            <div class="form_fild">
+                <div><label>PREÇO:</label></div>
+                <input type="number" step="0.01" min="0.01" name="preco"  id="preco_id" onchange="OnChangePreco()" placeholder="ex: 10,99">
+                <div class="error" id="preco_obrigatorio_id">Preço  é Obrigatorio</div>
+                <div class="error" id="preco_invalido_id">Preço Invalido</div>
+            </div>
 
             <div class="form_fild">
                 <div><label>Observação:</label></div>
