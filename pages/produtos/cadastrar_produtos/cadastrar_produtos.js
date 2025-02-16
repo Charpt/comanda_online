@@ -74,6 +74,17 @@ function criarProduto(){
     }
 }
 
+
+
+function OnChangeDate_criacao(){
+    
+    const date_criacao = form.date_criacao().value;
+    form.date_criacaoInvalido().style.display = !date_criacao ? "block" : "none";
+    ToggleCadastrarProdutoButton();
+ 
+}
+
+
 function OnChangeCodigo(){
     const codigo = form.codigo().value;
     form.codigoObrigatorio().style.display = codigo ? "none":"block";
@@ -84,7 +95,7 @@ function OnChangeCodigo(){
 function OnChangeProduto(){
     const produto = form.produto().value;
     form.produtoObrigatorio().style.display = produto ? "none":"block";
-    form.produtoInvalido().style.display = produto.length  >= 3 ? "none": "block";
+    form.produtoInvalido().style.display = produto.length  >= 1 ? "none": "block";
     ToggleCadastrarProdutoButton();
 }
 
@@ -103,12 +114,7 @@ function OnChangePreco(){
     ToggleCadastrarProdutoButton();
 }
 
-function OnChangeDate_criacao(){
-    
-       const date_criacao = form.date_criacao().value;
-       form.date_criacaoInvalido().style.display = !date_criacao ? "block" : "none";
-    
-}
+
 
 
 
@@ -147,6 +153,9 @@ function isFromValid(){
 
 const form = {
 
+    date_criacao:() => document.getElementById('date_criacao_id'),
+    date_criacaoInvalido:() => document.getElementById('date_criacaoInvalido_id'),
+
     status_ativo:() => document.getElementById('status_ativo_id'),
 
     status_desativado:() => document.getElementById('status_desativado_id'),
@@ -177,6 +186,5 @@ const form = {
 
     btnCadastrar:() => document.getElementById('btnCadastrarProduto_id'),
    
-    date_criacao:() => document.getElementById('date_criacao_id'),
-    date_criacaoInvalido:() => document.getElementById('date_criacao_invalido_id'),
+    
 }

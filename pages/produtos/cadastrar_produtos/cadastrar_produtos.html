@@ -55,8 +55,8 @@
            
             <div class="form_fild">
                 <div><label>DATA:</label></div>
-                <input type="date"  id="date_criacao_id" onchange="OnChangeDate_criacao()">
-                <div class="error" id="date_invalido_id">data Invalido</div>
+                <input type="date" name="date_criacao" id="date_criacao_id" onchange="OnChangeDate_criacao()">
+                <div class="error" id="date_criacaoInvalido_id">data Invalido</div>
             </div>
 
 
@@ -83,14 +83,19 @@
                 <div><label>Produto:</label></div>
                 <input type="text" name="produto_nome" id="produto_nome_id" onchange="OnChangeProduto()" placeholder="Nome do Produto">
                 <div class="error" id="produto_nome_obrigatorio_id">Nome do Produto é Obrigatorio</div>
-                <div class="error" id="produto_nome_invalido_id">Produto deve ter ao menos 3 caracteres</div>
+                <div class="error" id="produto_nome_invalido_id">Produto deve ter ao menos 1 caracteres</div>
             </div>
 
 
             <div class="form_fild">
                 <div><label>Unidade de Medida:</label></div>
             <select id="selecao_unidade_medida_id">
-                <option selected>MARMITEX NORMAL</option>
+                <option selected>MARMITEX (P)</option>
+                <option selected>MARMITEX (M)</option>
+                <option selected>MARMITEX (G)</option>
+                <option selected>PORÇÃO (P)</option>
+                <option selected>PORÇÃO (M)</option>
+                <option selected>PORÇÃO (G)</option>
                 <option>ADICIONAL</option>
                 <option>UNIDADE</option>
             </select>

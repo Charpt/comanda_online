@@ -97,12 +97,29 @@ dados.forEach(dados => {
     li.appendChild(botao);
 
     orderList.appendChild(li);
+
+    
+
     
 });
 
 }
 
-function formatar_date(date){
-    return new Date(date).toLocaleString('pt-br');
+function formatar_date(data){
+
+   
+const dataString = data;
+console.log("data RECEBIDA "+data);
+    const date = new Date(dataString);
+    
+    const dia = String(date.getDate()+1).padStart(2,'0');
+    const mes = String(date.getMonth()+1).padStart(2,'0');
+    const ano = date.getFullYear();
+
+    const dataformatada =`${dia}-${mes}-${ano}`;
+
+    console.log("data FORMATADA "+dataformatada);
+
+    return dataformatada
 
 }
