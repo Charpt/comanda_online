@@ -29,7 +29,12 @@ function buscarDados(user){
    .get()
    .then(snapshot =>{
     removeLoading();
-    const dados = snapshot.docs.map(doc => doc.data());
+
+    const dados = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        uid: doc.id
+    }));
+
     AddDados(dados);
    }).catch(error =>{
     removeLoading();
@@ -46,10 +51,14 @@ dados.forEach(dados => {
     
     
 
+    
     const li = document.createElement('li');
 
     li.classList.add(dados.status);
     li.classList.add("card");
+    li.addEventListener('click',()=> {
+        window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
+    })
 
 
     const img = document.createElement('img');
@@ -109,7 +118,7 @@ function formatar_date(data){
 
    
 const dataString = data;
-console.log("data RECEBIDA "+data);
+
     const date = new Date(dataString);
     
     const dia = String(date.getDate()+1).padStart(2,'0');
@@ -118,7 +127,7 @@ console.log("data RECEBIDA "+data);
 
     const dataformatada =`${dia}-${mes}-${ano}`;
 
-    console.log("data FORMATADA "+dataformatada);
+
 
     return dataformatada
 

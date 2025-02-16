@@ -6,23 +6,138 @@ function deslogar(){
     })
 }
 
+if(!NovoProdutoOuAtualizacao()){
+
+    const uid = GetDadosProdutos();
+    BuscarUidDoProduto(uid);
+}
+
+function BuscarUidDoProduto(uid){
+    
+    firebase.firestore()
+
+    .collection('produtos')
+    .doc(uid)
+    .get()
+    .then(doc => {
+        removeLoading();
+        if(doc.exists){
+            MostrarDadosParaAtualizar(doc.data());
+            ToggleCadastrarProdutoButton();
+
+        }else{
+            alert("Documento nao encontrado");
+            window.location.href ="../lista_de_produtos/lista_de_produtos.html";
+        }
+    }).catch(()=>{
+        removeLoading();
+        alert("Erro ao salvar Produto");
+        window.location.href ="../lista_de_produtos/lista_de_produtos.html";
+     });
+}
+
+
+
  
+function GetDadosProdutos(){
+    const urlParametros = new URLSearchParams(window.location.search);
+    return urlParametros.get('uid');
+}
+
+function NovoProdutoOuAtualizacao(){
+    return GetDadosProdutos() ? false : true;
+}
+
+
+
+
+
 function CadastrarProduto(){
 
     ShowLoading();
 
     const dados = criarProduto();
-     firebase.firestore()
+    
+
+    if(!GetDadosProdutos()){
+        CadastrarNovoProduto(dados);
+
+    }else{
+
+        AtualizarDadosDoProduto(dados);
+    }
+
+
+    
+}
+
+function AtualizarDadosDoProduto(dados){
+
+    
+    firebase.firestore()
      .collection('produtos')
-     .add(dados)
+     .doc(GetDadosProdutos())
+     .update(dados)
      .then(()=>{
-        removeLoading();
+        
         window.location.href = "../lista_de_produtos/lista_de_produtos.html";
 
      }).catch(()=>{
         removeLoading();
         alert("Erro ao salvar Produto");
      })
+
+}
+
+function CadastrarNovoProduto(dados){
+    
+
+     firebase.firestore()
+     .collection('produtos')
+     .add(dados)
+     .then(()=>{
+        
+        window.location.href = "../lista_de_produtos/lista_de_produtos.html";
+
+     }).catch(()=>{
+        removeLoading();
+        alert("Erro ao salvar Produto");
+     })
+}
+
+function MostrarDadosParaAtualizar(dados_produtos){
+
+    if(dados_produtos.status == "status_ativo"){
+        form.status_ativo().checked = true;
+
+    }else{
+        if(dados_produtos.status == "desativado"){
+            form.status_desativado().checked = true;
+    
+        }else{
+            if(dados_produtos.status == "falta"){
+                form.status_falta().checked = true;
+        
+            }else{
+                if(dados_produtos.status == "pausado"){
+                    form.status_pausado().checked = true;
+            
+                }
+            }
+        }
+    }
+    form.codigo().value = dados_produtos.codigo;
+    form.produto().value = dados_produtos.produto;
+    form.unidade_medida().value = dados_produtos.unidade_medida;
+    form.quantidade().value = dados_produtos.quantidade;
+    form.preco().value = dados_produtos.preco;
+    form.observacao().value = dados_produtos.observacao;
+    form.date_criacao().value = dados_produtos.date_criacao;
+
+
+
+    
+
 }
 
 function criarProduto(){
@@ -49,6 +164,7 @@ function criarProduto(){
         }
 
     }
+    
 
 
 
