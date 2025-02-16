@@ -25,8 +25,10 @@ body{
     height: 400px;
     border-radius: 10px;
     box-shadow: 4px 4px 12px;
+
     
 }
+
 
 .card h1{
 
@@ -39,14 +41,11 @@ body{
     font-size: 0.9rem;
 }
 
-.card button{
+.card .danger button{
 
-    background-color: rgb(153, 121, 121);
     height: 30px;
-    border: none;
     padding: 4px;
-    width: 80%;
-    color: #6d1717;
+    width: auto;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 10px;
@@ -87,38 +86,11 @@ body{
  }
 
 
-/*
-ol {
-list-style-type: none;
-background: white;
-width: 100%;
-height: max-content;
-padding: 5px;
-}
-
-ol li {
-    background: white;
-    margin: 10px;
-    background: rgb(19, 139, 155);
-}
-ol li:hover{
-    opacity: 0.8;
-}
-
-ol li.status_ativo{
-    border: 2px solid green;
+ .card:hover{
+    opacity: 0.9;
     
 }
-ol li.status_desativado{
-    border: 2px solid grey;
+.card:hover button.danger{
     
+    display: block;
 }
-p{
-    margin-left: 4px;
-
-}
-
-.response{
-    position: relative;
-}
-*/

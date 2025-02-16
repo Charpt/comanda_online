@@ -131,10 +131,15 @@ button:active{
     border-radius: 5px;
   }
   .outline{
-    background-color: transparent;
+    background-color: white;
     border: 1px solid white;
     border-radius: 5px;
     color: white;
+  }
+  .danger{
+    color: red;
+    border-color: red;
+    display: none;
   }
 
 .error{

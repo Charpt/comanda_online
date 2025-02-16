@@ -18,28 +18,23 @@ function CadastrarProdutoPage(){
 }
 
 
-function buscarDados(user){
+function buscarDados(user)
+{
 
     ShowLoading();
 
-   firebase.firestore()
-   .collection('produtos')
-   .where('user.uid','==', user.uid)
-   .orderBy('codigo','desc')
-   .get()
-   .then(snapshot =>{
-    removeLoading();
+   dados_servicos.BuscarPorUsuario(user)
+   .then(dados =>
+    {
+        removeLoading();
 
-    const dados = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        uid: doc.id
-    }));
+        AddDados(dados);
 
-    AddDados(dados);
-   }).catch(error =>{
-    removeLoading();
-    console.log(error);
-    alert("Erro ao recuperar dados");
+    }).catch(error =>
+    {
+        removeLoading();
+        console.log(error);
+        alert("Erro ao recuperar dados");
    })
 }
 
@@ -48,71 +43,94 @@ const orderList = document.getElementById('lista_dados');
 
 dados.forEach(dados => {
 
+    const li = Criar_lista_dos_dados(dados)   
     
+    li.appendChild(CriarImagemDosDados());    
+    li.appendChild(Criar_Paragrafos(""+dados.produto));
+    li.appendChild(Criar_Paragrafos("<b>STATUS:</b> "+dados.status));   
+    li.appendChild(Criar_Paragrafos("<b>CODIGO:</b> "+dados.codigo));   
+    li.appendChild(Criar_Paragrafos("<b>QUANT:<b/> "+dados.quantidade));    
+    li.appendChild(Criar_Paragrafos("<b>PREÇO:</b> "+dados.preco));
+    li.appendChild(Criar_Paragrafos("<b>OBS:</b> "+dados.observacao));
+    li.appendChild(Criar_Paragrafos("<b>UNIDADE DE MEDIDA:</b> "+dados.unidade_medida));    
+    li.appendChild(Criar_Paragrafos( "<b>Criado:</b> "+formatar_date(dados.date_criacao)));
+    li.appendChild(CriarBotaoDelete(dados));
     
-
-    
-    const li = document.createElement('li');
-
-    li.classList.add(dados.status);
-    li.classList.add("card");
-    li.addEventListener('click',()=> {
-        window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
-    })
-
-
-    const img = document.createElement('img');
-    img.src =  "produto_teste.jpg";
-    img.alt = "carne de panela com batata";
-    
-    
-    li.appendChild(img);
-
-    const produto = document.createElement('h1');
-    produto.innerHTML =  ""+dados.produto;
-    li.appendChild(produto);
-
-    const status = document.createElement('P');
-    status.innerHTML =  "<b>STATUS:</b> "+dados.status;
-    li.appendChild(status);
-
-    const codigo = document.createElement('P');
-    codigo.innerHTML =  "<b>CODIGO:</b> "+dados.codigo;
-    li.appendChild(codigo);
-
-    const quantidade = document.createElement('p');
-    quantidade.innerHTML =  "<b>QUANT:<b/> "+dados.quantidade;
-    li.appendChild(quantidade);
-
-    const preco = document.createElement('P');
-    preco.innerHTML =  "<b>PREÇO:</b> "+dados.preco;
-    li.appendChild(preco);
-
-    const observacao = document.createElement('p');    
-    observacao.innerHTML =  "<b>OBS:</b> "+dados.observacao;
-    li.appendChild(observacao);
-    
-    const unidade_medida = document.createElement('p');
-    unidade_medida.innerHTML =  "<b>UNIDADE DE MEDIDA:</b> "+dados.unidade_medida;
-    li.appendChild(unidade_medida);
-
-    const date_criacao = document.createElement('p');
-    date_criacao.innerHTML =  "<b>CRIADO:</b> "+formatar_date(dados.date_criacao);
-    li.appendChild(date_criacao);
-
-
-    const botao = document.createElement('button');
-    botao.innerHTML =  "mais informações";
-    li.appendChild(botao);
 
     orderList.appendChild(li);
 
     
-
+console.log(dados);
     
 });
 
 }
+
+function Criar_lista_dos_dados(dados){
+    const li = document.createElement('li');
+
+    li.classList.add(dados.status);
+    li.classList.add("card");
+    li.id = dados.uid;
+    li.addEventListener('click',()=> {
+        window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
+    })
+    return li;
+}
+
+function CriarBotaoDelete(dados){
+    const botaoDeletar = document.createElement('button');
+    botaoDeletar.innerHTML =  "deletar";
+    botaoDeletar.classList.add("outline");
+    botaoDeletar.classList.add("danger");
+    botaoDeletar.addEventListener('click',Event => {
+        Event.stopPropagation();
+        DesejaDeletarProduto(dados);
+
+    });
+    
+    return botaoDeletar;
+}
+
+
+function DesejaDeletarProduto(dados)
+{
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    if(desejaDeletarProduto == true){
+        DeletarProduto(dados);
+    }
+
+}
+
+function Criar_Paragrafos(value){
+    const elemento = document.createElement('p');
+    elemento.innerHTML =  value;
+    return elemento;
+}
+
+function CriarImagemDosDados(){
+    const img = document.createElement('img');
+    img.src =  "produto_teste.jpg";
+    img.alt = "carne de panela com batata";
+    return img;
+}
+
+function DeletarProduto(dados){
+    ShowLoading();
+
+    dados_servicos.DeleteDados(dados)
+   .then(snapshot =>{
+    removeLoading();
+
+    document.getElementById(dados.uid).remove();
+
+   }).catch(error =>{
+    removeLoading();
+    console.log(error);
+    alert("Erro ao deletar dados");
+   })
+}
+
 
 function formatar_date(data){
 

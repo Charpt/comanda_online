@@ -8,20 +8,23 @@ function deslogar(){
 
 if(!NovoProdutoOuAtualizacao()){
 
+    
     const uid = GetDadosProdutos();
     BuscarUidDoProduto(uid);
+    
+    
 }
 
 function BuscarUidDoProduto(uid){
-    
+   
     firebase.firestore()
-
-    .collection('produtos')
-    .doc(uid)
-    .get()
+        .collection('produtos')
+        .doc(uid)
+        .get()
     .then(doc => {
-        removeLoading();
+        
         if(doc.exists){
+            removeLoading();
             MostrarDadosParaAtualizar(doc.data());
             ToggleCadastrarProdutoButton();
 
@@ -34,7 +37,10 @@ function BuscarUidDoProduto(uid){
         alert("Erro ao salvar Produto");
         window.location.href ="../lista_de_produtos/lista_de_produtos.html";
      });
+     
 }
+
+
 
 
 
@@ -54,7 +60,7 @@ function NovoProdutoOuAtualizacao(){
 
 function CadastrarProduto(){
 
-    ShowLoading();
+ShowLoading();
 
     const dados = criarProduto();
     
@@ -73,11 +79,8 @@ function CadastrarProduto(){
 
 function AtualizarDadosDoProduto(dados){
 
-    
-    firebase.firestore()
-     .collection('produtos')
-     .doc(GetDadosProdutos())
-     .update(dados)
+    ShowLoading();
+    dados_servicos.Atualizar_dados(dados)
      .then(()=>{
         
         window.location.href = "../lista_de_produtos/lista_de_produtos.html";
@@ -92,9 +95,7 @@ function AtualizarDadosDoProduto(dados){
 function CadastrarNovoProduto(dados){
     
 
-     firebase.firestore()
-     .collection('produtos')
-     .add(dados)
+     dados_servicos.Cadastrar_novo_dado(dados)
      .then(()=>{
         
         window.location.href = "../lista_de_produtos/lista_de_produtos.html";
