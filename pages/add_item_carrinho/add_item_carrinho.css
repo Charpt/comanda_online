@@ -26,4 +26,6 @@
     border: 2PX solid black;
     background-color: rgb(236, 188, 170);
     padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
 }

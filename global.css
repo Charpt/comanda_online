@@ -79,12 +79,6 @@ header button{
 }
 
 
-
-
-
-
-
-
 button:active{
     opacity: 0.8;
   }
@@ -147,6 +141,7 @@ button:active{
     background-color: red;
     display: none;
   }
+
   .form_fild{
     margin-bottom: 10px;
   }
@@ -161,7 +156,7 @@ button:active{
     width: auto;
   }
   form{
-    width: 300px;
+    width: 85%;
   }
 
   footer{
