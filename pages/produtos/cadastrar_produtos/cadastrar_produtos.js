@@ -135,7 +135,7 @@ function MostrarDadosParaAtualizar(dados_produtos){
     form.observacao().value = dados_produtos.observacao;
     form.date_criacao().value = dados_produtos.date_criacao;
 
-
+    
 
     
 
@@ -167,8 +167,8 @@ function criarProduto(){
     }
     
 
-
-
+    
+   
 
     return{
         
@@ -184,6 +184,8 @@ function criarProduto(){
 
         },
         date_criacao: form.date_criacao().value
+
+        
        
 
         

@@ -38,7 +38,10 @@ function buscarDados(user)
    })
 }
 
+
+
 function AddDados(dados){
+
 const orderList = document.getElementById('lista_dados');
 
 dados.forEach(dados => {
@@ -55,23 +58,22 @@ dados.forEach(dados => {
     li.appendChild(Criar_Paragrafos("<b>UNIDADE DE MEDIDA:</b> "+dados.unidade_medida));    
     li.appendChild(Criar_Paragrafos( "<b>Criado:</b> "+formatar_date(dados.date_criacao)));
     li.appendChild(CriarBotaoDelete(dados));
-    
-
     orderList.appendChild(li);
-
     
-console.log(dados);
+    
+console.log(dados.date_criacao);
     
 });
 
 }
 
 function Criar_lista_dos_dados(dados){
+    
     const li = document.createElement('li');
-
     li.classList.add(dados.status);
-    li.classList.add("card");
+    li.classList.add('card');
     li.id = dados.uid;
+    
     li.addEventListener('click',()=> {
         window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
     })
@@ -139,14 +141,42 @@ const dataString = data;
 
     const date = new Date(dataString);
     
-    const dia = String(date.getDate()+1).padStart(2,'0');
+    const dia = String(date.getDate()).padStart(2,'0');
     const mes = String(date.getMonth()+1).padStart(2,'0');
     const ano = date.getFullYear();
+    const horas = String(date.getHours()).padStart(2,'0');
+    const minutos = String(date.getMinutes()).padStart(2,'0');
 
-    const dataformatada =`${dia}-${mes}-${ano}`;
+    
+
+    const dataformatada =`${dia}/${mes}/${ano} ás ${horas}:${minutos}`;
 
 
 
     return dataformatada
 
 }
+
+
+/*// Função para calcular a cor com base no tempo restante
+function updateColor(card_id,startTime, totalDuration) {
+    
+    const card = document.getElementById(''+card_id);
+     const now = new Date().getTime(); // Tempo atual em milissegundos
+     const elapsedTime = now - startTime; // Tempo decorrido desde o início
+     const progress = elapsedTime / totalDuration; // Progresso (0 a 1)
+ 
+     // Limita o progresso a 1 (100%)
+     if (progress >= 1) {
+         card.style.backgroundColor = 'red'; // Cor final
+         return;
+     }
+ 
+     // Calcula a cor intermediária
+     const red = Math.floor(255 * progress); // Aumenta o vermelho
+     const green = Math.floor(255 * (1 - progress)); // Diminui o verde
+     card.style.backgroundColor = `rgb(${red}, ${green}, 0)`; // Aplica a cor
+ 
+     // Atualiza a cor a cada segundo
+     requestAnimationFrame(() => updateColor(startTime, totalDuration));
+ }*/

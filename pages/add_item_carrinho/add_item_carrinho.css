@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.item_selecionado{
+    background-color: aliceblue;
+    width: 100%;
+    color: rgb(230, 17, 17);
+    justify-self: center;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.grupo_produto_selecionado{
+    background-color: rgb(192, 128, 75);
+    width: auto;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.FORMULARIO_ADD_ITEM{
+    border: 2PX solid black;
+    background-color: rgb(236, 188, 170);
+    padding: 10px;
+}

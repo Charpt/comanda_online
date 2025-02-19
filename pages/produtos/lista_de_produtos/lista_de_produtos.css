@@ -9,6 +9,8 @@
 body{
 
     justify-content: center;
+    align-items: flex;
+    
     align-items: center;
     height: 100vh;
     font-family: "Arial";
@@ -20,7 +22,7 @@ body{
     list-style-type: none;
     padding: 10px;
     margin: 25px;
-    background-color: #d6b1b1;
+    background-color: #a5bd1c;
     width: 300px;
     height: 400px;
     border-radius: 10px;
