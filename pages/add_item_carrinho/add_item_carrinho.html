@@ -53,13 +53,13 @@
    
       </header> 
 
-<div class="centralizar">
+<div class="titulo_da_pagina">
 
     <div><label>ADICIONAR NOVO ITEM AO PEDIDO</label></div>
 
 </div> 
 
-<main class="centralizar">
+<main class="centralizar_formulario">
     <form>       
         
         <DIV class="FORMULARIO_ADD_ITEM">
@@ -74,36 +74,30 @@
 
             <div class="form_fild">
                 <div><label>PRODUTO SELECIONADO:</label></div>
-                <BR>
-                <div class="item_selecionado"><label>PARMEDIANA DE CARNE</label></div>
+                <div class="item_selecionado"><label>PARMEDIANA DE CARNE (GRANDE)</label></div>
                 
             </div>
 
 
             <div class="form_fild">
-                <div><label>Unidade de Medida:</label></div>
+                <div><label>UNIDADE DE MEDIDA:</label></div>
             <select id="selecao_unidade_medida_id">
-                <option selected>MARMITEX (P)</option>
-                <option selected>MARMITEX (M)</option>
-                <option selected>MARMITEX (G)</option>
-                <option selected>PORÇÃO (P)</option>
-                <option selected>PORÇÃO (M)</option>
-                <option selected>PORÇÃO (G)</option>
+                <option selected>MARMITEX</option>
                 <option>ADICIONAL</option>
                 <option>UNIDADE</option>
             </select>
             </div>
 
             <div class="form_fild">
-                <div><label>Quantidade:</label></div>
-                <input type="number" name="quantidade" id="quantidade_id" onchange="OnChangeQuantidade()" placeholder="ex.. 1 MARMITEX NORMAL">
+                <div><label>QUANTIDADE:</label></div>
+                <input type="number" name="quantidade" id="quantidade_id" onchange="OnChangeQuantidade()" placeholder="ex: 1 MARMITEX">
                 <div class="error" id="quantidade_obrigatorio_id">quantidade é Obrigatorio</div>
                 <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
             </div>          
             
             <div class="form_fild">
                 <div><label>PREÇO:</label></div>
-                <div class="item_selecionado"><label>UNIDADE 70,00 X 2 = 140,00</label></div>
+                <div class="item_selecionado"><label>UNIDADE: 70,00 X 2 = 140,00</label></div>
                 
             </div>
 
@@ -121,8 +115,8 @@
         
 
         <div class="form_fild">
-            <div><label>Observação:</label></div>
-            <input type="text" name="observacao" id="observacao_id" placeholder="ex... POUCO FEIJAO, TIRAR CEBOLA">
+            <div><label>OBSERVAÇÃO:</label></div>
+            <input type="text" name="observacao" id="observacao_id" placeholder="EX... POUCO FEIJAO, TIRAR CEBOLA">
         </div>
 
     </DIV>

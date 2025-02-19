@@ -106,11 +106,26 @@ button:active{
     right: 34px;
   }
   
-.centralizar{
+.centralizar_formulario{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+
+}
+
+.titulo_da_pagina{
+  border: 1PX solid black;
+  font-size: 15pt;
+   width: 100%;
+    padding: 10px;
+    background-color: #d3a67e;
+    border-radius: 5px;
+margin-top: 5px;
+    max-width: 85%;
+    justify-self: center;
+    text-align: center;
+    
 }
 
 .clear{
@@ -156,7 +171,9 @@ button:active{
     width: auto;
   }
   form{
-    width: 85%;
+    width: 90%;
+    font-size: 15pt;
+    
   }
 
   footer{
