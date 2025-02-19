@@ -49,14 +49,15 @@ dados.forEach(dados => {
     const li = Criar_lista_dos_dados(dados)   
     
     li.appendChild(CriarImagemDosDados());    
-    li.appendChild(Criar_Paragrafos(""+dados.produto));
-    li.appendChild(Criar_Paragrafos("<b>STATUS:</b> "+dados.status));   
-    li.appendChild(Criar_Paragrafos("<b>CODIGO:</b> "+dados.codigo));   
-    li.appendChild(Criar_Paragrafos("<b>QUANT:<b/> "+dados.quantidade));    
-    li.appendChild(Criar_Paragrafos("<b>PREÇO:</b> "+dados.preco));
-    li.appendChild(Criar_Paragrafos("<b>OBS:</b> "+dados.observacao));
-    li.appendChild(Criar_Paragrafos("<b>UNIDADE DE MEDIDA:</b> "+dados.unidade_medida));    
-    li.appendChild(Criar_Paragrafos( "<b>Criado:</b> "+formatar_date(dados.date_criacao)));
+    li.appendChild(Criar_Paragrafos(""+dados.produto)).classList.add('titulo_card');
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> status: <b class=info_item>"+dados.status));   
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> codigo: <b class=info_item>"+dados.codigo)).classList.add('text_info_card');   
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> quantidade: <b class=info_item>"+dados.quantidade)).classList.add('text_info_card');    
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> preço: <b class=info_item>"+dados.preco)).classList.add('text_info_card');
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> observação: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> Acompanhamenentos: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
+    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> unidade de medida: <b class=info_item>"+dados.unidade_medida)).classList.add('text_info_card');    
+    li.appendChild(Criar_Paragrafos( "<b class=texto_indicador_info> data da criação: <b class=info_item>"+formatar_date(dados.date_criacao))).classList.add('text_info_card');
     li.appendChild(CriarBotaoDelete(dados));
     orderList.appendChild(li);
     
