@@ -1,5 +1,6 @@
-const dados_servicos ={
-    BuscarPorUsuario: user =>{
+const dados_servicos ={ 
+
+    BuscarPorUsuario: user  =>{
         
        return firebase.firestore()
         .collection('produtos')
@@ -19,12 +20,33 @@ const dados_servicos ={
 
         
     },
+    BuscarPorUsuario_Carrinho_de_Compras: user  =>{
+        
+        return firebase.firestore()
+         .collection('carrinhos_de_compras')
+         .where('user.uid','==', user.uid)
+         .orderBy('codigo','desc')
+         .get()
+         .then(snapshot =>
+         {
+              return snapshot.docs.map(doc => (
+             {
+                 ...doc.data(),
+                 uid: doc.id
+             }));
+ 
+             
+         })
+ 
+         
+     },
+
 
     //nao consegui fazer o uid funcioanr por aqui devo verifiar o codigo para saber oque impede o funcionamento
     BuscarPorUid: uid =>{
         return firebase.firestore()
         .collection('produtos')
-        .doc(uid)
+        .where
         .get()
         .then(doc => {           
             

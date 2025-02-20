@@ -57,55 +57,14 @@
    
     
 
-<div class="centralizar">
+<div class="titulo_da_pagina">
 
     <label>CARRINHO DE COMPRAS</label>
 
 </div> 
 
+<table id="carrinho"></table>
 
-<table>
-    <caption class="evidente_destaque_1">ENDEREÇO:<br> AVENIDA RIVER Nº 465 - AGUA CHATA</caption>
-    <thead>
-        <tr>
-            <th>CODIGO</th>
-            <th>QUANTIDADE</th>
-            <th>PRODUTOS</th>
-            <th>PREÇO</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-        <tr>
-            <td>5863</td>
-            <td class="evidente">1</td>
-            <td class="evidente">BIFE ACEBOLADO</td>
-            <td>50,00</td>
-        </tr>
-
-        <tr>
-            <td>323</td>
-            <td class="evidente">1</td>
-            <td class="evidente">PARMEDIANA DE CARNE</td>
-            <td>200,00</td>
-        </tr>
-
-        <tr>
-            <td>344</td>
-            <td class="evidente">2</td>
-            <td class="evidente">COCA-COLA LATA 350ML</td>
-            <td>100,00</td>
-        </tr>
-
-        <tr>
-            <td>783</td>
-            <td class="evidente">2</td>
-            <td class="evidente">FRANGO GRELHADO</td>
-            <td>50,00</td>
-        </tr>
-
-    </tbody>
-</table>
 
 <table>
     <caption>TOTAL E FORMAS DE PAGAMENTO</caption>
@@ -119,10 +78,12 @@
         
         <tr>
             <td class="evidente_destaque">0%</td>
-            <td class="evidente_destaque">400,00</td>
+            <td id="total_carrinho" class="evidente_destaque">400,00</td>
         </tr>
     </tbody>
 </table>
+
+<button class="button_1" onclick="additem()">ADICIONAR ITEM </button>
 
 <button class="fab fixo baixo direita" onclick="Add_Item_Carrinho()">+</button>
 
@@ -149,4 +110,5 @@
 <script src="../../auth_guard.js"></script>
 <script src="../../loading.js"></script>
 <script src="carrinho_compras.js"></script>
+<script src="../../servicos/servicos_dados_produtos.js"></script>
 </html>

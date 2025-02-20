@@ -54,7 +54,6 @@ dados.forEach(dados => {
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> codigo: <b class=info_item>"+dados.codigo)).classList.add('text_info_card');   
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> quantidade: <b class=info_item>"+dados.quantidade)).classList.add('text_info_card');    
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> preço: <b class=info_item>"+dados.preco)).classList.add('text_info_card');
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> observação: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> Acompanhamenentos: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> unidade de medida: <b class=info_item>"+dados.unidade_medida)).classList.add('text_info_card');    
     li.appendChild(Criar_Paragrafos( "<b class=texto_indicador_info> data da criação: <b class=info_item>"+formatar_date(dados.date_criacao))).classList.add('text_info_card');

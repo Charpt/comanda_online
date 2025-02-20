@@ -59,16 +59,18 @@
 </div> 
 
 <main class="centralizar_formulario">
-    <form>       
+    <form id="formulario_de_pesquisa">       
         
         <DIV class="FORMULARIO_ADD_ITEM">
 
         <div class="form_fild">
             <div><label>PESQUISAR POR CODIGO OU NOME:</label></div>
-            <input type="text" name="codigo"  id="codigo_id" placeholder="ex: 123 ex: frango grelhado">
+            <input type="text" name="pesquisa"  id="pesquisa_codigo_name" placeholder="ex: 123 ex: frango grelhado">
             <div class="error" id="codigo_obrigatorio_id">Codigo é Obrigatorio</div>
             <div class="error" id="codigo_invalido_id">codigo Invalido</div>
         </div>
+
+        <div id="resultado"></div>
 
         <div class="grupo_produto_selecionado">
 
@@ -160,4 +162,5 @@
 <script src="../../loading.js"></script>
 <script src="add_item_carrinho.js"></script>
 <script src="../../servicos/formatacao_data.js"></script>
+<script src="../../servicos/servicos_dados_produtos.js"></script>
 </html>

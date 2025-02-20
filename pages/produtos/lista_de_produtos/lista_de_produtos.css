@@ -26,6 +26,7 @@ body{
     border-radius: 10px;
     box-shadow: 4px 4px 12px;
     text-transform:uppercase; 
+    margin-bottom: 20px;
 }
 
 
@@ -69,7 +70,7 @@ body{
 
  .card p{
     margin-top: 5px;
-    font-size: 13pt;
+    font-size: 12pt;
  }
  
 

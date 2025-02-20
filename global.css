@@ -128,6 +128,14 @@ margin-top: 5px;
     
 }
 
+.FORMULARIO_ADD_ITEM{
+  border: 2PX solid black;
+  background-color: #d3a67e;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  
+}
 .clear{
     background-color: transparent;
     border: none;
