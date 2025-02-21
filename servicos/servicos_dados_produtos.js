@@ -5,7 +5,7 @@ const dados_servicos ={
        return firebase.firestore()
         .collection('produtos')
         .where('user.uid','==', user.uid)
-        .orderBy('codigo','desc')
+        .orderBy('codigo','asc')
         .get()
         .then(snapshot =>
         {
@@ -20,26 +20,7 @@ const dados_servicos ={
 
         
     },
-    BuscarPorUsuario_Carrinho_de_Compras: user  =>{
-        
-        return firebase.firestore()
-         .collection('carrinhos_de_compras')
-         .where('user.uid','==', user.uid)
-         .orderBy('codigo','desc')
-         .get()
-         .then(snapshot =>
-         {
-              return snapshot.docs.map(doc => (
-             {
-                 ...doc.data(),
-                 uid: doc.id
-             }));
- 
-             
-         })
- 
-         
-     },
+    
 
 
     //nao consegui fazer o uid funcioanr por aqui devo verifiar o codigo para saber oque impede o funcionamento
@@ -73,6 +54,34 @@ const dados_servicos ={
         .collection('produtos')
         .doc(GetDadosProdutos())
         .update(dados_produtos);
-    }
+    },
+
+    // carrinho de compras
+    BuscarPorUsuario_Carrinho_de_Compras: user  =>{
+        
+        return firebase.firestore()
+         .collection('carrinhos_de_compras')
+         .where('user.uid','==', user.uid)
+         .orderBy('codigo','asc')
+         .get()
+         .then(snapshot =>
+         {
+              return snapshot.docs.map(doc => (
+             {
+                 ...doc.data(),
+                 uid: doc.id
+             }));
+ 
+             
+         })
+ 
+         
+     },
+
+    Add_item_carrinho: dados_item_carrinho => {
+        return firebase.firestore()
+        .collection('carrinhos_de_compras')
+        .add(dados_item_carrinho);
+    },
     
 }

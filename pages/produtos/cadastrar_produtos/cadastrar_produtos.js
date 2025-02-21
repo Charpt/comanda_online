@@ -62,6 +62,8 @@ function CadastrarProduto(){
 
 ShowLoading();
 
+
+
     const dados = criarProduto();
     
 
@@ -174,7 +176,7 @@ function criarProduto(){
         
         status: status_radio,
         codigo: form.codigo().value,
-        produto: form.produto().value,
+        produto: form.produto().value.toUpperCase(),
         unidade_medida: form.unidade_medida().value,
         quantidade: form.quantidade().value,
         preco: form.preco().value,
@@ -272,6 +274,10 @@ function isFromValid(){
 
 const form = {
 
+
+  
+
+
     date_criacao:() => document.getElementById('date_criacao_id'),
     date_criacaoInvalido:() => document.getElementById('date_criacaoInvalido_id'),
 
@@ -287,7 +293,8 @@ const form = {
     codigoObrigatorio:() => document.getElementById('codigo_obrigatorio_id'),
     codigoInvalido:() => document.getElementById('codigo_invalido_id'),
 
-    produto:() => document.getElementById('produto_nome_id'),
+    produto:() => document.getElementById('produto_nome_id'),    
+
     produtoObrigatorio:() => document.getElementById('produto_nome_obrigatorio_id'),
     produtoInvalido:() => document.getElementById('produto_nome_invalido_id'),
 

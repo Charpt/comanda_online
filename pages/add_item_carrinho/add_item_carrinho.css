@@ -21,3 +21,17 @@
     padding: 5px;
     
 }
+
+ul  {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pesquisa li {
+    background-color: #f8f9fa;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #218838;
+    text-align: start;
+}

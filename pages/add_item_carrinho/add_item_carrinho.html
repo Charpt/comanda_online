@@ -70,36 +70,44 @@
             <div class="error" id="codigo_invalido_id">codigo Invalido</div>
         </div>
 
-        <div id="resultado"></div>
+        <ul id="results" class="pesquisa"></ul>
+
 
         <div class="grupo_produto_selecionado">
 
             <div class="form_fild">
-                <div><label>PRODUTO SELECIONADO:</label></div>
-                <div class="item_selecionado"><label>PARMEDIANA DE CARNE (GRANDE)</label></div>
+                <div><label>CODIGO:</label></div>
+                <div  class="item_selecionado"><label id="item_codigo_id">9999</label></div>
                 
             </div>
 
+            <div class="form_fild">
+                <div><label>PRODUTO SELECIONADO:</label></div>
+                <div  class="item_selecionado"><label id="item_selecionado_id">PARMEDIANA DE CARNE (GRANDE)</label></div>
+                
+            </div>
 
             <div class="form_fild">
                 <div><label>UNIDADE DE MEDIDA:</label></div>
-            <select id="selecao_unidade_medida_id">
-                <option selected>MARMITEX</option>
-                <option>ADICIONAL</option>
-                <option>UNIDADE</option>
-            </select>
+                <div class="item_selecionado"><label id="item_unidade_medida_id">ADICIONAL</label></div>
+                
             </div>
 
             <div class="form_fild">
                 <div><label>QUANTIDADE:</label></div>
-                <input type="number" name="quantidade" id="quantidade_id" onchange="OnChangeQuantidade()" placeholder="ex: 1 MARMITEX">
+                <input type="number" step="1" min="1" name="quantidade" id="item_quantidade_id"  placeholder="ex: 1 MARMITEX">
                 <div class="error" id="quantidade_obrigatorio_id">quantidade é Obrigatorio</div>
                 <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
             </div>          
             
             <div class="form_fild">
                 <div><label>PREÇO:</label></div>
-                <div class="item_selecionado"><label>UNIDADE: 70,00 X 2 = 140,00</label></div>
+                <div class="item_selecionado"><label id="item_preco_id">70,00</label></div>
+                
+            </div>
+            <div class="form_fild">
+                <div><label>VALOR TOTAL:</label></div>
+                <div class="item_selecionado"><label id="item_valor_total_id">70,00 X 2 = 140,00</label></div>
                 
             </div>
 
@@ -107,25 +115,21 @@
 
 
 
-        <div class="form_fild">
-            <div><label>DATA:</label></div>
-            <input type="datetime-local" name="date_criacao" id="date_criacao_id" onchange="OnChangeDate_criacao()">
-            <div class="error" id="date_criacaoInvalido_id">data Invalido</div>
-        </div>
+
 
 
         
 
         <div class="form_fild">
             <div><label>OBSERVAÇÃO:</label></div>
-            <input type="text" name="observacao" id="observacao_id" placeholder="EX... POUCO FEIJAO, TIRAR CEBOLA">
+            <input type="text" name="observacao" id="item_observacao_id" placeholder="EX... POUCO FEIJAO, TIRAR CEBOLA">
         </div>
 
     </DIV>
 
         
         <div>
-            <button type="button" class="solid"  id="btnCadastrarProduto_id" disabled="true" onclick="CadastrarProduto()">ADD CARRINHO</button>
+            <button type="button" class="solid"  id="btn_add_carrinho"  onclick="inserir_item_carrinho()">ADD CARRINHO</button>
         </div>
 
         <div>
@@ -157,10 +161,10 @@
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 
-<script src="../../firebase_init.js"></script>
-<script src="../../auth_guard.js"></script>
+<script src="../../../firebase_init.js"></script>
+<script src="../../../auth_guard.js"></script>
+
 <script src="../../loading.js"></script>
 <script src="add_item_carrinho.js"></script>
-<script src="../../servicos/formatacao_data.js"></script>
 <script src="../../servicos/servicos_dados_produtos.js"></script>
 </html>

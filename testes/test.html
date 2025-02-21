@@ -1,58 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-
-    <meta charset="UFT-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INICIO</title>
-    
-
-
+    <title>Pesquisa em Tempo Real</title>
+    <link rel="stylesheet" href="test.css">
 </head>
+<body>
+    <div class="container">
+        <input type="text" id="searchInput" placeholder="Digite para pesquisar...">
+        <ul id="results"></ul>
+    </div>
 
-<body >
-
-
-<table>
-    <thead>
-        <tr>
-            <th >numero 1</th>
-            <th >numero 2</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td id="num1">5</td>
-            <td id="num2">2</td>
-        </tr>
-    </tbody>
-
-
-
-
-
-
-</table>
-
-<button id="calcular" onclick="calcular()" b> calcular</button>
-
-    <span id="resultado"></span>
-
-    
-    <div id="card_id" class="card"> </div>
-
-    <label id="horas"></label>
-    
-    
-
+    <!-- Firebase v11.2.0 compat -->
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js"></script>
+    <script src="test.js"></script>
 </body>
-
-<link rel="stylesheet" href="test.css">
-<script src="test.js"></script>
-
-
-
 </html>

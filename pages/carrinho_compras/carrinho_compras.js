@@ -31,12 +31,7 @@ function buscarDados(user)
 
 
 
-function additem(){
-    Add_Item_Carrinho_de_Compras(carrinho, "10", "2", "Peixe", "20.00")
-    //SOMA AS COLUNAS DA TABELA EXIBINDO O VALOR TOTAL
-const total_carrinho = document.getElementById('total_carrinho');
-total_carrinho.innerHTML = somar_Colunas("carrinho",4).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-}
+
 
 function Add_Item_Carrinho(){
     window.location.href ="../add_item_carrinho/add_item_carrinho.html";
@@ -56,7 +51,7 @@ Criar_Colunas_Carrinho_de_Compras(carrinho);
 
 
 dados.forEach(dados => {    
-    Add_Item_Carrinho_de_Compras(carrinho,dados.codigo,dados.quantidade,dados.item_nome,dados.unidade_preco);    
+    Add_Item_Carrinho_de_Compras(carrinho,dados.codigo,dados.quantidade,dados.item_nome,dados.unidade_preco,dados.observacao);    
 console.log(dados.date_criacao);
     
 });
@@ -100,7 +95,7 @@ function Criar_Colunas_Carrinho_de_Compras(carrinho){
 }
 
 
-function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos, th_preco){
+function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos, th_preco,th_observacao){
 
     const tbody = document.createElement('tbody');
     carrinho.appendChild(tbody);
@@ -115,11 +110,10 @@ function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos
     const td_item_1_quant = document.createElement('td');
     td_item_1_quant.innerHTML =th_quant;
     td_item_1_quant.classList.add('evidente');
-    
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
-    td_item_1_produtos.innerHTML =th_produtos;
+    td_item_1_produtos.innerHTML =th_produtos +"<br> <b class=obs> obs: "+ th_observacao;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
     tr_tbody.appendChild(td_item_1_produtos);
@@ -132,7 +126,10 @@ function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos
     td_item_1_preco.classList.add('evidente');
     td_item_1_preco.innerHTML =(th_preco * th_quant).toLocaleString('pt-br', {minimumFractionDigits: 2});
     tr_tbody.appendChild(td_item_1_preco);
- }
+ 
+    const total_carrinho = document.getElementById('total_carrinho');
+    total_carrinho.innerHTML = somar_Colunas("carrinho",4).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+}
 
 
  function somar_Colunas(tabela_id,indice_Coluna){
