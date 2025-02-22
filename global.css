@@ -1,3 +1,7 @@
+
+/*************************************/
+  /* CONFIGURACAO DA ANIMACAO DE CARREGAMENTO*/
+/*************************************/
 .loading{
   background: rgba(0,0,0,0.5);
   position: fixed;
@@ -10,14 +14,21 @@
   font-size: 32px;
 }
 
+/*************************************/
+  /* CONFIGURACAO DO CORPO DA PAGINA */
+/*************************************/
+
 body{
+
+  justify-items: center;
   background-color: #eac09a;
-  margin: 0;
   height: 100vh;
+  gap: 16px;
 }
 
-
-
+/*************************************/
+  /* CONFIGURACAO DO CABEÇARIO*/
+/*************************************/
 
 header{
   width: 100%;
@@ -78,6 +89,24 @@ header button{
   font-size: 20px;
 }
 
+/************************************************************/
+  /* CONFIGURACAO DO TITULO DAS PAGINAS QUE NAO SÃO DO INDEX*/
+/************************************************************/
+
+.titulo_da_pagina{
+  border: 1px solid black;
+    font-size: 15pt;
+    width: 100%;
+    padding: 10px;
+    background-color: #d3a67e;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 85%;
+    justify-self: center;
+    text-align: center;
+    
+}
 
 button:active{
     opacity: 0.8;
@@ -105,38 +134,31 @@ button:active{
   button.fab.direita{
     right: 34px;
   }
-  
-.centralizar_formulario{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
 
-}
 
-.titulo_da_pagina{
-  border: 1PX solid black;
-  font-size: 15pt;
-   width: 100%;
-    padding: 10px;
-    background-color: #d3a67e;
-    border-radius: 5px;
-margin-top: 5px;
-    max-width: 85%;
-    justify-self: center;
-    text-align: center;
-    
-}
 
-.FORMULARIO_ADD_ITEM{
+
+/*******************************************/
+  /* CONFIGURACAO DO FUNDO DOS FORMULARIOS*/
+/******************************************/
+
+.centralizar .formulario{
   border: 2PX solid black;
   background-color: #d3a67e;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
   text-transform: uppercase;
+  font-size: 15pt;
+  width: 440px;
   
 }
+
+.centralizar .formulario .formulario_margem_para_cada_elemento{
+  margin-bottom: 20px;
+}
+
+
 .clear{
     background-color: transparent;
     border: none;
@@ -144,7 +166,7 @@ margin-top: 5px;
   }
   
   .solid{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border: none;
     border-radius: 5px;
   }
@@ -152,7 +174,7 @@ margin-top: 5px;
     background-color: white;
     border: 1px solid white;
     border-radius: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
   }
   .danger{
     color: red;
@@ -166,9 +188,7 @@ margin-top: 5px;
     display: none;
   }
 
-  .form_fild{
-    margin-bottom: 10px;
-  }
+
 
   input,button{
     color: black;
@@ -179,11 +199,7 @@ margin-top: 5px;
   input[type="radio"]{
     width: auto;
   }
-  form{
-    width: 90%;
-    font-size: 15pt;
-    
-  }
+
 
   footer{
 

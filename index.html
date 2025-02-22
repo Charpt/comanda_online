@@ -7,16 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
-    
     <title>PDV C.A.C</title>
-    
-
 
 </head>
 
 <body>
-
+    <!-------------------------------------------------------->
+    <!---------------- CABEÇARIO -->
+    <!-------------------------------------------------------->
    <header>
      <section class="top_header">
         <div class="interface">
@@ -44,30 +42,26 @@
                 </ul>
             </nav>
         </div>
-
-
      </section>
+</header>
 
-
-
-   </header>
-
-    <div class="titulo_pagina_central">
-        
-            <div><label class="titulo_pagina">PONTO DE VENDA</label></div>
-        
-    </div>  
-
-
-    <div class="titulo_pagina_central">
-        <div><label class="sub_titulo_pagina">Seja bem vindo.</label></div>
+    <!-------------------------------------------------------->
+    <!---------------- titulo e sub titulo da pagina  -->
+    <!-------------------------------------------------------->
     
-    </div>  
+    <div class="titulo_pagina_index"><label >PONTO DE VENDA</label></div>
+    <div class="sub_titulo_pagina_index"><label>Seja bem vindo.</label></div>
+    
+     <!-------------------------------------------------------->
+    <!---------------- FORMULARIO  -->
+    <!-------------------------------------------------------->
+   
 
 <section class="centralizar">
     <section>
         <form>
-            <div class="form_fild">
+            <div class="formulario">
+            <div class="formulario_margem_para_cada_elemento">
                 
                 <div><label>Email</label></div>
                 <input type="email" name="email" id="email_id" onchange="OnchangeEmail()" placeholder="seu@email.com">
@@ -76,16 +70,17 @@
             
             </div>
     
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Senha</label></div>
                 <input type="password" name="password" id="password_id" onchange="OnchangePassword()" placeholder="Senha">
-                <div class="error" id="senha_obrigatorio_id">senha Obrigatorio</div>
+                <div class="error" id="senha_obrigatorio_id">senha Obrigatoria</div>
                 
             </div>
             
             <div>
                 <button type="button" id="recuperar_password_button_id" class="clear" disabled="true" onclick="Recuperar_Senha()">Esqueci a senha</button>
             </div>
+        </div>
     
             <div>
                 <button type="button" class="solid"  id="login_button_id" disabled="true"  onclick="Login()">Entrar</button>

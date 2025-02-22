@@ -53,22 +53,18 @@
         <label>CADASTRAR NOVO PRODUTO</label>
     </div>
     
-    <main class="centralizar_formulario">
+    <main class="centralizar">
         <form>
-            
-
-            <div class="FORMULARIO_ADD_ITEM">
-
-            
+            <div class="formulario">           
            
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>DATA:</label></div>
                 <input type="datetime-local" name="date_criacao" id="date_criacao_id" onchange="OnChangeDate_criacao()">
                 <div class="error" id="date_criacaoInvalido_id">data Invalido</div>
             </div>
 
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
             <div><label>Status:</label></div>
             
             <input type="radio"  name="type" checked id="status_ativo_id"> <label for="status_ativo_id">ativo</label>
@@ -80,14 +76,14 @@
             <input type="radio"  name="type"  id="status_pausado_id"> <label for="status_pausado_id">pausado</label>
             </div>
             
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Codigo:</label></div>
                 <input type="number" name="codigo"  id="codigo_id" onchange="OnChangeCodigo()" placeholder="ex: 123">
                 <div class="error" id="codigo_obrigatorio_id">Codigo é Obrigatorio</div>
                 <div class="error" id="codigo_invalido_id">codigo Invalido</div>
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Produto:</label></div>
                 <input type="text" name="produto_nome" id="produto_nome_id" onchange="OnChangeProduto()" placeholder="Nome do Produto">
                 <div class="error" id="produto_nome_obrigatorio_id">Nome do Produto é Obrigatorio</div>
@@ -95,7 +91,7 @@
             </div>
 
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Unidade de Medida:</label></div>
             <select id="selecao_unidade_medida_id">
                 <option selected>MARMITEX</option>
@@ -104,21 +100,21 @@
             </select>
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Quantidade:</label></div>
                 <input type="number" name="quantidade" id="quantidade_id" onchange="OnChangeQuantidade()" placeholder="ex.. 1 MARMITEX NORMAL">
                 <div class="error" id="quantidade_obrigatorio_id">quantidade é Obrigatorio</div>
                 <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
             </div>          
             
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>PREÇO:</label></div>
                 <input type="number" step="0.01" min="0.01" name="preco"  id="preco_id" onchange="OnChangePreco()" placeholder="ex: 10,99">
                 <div class="error" id="preco_obrigatorio_id">Preço  é Obrigatorio</div>
                 <div class="error" id="preco_invalido_id">Preço Invalido</div>
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>Observação:</label></div>
                 <input type="text" name="observacao" id="observacao_id" placeholder="ex.: o produto danificado mas pode ser vendido">
             </div>

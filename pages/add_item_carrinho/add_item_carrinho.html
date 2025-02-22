@@ -58,12 +58,12 @@
 
 </div> 
 
-<main class="centralizar_formulario">
-    <form id="formulario_de_pesquisa">       
+<main class="centralizar">
+    <form id="formulario_de_pesquisa" >       
         
-        <DIV class="FORMULARIO_ADD_ITEM">
+        <DIV class="formulario">
 
-        <div class="form_fild">
+        <div class="formulario_margem_para_cada_elemento">
             <div><label>PESQUISAR POR CODIGO OU NOME:</label></div>
             <input type="text" name="pesquisa"  id="pesquisa_codigo_name" placeholder="ex: 123 ex: frango grelhado">
             <div class="error" id="codigo_obrigatorio_id">Codigo é Obrigatorio</div>
@@ -73,39 +73,39 @@
         <ul id="results" class="pesquisa"></ul>
 
 
-        <div class="grupo_produto_selecionado">
+        <div class="grupo_produto_selecionado" >
 
-            <div class="form_fild">
-                <div><label>CODIGO:</label></div>
-                <div  class="item_selecionado"><label id="item_codigo_id">9999</label></div>
+            <div class="formulario_margem_para_cada_elemento">
+                <div><label>CODIGO: </label><label id="item_codigo_id">9999</label></div>
+                
                 
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>PRODUTO SELECIONADO:</label></div>
                 <div  class="item_selecionado"><label id="item_selecionado_id">PARMEDIANA DE CARNE (GRANDE)</label></div>
                 
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>UNIDADE DE MEDIDA:</label></div>
                 <div class="item_selecionado"><label id="item_unidade_medida_id">ADICIONAL</label></div>
                 
             </div>
 
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>QUANTIDADE:</label></div>
                 <input type="number" step="1" min="1" name="quantidade" id="item_quantidade_id"  placeholder="ex: 1 MARMITEX">
                 <div class="error" id="quantidade_obrigatorio_id">quantidade é Obrigatorio</div>
                 <div class="error" id="quantidade_invalida_id">quantidade é Invalido</div>
             </div>          
             
-            <div class="form_fild">
-                <div><label>PREÇO:</label></div>
-                <div class="item_selecionado"><label id="item_preco_id">70,00</label></div>
+            <div class="formulario_margem_para_cada_elemento">
+                
+                <div><label>PREÇO: </label><label id="item_preco_id">70,00</label></div>
                 
             </div>
-            <div class="form_fild">
+            <div class="formulario_margem_para_cada_elemento">
                 <div><label>VALOR TOTAL:</label></div>
                 <div class="item_selecionado"><label id="item_valor_total_id">70,00 X 2 = 140,00</label></div>
                 
@@ -120,7 +120,7 @@
 
         
 
-        <div class="form_fild">
+        <div class="formulario_margem_para_cada_elemento">
             <div><label>OBSERVAÇÃO:</label></div>
             <input type="text" name="observacao" id="item_observacao_id" placeholder="EX... POUCO FEIJAO, TIRAR CEBOLA">
         </div>

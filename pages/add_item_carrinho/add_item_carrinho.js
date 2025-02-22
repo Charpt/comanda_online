@@ -44,6 +44,7 @@ const searchFirestore = async (searchText) => {
                         li.addEventListener('click',()=> {
 
                             const item_codigo_id =document.getElementById('item_codigo_id');
+                            item_codigo_id.classList.add('item_codigo_selecionado');
                             item_codigo_id.textContent = doc.data().codigo;
 
                             const item_selecionado_id =document.getElementById('item_selecionado_id');
@@ -52,6 +53,7 @@ const searchFirestore = async (searchText) => {
                             const item_unidade_medida_id =document.getElementById('item_unidade_medida_id');
                             const item_quantidade_id =document.getElementById('item_quantidade_id');
                             const item_preco_id = document.getElementById('item_preco_id');
+                            item_preco_id.classList.add('item_codigo_selecionado');
                             const item_valor_total_id = document.getElementById('item_valor_total_id');
 
                             item_unidade_medida_id.textContent =doc.data().unidade_medida;
