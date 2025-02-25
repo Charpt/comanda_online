@@ -137,6 +137,7 @@ function criarProduto(){
 
     
     return{
+
         
         cliente: "felipe",
         desconto: 0,

@@ -10,8 +10,47 @@ firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
         buscarDados(user);
+        obter_quantidade_de_carrinhos_fechados(user);
     }
 })
+
+
+// obter quantidade de carrinhos de compras
+
+var numero;
+function obter_quantidade_de_carrinhos_fechados(user){
+    const numero_de_carrinho1 = document.getElementById('quantidade_carrinhos1')
+    const numero_de_carrinho = document.createElement('label');
+    dados_servicos.Buscar_Carrinho_de_Compras_quantidade(user)
+    .then(dados =>
+     {
+        dados.forEach(dados => {    
+            
+            numero_de_carrinho.classList.add('quantidade_carrinhos');
+            numero_de_carrinho.id ='quantidade_carrinhos2';
+
+            numero_de_carrinho.innerHTML = (dados.quantidade + 1);
+            numero = (dados.quantidade + 1);
+       
+            numero_de_carrinho1.appendChild(numero_de_carrinho);
+
+     });
+         
+     
+     
+ 
+     }).catch(error =>
+     {
+         removeLoading();
+         console.log(error);
+         alert("Erro ao recuperar dados");
+    })
+
+    return numero;
+
+}
+
+
 
 
 function buscarDados(user)
@@ -20,6 +59,7 @@ function buscarDados(user)
    .then(dados =>
     {
         Criar_Carrinho_de_Compras(dados);
+        
 
     }).catch(error =>
     {
@@ -39,7 +79,10 @@ function Add_Item_Carrinho(){
 
 
 
-function Criar_Carrinho_de_Compras(dados){
+function Criar_Carrinho_de_Compras(dados){ 
+
+
+    
     const carrinho = document.getElementById('carrinho');
 
     const caption = document.createElement('caption');
@@ -51,7 +94,7 @@ Criar_Colunas_Carrinho_de_Compras(carrinho);
 
 
 dados.forEach(dados => {    
-    Add_Item_Carrinho_de_Compras(carrinho,dados.codigo,dados.quantidade,dados.item_nome,dados.unidade_preco,dados.observacao);    
+    Add_Item_Carrinho_de_Compras(carrinho,dados);    
 console.log(dados.date_criacao);
     
 });
@@ -95,42 +138,52 @@ function Criar_Colunas_Carrinho_de_Compras(carrinho){
 }
 
 
-function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos, th_preco,th_observacao){
+function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
     const tbody = document.createElement('tbody');
     carrinho.appendChild(tbody);
+    tbody.id = dados.uid;
+    tbody.addEventListener('click',Event => {
+        Event.stopPropagation();
+        Deseja_Deletar_Produto_carrinho_de_compras(dados);
+    });
 
     const tr_tbody = document.createElement('tr');
     tbody.appendChild(tr_tbody);
 
     const td_item_1_cod = document.createElement('td');
-    td_item_1_cod.innerHTML =th_codigo;
+    td_item_1_cod.innerHTML =dados.codigo;
     tr_tbody.appendChild(td_item_1_cod);
 
     const td_item_1_quant = document.createElement('td');
-    td_item_1_quant.innerHTML =th_quant;
+    td_item_1_quant.innerHTML =dados.quantidade;
     td_item_1_quant.classList.add('evidente');
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
-    td_item_1_produtos.innerHTML =th_produtos +"<br> <b class=obs> obs: "+ th_observacao;
+    td_item_1_produtos.innerHTML =dados.item_nome +"<br> <b class=obs> obs: "+ dados.observacao;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
     tr_tbody.appendChild(td_item_1_produtos);
 
     const td_item_1_uni_preco = document.createElement('td');
-    td_item_1_uni_preco.innerHTML =(th_preco).toLocaleString('pt-br', {minimumFractionDigits: 2});
+    td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('pt-br', {minimumFractionDigits: 2});
     tr_tbody.appendChild(td_item_1_uni_preco);
 
     const td_item_1_preco = document.createElement('td');
     td_item_1_preco.classList.add('evidente');
-    td_item_1_preco.innerHTML =(th_preco * th_quant).toLocaleString('pt-br', {minimumFractionDigits: 2});
+    td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('pt-br', {minimumFractionDigits: 2});
     tr_tbody.appendChild(td_item_1_preco);
  
     const total_carrinho = document.getElementById('total_carrinho');
     total_carrinho.innerHTML = somar_Colunas("carrinho",4).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }
 
+
+
+
+
+// funcao pra somar as colunas 
 
  function somar_Colunas(tabela_id,indice_Coluna){
 
@@ -151,5 +204,71 @@ function Add_Item_Carrinho_de_Compras(carrinho, th_codigo, th_quant, th_produtos
 
 
 
+// deletar produtotos do carrinho
+
+
+
+ function Deseja_Deletar_Produto_carrinho_de_compras(dados)
+{
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    if(desejaDeletarProduto == true){
+        Deletar_Produto_carrinho_de_compras(dados);
+    }
+
+}
+
+function Deletar_Produto_carrinho_de_compras(dados){
+    ShowLoading();
+
+    dados_servicos.Delete_dados_carrinho_de_compras(dados)
+   .then(snapshot =>{
+    removeLoading();
+
+    document.getElementById(dados.uid).remove();
+
+   }).catch(error =>{
+    removeLoading();
+    console.log(error);
+    alert("Erro ao deletar dados");
+   })
+}
+
+// INSERINDO A QUANTIDADE NO CARRINHO 
+function AtualizarDadosDoProduto(){
+    const dados = criarProduto();
+
+    ShowLoading();
+    dados_servicos.Add_quantidade_carrinho_finalizado(dados)
+     .then(()=>{
+        
+        
+
+     }).catch(()=>{
+        removeLoading();
+        alert("Erro ao salvar Produto");
+     })
+
+}
+
+
+
+
+
+
+function criarProduto(){
+
+
+
+    
+    return{
+        
+        
+        quantidade:  numero,
+        user:{
+            uid: firebase.auth().currentUser.uid
+
+        }
+    }
+}
 
 

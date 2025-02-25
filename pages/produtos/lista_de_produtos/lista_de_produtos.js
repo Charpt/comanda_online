@@ -61,7 +61,7 @@ dados.forEach(dados => {
     orderList.appendChild(li);
     
     
-console.log(dados.date_criacao);
+console.log(dados);
     
 });
 
@@ -95,14 +95,7 @@ function CriarBotaoDelete(dados){
 }
 
 
-function DesejaDeletarProduto(dados)
-{
-    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
-    if(desejaDeletarProduto == true){
-        DeletarProduto(dados);
-    }
 
-}
 
 function Criar_Paragrafos(value){
     const elemento = document.createElement('p');
@@ -115,6 +108,15 @@ function CriarImagemDosDados(){
     img.src =  "produto_teste.jpg";
     img.alt = "carne de panela com batata";
     return img;
+}
+
+function DesejaDeletarProduto(dados)
+{
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    if(desejaDeletarProduto == true){
+        DeletarProduto(dados);
+    }
+
 }
 
 function DeletarProduto(dados){
