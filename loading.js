@@ -1,4 +1,5 @@
 function ShowLoading(){
+    
     const div = document.createElement('div');
     div.classList.add("loading","centralizar");
     document.body.appendChild(div);

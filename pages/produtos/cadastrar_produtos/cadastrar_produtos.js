@@ -1,3 +1,17 @@
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA ENVIAR USUARIOS NAO AUTENTICADOS PARA A PAGINA INICIAL DE LOGIN */
+/*******************************************************************************************/
+
+firebase.auth().onAuthStateChanged(user =>{
+    if(!user){
+        window.location.href="../../../index.html";
+    }
+})
+
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA DESLOGAR O USUARIO *****************************************/
+/*******************************************************************************************/
+
 function deslogar(){
     firebase.auth().signOut().then(() =>{
         window.location.href ="../../../index.html";
@@ -6,6 +20,14 @@ function deslogar(){
     })
 }
 
+/******************************************************************************************
+*FUNÇÃO PARA VERIFICAR COMO CHEGAMOS A PAGINA DE CADASTRAR NOVO ITEM
+* SE CASO CHEGAMOS AQUI ATRAVEZ DE TER CLICADO EM UM PRODUTO, ISSO SIGNIFICA QUE IREMOS ATUALIZAR OS DADOS DO ITEM
+ SE NAO IREMOS INICIAR UM NOVO CADASRTO
+
+ ESSA INFORMAÇÃO FOI ENVIADA ATRAVES DA URLSearchParams ENVIANDO O UID DO ITEM CLICADO
+/*******************************************************************************************/
+// se NovoProdutoOuAtualizacao retornar verdadadeiro
 if(!NovoProdutoOuAtualizacao()){
 
     
@@ -15,8 +37,21 @@ if(!NovoProdutoOuAtualizacao()){
     
 }
 
+function GetDadosProdutos(){
+    const urlParametros = new URLSearchParams(window.location.search);
+    //retorna o parametro da url que seja = uid  ex... pagina.html  ? uid = MvPYiwBPTfT1jwPnLjnw
+    return urlParametros.get('uid');
+}
+
+function NovoProdutoOuAtualizacao(){
+    return GetDadosProdutos() ? false : true;
+}
+
+
+
+
 function BuscarUidDoProduto(uid){
-   
+   ShowLoading();
     firebase.firestore()
         .collection('produtos')
         .doc(uid)
@@ -42,20 +77,9 @@ function BuscarUidDoProduto(uid){
 
 
 
-
-
- 
-function GetDadosProdutos(){
-    const urlParametros = new URLSearchParams(window.location.search);
-    return urlParametros.get('uid');
-}
-
-function NovoProdutoOuAtualizacao(){
-    return GetDadosProdutos() ? false : true;
-}
-
-
-
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA CADASTRAR NOVO ITEM *****************************************/
+/*******************************************************************************************/
 
 
 function CadastrarProduto(){

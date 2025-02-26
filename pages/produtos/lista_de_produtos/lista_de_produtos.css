@@ -18,7 +18,7 @@
     border-radius: 10px;
     box-shadow: 4px 4px 12px;
     text-transform:uppercase; 
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 
@@ -67,7 +67,7 @@
  
 
  .ativo {
-    background-color: #197e32;
+    background-color: #ca885b;
 
  }
  .desativado {

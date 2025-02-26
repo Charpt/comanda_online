@@ -5,7 +5,7 @@
     <meta charset="UFT-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CADASTRAR NOVO PRODUTO</title>
+    <title>CADASTRAR NOVO ITEM</title>
 </head>
 
 <body >
@@ -35,7 +35,7 @@
                     <li><a href="../../home/home.html">INICIO</a></li>
                     <li><a href="../lista_de_produtos/lista_de_produtos.html">PRODUTOS</a></li>
                     <li><a href="../../carrinho_compras/carrinho_compras.html">NOVA VENDA</a></li>
-                    <li><button id="btn_sair" onclick="deslogar()">Sair</button></li>
+                    <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
                        
                    </ul>
                </nav>
@@ -144,17 +144,17 @@
 
 
 
+<!-- os script tem ordem correta para serem chamados fique atento-->
+<script src="../../../loading.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 
 <script src="../../../firebase_init.js"></script>
-<script src="../../../auth_guard.js"></script>
+<script src="../../../validacao.js"></script>
 <script src="cadastrar_produtos.js"></script>
 
-<script src="../../../validacao.js"></script>
-<script src="../../../loading.js"></script>
 <script src="../../../servicos/servicos_dados_produtos.js"></script>
 <script src="../../../servicos/formatacao_data.js"></script>
 

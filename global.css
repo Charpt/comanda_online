@@ -50,6 +50,14 @@ header button{
   
 }
 
+#btn_sair{
+background-color: transparent;
+border: none;
+}
+
+#btn_sair{
+  cursor: pointer;
+}
 
 .interface{
   max-width: 1280px;
@@ -82,10 +90,12 @@ header button{
 
 }
 
-.bottom_header nav ul li a{
-  color: white;
+.bottom_header nav ul li a, #btn_sair{
+  color: rgb(255, 255, 255);
   padding: 5px 10px;
   text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  
   font-size: 20px;
 }
 

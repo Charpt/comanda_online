@@ -1,12 +1,24 @@
-function imprimirCupom() {
-    // Atualiza a data e hora
-    const dataElement = document.getElementById('data');
-    const horaElement = document.getElementById('hora');
-    const agora = new Date();
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA ENVIAR USUARIOS NAO AUTENTICADOS PARA A PAGINA INICIAL DE LOGIN */
+/*******************************************************************************************/
 
-    dataElement.textContent = agora.toLocaleDateString();
-    horaElement.textContent = agora.toLocaleTimeString();
+firebase.auth().onAuthStateChanged(user =>{
+    if(!user){
+        window.location.href="../../../index.html";
+    }
+})
 
-    // Aciona a impressão
-    window.print();
+
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA DESLOGAR O USUARIO *****************************************/
+/*******************************************************************************************/
+
+function deslogar(){
+    firebase.auth().signOut().then(() =>{
+        window.location.href ="../../../index.html";
+    }).catch(() =>{
+        alert("Erro ao deslogar");
+    })
 }
+
+
