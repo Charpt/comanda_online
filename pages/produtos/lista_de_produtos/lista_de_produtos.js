@@ -23,10 +23,20 @@ function deslogar(){
 }
 
 
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA ABRIR A PAGINA DE CADASTRO DOS ITENS *****************************************/
+/*******************************************************************************************/
+function CadastrarProdutoPage(){
+    window.location.href ="../cadastrar_produtos/cadastrar_produtos.html";
+}
 
+
+
+/******************************************************************************************
+O METODO onAuthStateChanged VERIFICA SE TEVE ALGUMA ALTERAÇÃO NO STATUS DO USUARIO LOGADO
+SE O USUSARIO ESTIVER LOGADO ELE EXECULTA O BUSCAR DADOS
 /*******************************************************************************************/
-/******************O METODO onAuthStateChanged*************************************************************************/
-/*******************************************************************************************/
+
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
@@ -34,10 +44,11 @@ firebase.auth().onAuthStateChanged(user =>{
     }
 })
 
-function CadastrarProdutoPage(){
-    window.location.href ="../cadastrar_produtos/cadastrar_produtos.html";
-}
 
+
+/*******************************************************************************************/
+/** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS OS DADOS DOS ITENS CADASTRADOS 
+/*******************************************************************************************/
 
 function buscarDados(user)
 {

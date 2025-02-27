@@ -37,6 +37,40 @@
         <label>PEDIDOS</label>
 
     </div> 
+
+    <!--- LISTA QUE -->
+    <div><ol id="lista_dos_itens_pedidos" class="itens-colunas">
+
+        <li class="ativo card" >
+            
+            <p class="tempo_preparo">tempo de preparo <br> 01:40:00</p>
+            <br>
+            <p class="titulo_card"> b 16 ap 303</p>
+            <br>
+            <p class="text_info_card"><b class="info_item">1- parmediana de carne (grande)</b><br>
+                sem batata frita<br> sem salada<br> pouco feijão<br> mais arroz
+            </p>
+            <br>
+            <p class="text_info_card"><b class="info_item">3- bife acebolado</b><br>
+                sem batata frita
+            </p>
+            <br>
+            <p class="text_info_card"><b class="info_item">1- parmediana de carne (grande)</b><br>
+                sem batata frita<br> sem salada<br> pouco feijão<br> mais arroz
+            </p>
+            <br>
+            <p class="text_info_card"><b class="info_item">1- coca-cola 2.5 LT</b><br>
+            </p>
+            <BR>
+
+            <button>FINALIZAR PEDIDO</button>
+
+            
+        
+        </li>
+
+
+    </ol></div>
     
     <!--- FOOTER É A AREA RESERVADA PARA O RODAPÉ DA PAGINA ELE SEMRPE FICA AO FIM DE TODO O CONTEUDO DA PAGINA -->
     <footer>
@@ -45,18 +79,21 @@
 
 </body>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="../../global.css">
-<link rel="stylesheet" href="tela_pedidos.css">
-
-
+<!-- os script tem ordem correta para serem chamados fique atento-->
+<script src="../../loading.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 
 <script src="../../firebase_init.js"></script>
-<script src="../../auth_guard.js"></script>
-<script src="../../loading.js"></script>
+
+<script src="../../servicos/servicos_dados_produtos.js"></script>
 <script src="tela_pedidos.js"></script>
+
+
+<link rel="stylesheet" href="../../global.css">
+<link rel="stylesheet" href="tela_pedidos.css">
+</html>
+
 </html>

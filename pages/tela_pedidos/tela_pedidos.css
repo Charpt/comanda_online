@@ -3,3 +3,100 @@
     padding: 0;
 }
 
+
+
+.cores{
+    color: #6d1717;
+}
+
+
+
+.card{
+
+    list-style-type: none;
+    padding: 10px;
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 4px 4px 12px;
+    text-transform:uppercase; 
+    margin: 20px;
+}
+
+
+ .card .titulo_card{
+    font-family: "arial";
+    color: #ffffff;
+    font-weight:bold;
+    background-color: #6d1717;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+ }
+
+ .card .texto_indicador_info{
+    font-family: "georgia";
+    color: #ffffff;
+    font: weight 0;;
+    
+    
+    
+ }
+
+ .card .info_item{
+    font-family: "arial";
+    color: #050303;
+    font: weight 0;;
+    
+    
+ }
+
+ .card p{
+    margin-top: 5px;
+    
+ }
+ 
+
+ .ativo {
+    background-color: #60a14d;
+
+ }
+ .desativado {
+    background-color: #635656;
+
+ }
+
+ .falta {
+    background-color: #1e4785;
+
+ }
+
+ .pausado {
+    background-color: #b8ae28;
+
+ }
+
+
+ .card:hover{
+    opacity: 0.9;
+    
+}
+.card:hover button.danger{
+    
+    display: block;
+}
+
+ .tempo_preparo{
+    background-color: #b8ae28;
+    padding: 5px;
+    font-size: 18pt;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    
+  
+
+}
+
+
