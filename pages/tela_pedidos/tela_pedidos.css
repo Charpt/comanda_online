@@ -4,6 +4,13 @@
 }
 
 
+ol{
+
+   display: flex ;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   align-items: center;
+}
 
 .cores{
     color: #6d1717;
@@ -12,7 +19,6 @@
 
 
 .card{
-
     list-style-type: none;
     padding: 10px;
     width: 350px;
@@ -20,7 +26,7 @@
     border-radius: 10px;
     box-shadow: 4px 4px 12px;
     text-transform:uppercase; 
-    margin: 20px;
+    margin: 5px;
 }
 
 
@@ -82,10 +88,7 @@
     opacity: 0.9;
     
 }
-.card:hover button.danger{
-    
-    display: block;
-}
+
 
  .tempo_preparo{
     background-color: #b8ae28;
@@ -96,6 +99,16 @@
     border-radius: 5px;
     
   
+
+}
+
+.retirada{
+
+   color: blue;
+   text-align: center;
+   background-color: #ffffff;
+   border: 1px solid black;
+   border-radius: 5px;
 
 }
 

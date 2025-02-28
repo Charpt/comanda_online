@@ -117,6 +117,30 @@ const dados_servicos ={
         .doc('2DSs00ACRiil1spiwPM4')
         .update(quantidade_para_atualizar);
     },
+
+    // busca de itens para os pedidos ativos
+
+    buscar_itens_bd_pedidos_ativos: user  =>{
+        
+        return firebase.firestore()
+         .collection('pedidos_ativos').doc('pMNkSp0pCcrR9ItIRBJk').collection('pedido_n1')
+         .where('user.uid','==', user.uid)
+         .get()
+         .then(snapshot =>
+         {
+             return snapshot.docs.map(doc => (
+                 {
+                     ...doc.data(),
+                     uid: doc.id
+                 }));
+ 
+             
+         })
+ 
+         
+     },
+
+
     
     
 }

@@ -70,7 +70,10 @@ function buscarDados(user)
    })
 }
 
-
+/*******************************************************************************************/
+/** FUNÇÃO PARA ADICIONAR OS ITENS DO BANCO DE DADOS EM UM LISTA ORDENADA ASSIM ADICIONAMOS
+ * OS DADOS DOS ITENS NO LI
+/*******************************************************************************************/
 
 function AddDados(dados){
 
@@ -99,6 +102,11 @@ console.log(dados);
 
 }
 
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (LI) QUE REPRESENTA UM ITEM DO BANCO DE DADOS 
+/*******************************************************************************************/
+
+
 function Criar_lista_dos_dados(dados){
     
     const li = document.createElement('li');
@@ -111,6 +119,10 @@ function Criar_lista_dos_dados(dados){
     })
     return li;
 }
+
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (BUTTON) QUE TEM O EVENTO DE CLIQUE PARA ACIOANR UM EVENTO 
+/*******************************************************************************************/
 
 function CriarBotaoDelete(dados){
     const botaoDeletar = document.createElement('button');
@@ -128,7 +140,9 @@ function CriarBotaoDelete(dados){
 
 
 
-
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) QUE REPRESENTA UM PARAGRAFO DAS INFORMAÇÕES DOS ITENS  
+/*******************************************************************************************/
 function Criar_Paragrafos(value){
     const elemento = document.createElement('p');
     elemento.innerHTML =  value;

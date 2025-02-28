@@ -33,6 +33,9 @@ body{
 header{
   width: 100%;
   background-color: #faa854;
+  display: flex;
+  flex-wrap: wrap;
+
 }
 
 header button{
@@ -40,6 +43,7 @@ header button{
 }
 
 .top_header{
+  width: 100%;
   background-color: #bb8e61;
 }
 
