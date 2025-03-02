@@ -29,8 +29,8 @@ SE O USUSARIO ESTIVER LOGADO ELE EXECULTA O BUSCAR DADOS
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
-        buscar_info_identificacao_pedidos_ativos();
-        buscar_itens_pedidos_ativos(user);
+        //buscar_info_identificacao_pedidos_ativos("add_dados_itens_pedidos_ativos_na_comanda");
+       // buscar_itens_pedidos_ativos(user);
         
     }
 })
@@ -39,6 +39,7 @@ firebase.auth().onAuthStateChanged(user =>{
 /** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS O DOCUMENTO EXPECIFICO COM AS INFORMAÇÕES DO CLIENTE QUE O PEDIU 
 /*******************************************************************************************/
 
+/*
 function buscar_info_identificacao_pedidos_ativos()
 {
 
@@ -50,11 +51,9 @@ function buscar_info_identificacao_pedidos_ativos()
          .then((doc) => {
         if (doc.exists) {
           //console.log("Dados do documento:", doc.data());
-          
-          add_dados_itens_pedidos_ativos_na_comanda("vazio",doc.data());
-        
-
+           add_dados_itens_pedidos_ativos_na_comanda(doc.data());
           removeLoading();
+          
         } else {
           console.log("Documento não encontrado!");
           removeLoading();
@@ -67,10 +66,13 @@ function buscar_info_identificacao_pedidos_ativos()
    })
 }
 
+
+
 /*******************************************************************************************/
 /** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS OS DADOS DOS ITENS CADASTRADOS 
 /*******************************************************************************************/
 
+/*
 function buscar_itens_pedidos_ativos(user)
 {
 
@@ -81,7 +83,7 @@ function buscar_itens_pedidos_ativos(user)
     {
         removeLoading();
 
-        add_dados_itens_pedidos_ativos_na_comanda(dados,"vazio","identificacao_pedidon1");
+        inserir_dados_pedidos_ativos(dados);
 
     }).catch(error =>
     {
@@ -96,60 +98,32 @@ function buscar_itens_pedidos_ativos(user)
  * OS DADOS DOS ITENS NO LI
 /*******************************************************************************************/
 
-function add_dados_itens_pedidos_ativos_na_comanda(dados,doc_identificacao){
-
-const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
-
-if(doc_identificacao != "vazio"){
-    const li = criar_elemento_li_com_os_dados(doc_identificacao)    
-        li.appendChild(criar_elemento_p_com_o_valor("<i class=tempo_preparo>tempo de preparo "+doc_identificacao.tempo_preparo+"</i>"));
-        li.appendChild(criar_elemento_p_com_o_valor("<i class=retirada>"+doc_identificacao.meio_de_envio+"</i>"));
-        li.appendChild(criar_elemento_p_com_o_valor("<i class=cliente>"+doc_identificacao.cliente+"</i>"));      
-        li.appendChild(criar_elemento_p_com_o_valor("<i class=titulo_card>"+doc_identificacao.endereco+"</i>")); 
-    
-    orderList.appendChild(li);
-    
-}else{
-
-    if(dados != "vazio"){
-
-
-       
-        inserir_dados_pedidos_ativos(dados,"identificacao_pedidon1");
-    }
-
-}
-
-}
-
-
-function deteck(){
- 
-}
-
-
-
-
-function inserir_dados_pedidos_ativos(dados,uid){
-
-    console.log(uid);
+/*
+function add_dados_itens_pedidos_ativos_na_comanda(dados){
     const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
-    const li = document.getElementById(uid);   
-        
-    dados.forEach(dados => {
-        
-        if(dados.uid != uid){
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=text_info_card > <b class=info_item>"+dados.quantidade+"- "+dados.item_pedido+"</i>"));  
-        li.appendChild(criar_elemento_p_com_o_valor("<i class=observacao>"+dados.observacao+"</i>"));
-        }
-           
-    console.log(dados.uid);   
-    });
+    if(!dados.empty){
+        const li = criar_elemento_li_com_os_dados(dados)    
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=tempo_preparo>tempo de preparo "+dados.tempo_preparo+"</i>"));
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=retirada>"+dados.meio_de_envio+"</i>"));
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=cliente>"+dados.cliente+"</i>"));      
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=titulo_card>"+dados.endereco+"</i>")); 
+        orderList.appendChild(li);
+    }
+}
 
-    li.appendChild(criar_elemento_button_com_evento(dados));
-    orderList.appendChild(li);
-    
-    console.log('inserindo dados de identificacao');
+
+function inserir_dados_pedidos_ativos(dados){
+    const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
+     dados.forEach(dados => {
+        console.log(dados.ident.uid);
+        const li = document.getElementById(dados.ident.uid);   
+        if(dados.ident.uid != ""){
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=text_info_card > <b class=info_item>"+dados.quantidade+"- "+dados.item_pedido+"</i>"));  
+            li.appendChild(criar_elemento_p_com_o_valor("<i class=observacao>"+dados.observacao+"</i>"));
+            orderList.appendChild(li);
+        }  
+    });
+     console.log('inserindo dados de identificacao');
 }
 
 

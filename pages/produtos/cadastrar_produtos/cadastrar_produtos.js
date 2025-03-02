@@ -27,30 +27,32 @@ function deslogar(){
 
  ESSA INFORMAÇÃO FOI ENVIADA ATRAVES DA URLSearchParams ENVIANDO O UID DO ITEM CLICADO
 /*******************************************************************************************/
-// se NovoProdutoOuAtualizacao retornar verdadadeiro
-if(!NovoProdutoOuAtualizacao()){
+// se NovoProdutoOuAtualizacao retornar verdadadeiro ele pega a informaçaõ da funcao Obter_informacao_url_uid e coloca na variavel uid e faz a busca no bancod e dados pela uid
+if(!Item_novo_ou_atualizacao()){
 
     
-    const uid = GetDadosProdutos();
-    BuscarUidDoProduto(uid);
+    const uid = Obter_informacao_url_uid();
+    Buscar_uid_item(uid);
     
     
 }
 
-function GetDadosProdutos(){
+function Obter_informacao_url_uid(){
     const urlParametros = new URLSearchParams(window.location.search);
     //retorna o parametro da url que seja = uid  ex... pagina.html  ? uid = MvPYiwBPTfT1jwPnLjnw
     return urlParametros.get('uid');
 }
 
-function NovoProdutoOuAtualizacao(){
-    return GetDadosProdutos() ? false : true;
+// verifica se retornou alguma informcação da funcao Obter_informacao_url_uid se sim (true) se nao (false)
+function Item_novo_ou_atualizacao(){
+    return Obter_informacao_url_uid() ? false : true;
 }
 
+/**************************************************
+ * BUSCA UM DOCUMENTO QUE TENHA A UID DE PROCURA 
+ ****************************************************/
 
-
-
-function BuscarUidDoProduto(uid){
+function Buscar_uid_item(uid){
    ShowLoading();
     firebase.firestore()
         .collection('produtos')
@@ -60,7 +62,7 @@ function BuscarUidDoProduto(uid){
         
         if(doc.exists){
             removeLoading();
-            MostrarDadosParaAtualizar(doc.data());
+            Inserir_dados_no_formulario_para_Atualizar(doc.data());
             ToggleCadastrarProdutoButton();
 
         }else{
@@ -91,19 +93,22 @@ ShowLoading();
     const dados = criarProduto();
     
 
-    if(!GetDadosProdutos()){
+    if(!Obter_informacao_url_uid()){
+        
         CadastrarNovoProduto(dados);
 
     }else{
 
-        AtualizarDadosDoProduto(dados);
+        Atualizar_dados_do_item(dados);
     }
 
 
     
 }
-
-function AtualizarDadosDoProduto(dados){
+/******************************************************
+ * ATUALIZA OS DADOS DOS ITENS
+ *********************************************/
+function Atualizar_dados_do_item(dados){
 
     ShowLoading();
     dados_servicos.Atualizar_dados(dados)
@@ -118,12 +123,15 @@ function AtualizarDadosDoProduto(dados){
 
 }
 
-function CadastrarNovoProduto(dados){
-    
 
+/******************************************************
+ * CADASTRA NOVOS ITENS
+ *********************************************/
+function CadastrarNovoProduto(dados){
      dados_servicos.Cadastrar_novo_dado(dados)
      .then(()=>{
         
+
         window.location.href = "../lista_de_produtos/lista_de_produtos.html";
 
      }).catch(()=>{
@@ -132,7 +140,7 @@ function CadastrarNovoProduto(dados){
      })
 }
 
-function MostrarDadosParaAtualizar(dados_produtos){
+function Inserir_dados_no_formulario_para_Atualizar(dados_produtos){
 
     if(dados_produtos.status == "status_ativo"){
         form.status_ativo().checked = true;

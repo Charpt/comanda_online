@@ -62,31 +62,102 @@
 
     <label id="quantidade_carrinhos1">CARRINHO DE COMPRAS  Nº </label>
     
+    
 
-</div> 
-
-<table id="carrinho"></table>
+</div>
 
 
-<table>
-    <caption>TOTAL E FORMAS DE PAGAMENTO</caption>
-    <thead>
-        <tr>
-            <th>DESCONTO</th>
-            <th>TOTAL</th>
-        </tr>
-    </thead>
-    <tbody>
+<main >
+
+    <table id="carrinho"></table>
+
+
+    <table>
+        <caption>TOTAL E FORMAS DE PAGAMENTO</caption>
+        <thead>
+            <tr>
+                <th>DESCONTO</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td class="evidente_destaque">0%</td>
+                <td id="total_carrinho" class="evidente_destaque">400,00</td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+    <form >
+        <div class="formulario">  
+
+            <div class="formulario_margem_para_cada_elemento">
+                                
+                <input type="radio"  name="type" checked id="entrega_id"> <label for="status_ativo_id">entrega</label>
+    
+                <input type="radio"  name="type"  id="retirada_id"> <label for="status_desativado_id">retirada</label>
+    
+                </div>
+
+            <div class="formulario_margem_para_cada_elemento">
+                <label>Endereco:</label>
+                <select id="selecao_endereco_id">
+                    <option selected>Condominio</option>
+                    <option>Loja</option>
+                    <option>Casa</option>
+                    <option>Empresa</option>
+                </select>
+                </div>    
+                
+                <div class="formulario_margem_para_cada_elemento">
+                    <select id="selecao_condominio_id">
+                        <option selected>SANTA LUCIA</option>
+                        <option>vila Alegre</option>
+                        <option>Monica</option>
+                        <option>Bolevard</option>
+                    </select>
+                
+                    </div>
+                
+                    <div>
+                        <label >BLoco: </label>
+                        <input type="text" id="bloco_id" placeholder="EX... 16">
+                    </div>
+                   
+                    
+                    <div>
+                        <label >AP: </label>
+                        <input type="text" id="apartamento_id" placeholder="EX... 303">
+                    </div>
+
+        </div>
         
-        <tr>
-            <td class="evidente_destaque">0%</td>
-            <td id="total_carrinho" class="evidente_destaque">400,00</td>
-        </tr>
-    </tbody>
-</table>
+       
+    
+    </form>
 
-<button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR COMPRA </button>
-<button class="button_1" >CANCELAR CARRINHO </button>
+    <form>
+        <div class="formulario"> 
+            <div class="formulario_margem_para_cada_elemento">
+                <div><label>FORMA DE PAGAMENTO:</label></div>
+                <select id="selecao_endereco_id">
+                    <option selected>PIX</option>
+                    <option>DEBITO</option>
+                    <option>CREDITO</option>
+                    <option>DINHEIRO</option>
+                    <option>VOUCHER</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR COMPRA </button>
+    <button class="button_1" >CANCELAR CARRINHO </button>
+
+</main>
+
 
 
 <button class="fab fixo baixo direita" onclick="Add_Item_Carrinho()">+</button>

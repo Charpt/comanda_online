@@ -44,3 +44,7 @@ ul  {
     background-color: #218838;
     text-align: start;
 }
+
+#item_uid_principal_id{
+    text-transform: none;
+}

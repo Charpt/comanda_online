@@ -1,6 +1,11 @@
 
 const dados_servicos ={ 
 
+/*************************************************************
+ * CADASTRAR PRODUTOS
+ **************************************************************/
+
+//BUSCA OS PRODUTOS JA CADASTRADOS
     BuscarPorUsuario: user  =>{
         
        return firebase.firestore()
@@ -15,18 +20,10 @@ const dados_servicos ={
                     ...doc.data(),
                     uid: doc.id
                 }));
-
-            
-        })
-
-        
+        }) 
     },
-    
 
-
-
-
-
+// DELETA OS ITEM CADASTRADOS
     DeleteDados: dados_produtos =>{
         return firebase.firestore()
         .collection('produtos')
@@ -34,20 +31,30 @@ const dados_servicos ={
         .delete();
     },
 
+//CADASTRA NOVOS ITENS
     Cadastrar_novo_dado: dados_produtos => {
         return firebase.firestore()
         .collection('produtos')
         .add(dados_produtos);
     },
 
+// ATUALIZA OS ITEN JA CADASTRADOS
     Atualizar_dados: dados_produtos =>{
         return firebase.firestore()
         .collection('produtos')
-        .doc(GetDadosProdutos())
+        .doc(Obter_informacao_url_uid())
         .update(dados_produtos);
     },
 
-    // carrinho de compras
+
+    
+/*************************************************************
+ * CARRINHO DE COMPRAS
+ **************************************************************/
+
+    // BUSCA NO BANCO DE DADOS OS ITENS QUE JA ESTAO NO CARRINHO
+    // DE COMPRA ATUAL, QUE FORAM ADICIONADOS PELO USUARIO QUE ESTA LOGADO
+    // E MOSTRA NA ORDEM DOS CODIGOS DO MENOS PARA O MAIOR (ORDER BY ASC)
     BuscarPorUsuario_Carrinho_de_Compras: user  =>{
         
         return firebase.firestore()
@@ -65,21 +72,18 @@ const dados_servicos ={
  
              
          })
- 
-         
+
      },
 
      
-    
-
-      
-
+    // ADICIONA OS DADOS DO ITEM 
     Add_item_carrinho: dados_item_carrinho => {
         return firebase.firestore()
         .collection('carrinhos_de_compras')
         .add(dados_item_carrinho);
     },
 
+    // DELETA UM ITEM ESPECIFICO DO CARRINHO DE COMPRAS
     Delete_dados_carrinho_de_compras: dados_produtos =>{
         return firebase.firestore()
         .collection('carrinhos_de_compras')
@@ -95,7 +99,6 @@ const dados_servicos ={
         return firebase.firestore()
          .collection('quant_carrinhos_compra')
          .where('user.uid','==', user.uid)
-
          .get()
          .then(snapshot =>
          {
@@ -118,9 +121,15 @@ const dados_servicos ={
         .update(quantidade_para_atualizar);
     },
 
-    // busca de itens para os pedidos ativos
 
-    buscar_itens_bd_pedidos_ativos: user  =>{
+
+
+/*************************************************************
+ * PEDIDOS
+ **************************************************************/
+
+
+  /*  buscar_itens_bd_pedidos_ativos: user  =>{
         
         return firebase.firestore()
          .collection('pedidos_ativos').doc('pMNkSp0pCcrR9ItIRBJk').collection('pedido_n1')
@@ -138,7 +147,7 @@ const dados_servicos ={
          })
  
          
-     },
+     },*/
 
 
     

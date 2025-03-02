@@ -5,6 +5,8 @@
 firebase.auth().onAuthStateChanged(user =>{
     if(!user){
         window.location.href="../../index.html";
+
+        
     }
 })
 
@@ -44,7 +46,7 @@ const searchFirestore = async (searchText) => {
             .where('produto', '<=', searchText +'\uf8ff')
             .get()
             .then((querySnapshot) => {
-                
+                                
                     if(querySnapshot.empty){
                         console.log("Item nao existe");
                         const li = document.createElement('li');                                          
@@ -54,13 +56,20 @@ const searchFirestore = async (searchText) => {
                     }else{
                     
                         querySnapshot.forEach((doc) => {
+                            
                         // Exibe os resultados
                         const li = document.createElement('li');
                         li.addEventListener('click',()=> {
 
+                            console.log(doc.id);
+
                             const item_codigo_id =document.getElementById('item_codigo_id');
                             
                             item_codigo_id.textContent = doc.data().codigo;
+
+                            const item_uid_principal_id =document.getElementById('item_uid_principal_id');
+                            
+                            item_uid_principal_id.textContent = doc.id;                            
 
                             const item_selecionado_id =document.getElementById('item_selecionado_id');
                             item_selecionado_id.textContent = doc.data().produto;
@@ -77,7 +86,7 @@ const searchFirestore = async (searchText) => {
                             item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (doc.data().preco * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
 
                             item_quantidade_id.addEventListener('input',()=>{
-                                item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (doc.data().preco * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
+                            item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (doc.data().preco * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
                                 
                             })
 
@@ -162,12 +171,16 @@ function criarProduto(){
         quantidade: parseInt(document.getElementById('item_quantidade_id').value),
         unidade_preco: parseFloat(document.getElementById('item_preco_id').textContent),
         observacao: document.getElementById('item_observacao_id').value,
+        uid_principal: document.getElementById('item_uid_principal_id').textContent,
         user:{
             uid: firebase.auth().currentUser.uid
 
         }
     }
 }
+
+
+
 
 
   

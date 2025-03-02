@@ -75,6 +75,7 @@ function buscarDados(user)
     {
         Criar_Carrinho_de_Compras(dados);
         
+        
 
     }).catch(error =>
     {
@@ -93,6 +94,20 @@ function Add_Item_Carrinho(){
 }
 
 
+// Verifica se há um valor salvo no localStorage
+const input = document.getElementById('bloco_id');
+
+const savedValue = localStorage.getItem('inputValue');
+
+if (savedValue) {
+    input.value = savedValue; // Preenche o input com o valor salvo
+}
+
+// Salva o valor no localStorage sempre que o usuário digitar algo
+input.addEventListener('input', function() {
+    localStorage.setItem('inputValue', this.value);
+});
+
 
 function Criar_Carrinho_de_Compras(dados){ 
 
@@ -102,14 +117,16 @@ function Criar_Carrinho_de_Compras(dados){
 
     const caption = document.createElement('caption');
     caption.classList.add('evidente_destaque_1');
-    caption.innerHTML = "ENDEREÇO:<br> AVENIDA RIVER Nº 465 - AGUA CHATA";
+    caption.id = ('capition_endereco');
+    caption.innerHTML = "Produtos";
     carrinho.appendChild(caption);
 
 Criar_Colunas_Carrinho_de_Compras(carrinho);
 
 
 dados.forEach(dados => {    
-    Add_Item_Carrinho_de_Compras(carrinho,dados);    
+    Add_Item_Carrinho_de_Compras(carrinho,dados);
+    
 console.log(dados.date_criacao);
     
 });
@@ -182,12 +199,12 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
     tr_tbody.appendChild(td_item_1_produtos);
 
     const td_item_1_uni_preco = document.createElement('td');
-    td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('pt-br', {minimumFractionDigits: 2});
+    td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('en', {minimumFractionDigits: 2});
     tr_tbody.appendChild(td_item_1_uni_preco);
 
     const td_item_1_preco = document.createElement('td');
     td_item_1_preco.classList.add('evidente');
-    td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('pt-br', {minimumFractionDigits: 2});
+    td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('en', {minimumFractionDigits: 2});
     tr_tbody.appendChild(td_item_1_preco);
  
     const total_carrinho = document.getElementById('total_carrinho');
@@ -208,9 +225,12 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
     for(let i =1; i< tabela.rows.length;i++){
 
-        const valorCelula = tabela.rows[i].cells[indice_Coluna].innerText;
+        const valorCelula = String(tabela.rows[i].cells[indice_Coluna].innerHTML);
+
 
         soma+= parseFloat(valorCelula) || 0;
+        console.log(parseFloat(valorCelula).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        
     }
 
     return soma;
@@ -253,35 +273,33 @@ function AtualizarDadosDoProduto(){
     const dados = criarProduto();
 
     ShowLoading();
-    dados_servicos.Add_quantidade_carrinho_finalizado(dados)
-     .then(()=>{
-        
-        
+    
+    finalizar(dados);
 
-     }).catch(()=>{
-        removeLoading();
-        alert("Erro ao salvar Produto");
-     })
 
 }
 
 
 
+function finalizar(dados){
+    dados_servicos.Add_quantidade_carrinho_finalizado(dados)
+    .then(()=>{
+       
+       
 
+    }).catch(()=>{
+       removeLoading();
+       alert("Erro ao salvar Produto");
+    })
+}
 
 
 function criarProduto(){
-
-
-
     
     return{
-        
-        
         quantidade:  numero,
         user:{
             uid: firebase.auth().currentUser.uid
-
         }
     }
 }
