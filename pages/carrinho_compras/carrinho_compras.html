@@ -95,46 +95,62 @@
 
             <div class="formulario_margem_para_cada_elemento">
                                 
-                <input type="radio"  name="type" checked id="entrega_id"> <label for="status_ativo_id">entrega</label>
+                <input type="radio"  name="opcao" checked value="entrega"  id="entrega_id"> <label for="status_ativo_id">entrega</label>
     
-                <input type="radio"  name="type"  id="retirada_id"> <label for="status_desativado_id">retirada</label>
+                <input type="radio"  name="opcao" value="retirada" id="retirada_id"> <label for="status_desativado_id">retirada</label>
     
                 </div>
 
-            <div class="formulario_margem_para_cada_elemento">
-                <label>Endereco:</label>
-                <select id="selecao_endereco_id">
-                    <option selected>Condominio</option>
-                    <option>Loja</option>
-                    <option>Casa</option>
-                    <option>Empresa</option>
-                </select>
-                </div>    
-                
-                <div class="formulario_margem_para_cada_elemento">
-                    <select id="selecao_condominio_id">
-                        <option selected>SANTA LUCIA</option>
-                        <option>vila Alegre</option>
-                        <option>Monica</option>
-                        <option>Bolevard</option>
+                <div id="opcao_entrega_id">
+
+                        <div class="formulario_margem_para_cada_elemento">
+                    <label>Endereco:</label>
+                    <select id="selecao_endereco_id">
+                        <option selected>Condominio</option>
+                        <option>Loja</option>
+                        <option>Casa</option>
+                        <option>Empresa</option>
                     </select>
-                
-                    </div>
-                
-                    <div>
-                        <label >BLoco: </label>
-                        <input type="text" id="bloco_id" placeholder="EX... 16">
-                    </div>
-                   
+                    </div>    
                     
-                    <div>
-                        <label >AP: </label>
-                        <input type="text" id="apartamento_id" placeholder="EX... 303">
+                    <div class="formulario_margem_para_cada_elemento">
+                        <select id="selecao_condominio_id">
+                            <option selected>SANTA LUCIA</option>
+                            <option>vila Alegre</option>
+                            <option>Monica</option>
+                            <option>Bolevard</option>
+                        </select>
+                    
+                        </div>
+                    
+                        <div>
+                            <label >BLoco: </label>
+                            <input type="text" id="bloco_id" placeholder="EX... 16">
+                        </div>
+                    
+                        
+                        <div>
+                            <label >AP: </label>
+                            <input type="text" id="apartamento_id" placeholder="EX... 303">
+                        </div>
+
+                        <div>
+                            <label >nome: </label>
+                            <input type="text" id="apartamento_id" placeholder="roberto">
+                        </div>
+                </div>
+
+                <div id="opcao_retirada_id">
+
+                    <div class="formulario_margem_para_cada_elemento">
+                        <label >nome: </label>
+                        <input type="text" id="apartamento_id" placeholder="roberto">
                     </div>
+                </div>
+            
 
         </div>
-        
-       
+              
     
     </form>
 
@@ -150,11 +166,19 @@
                     <option>VOUCHER</option>
                 </select>
             </div>
+            <button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR</button>
+    <button class="button_1" onclick="Alerta_compra()" >CANCELAR</button>
         </div>
+
+    
     </form>
 
-    <button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR COMPRA </button>
-    <button class="button_1" >CANCELAR CARRINHO </button>
+    <form>
+        
+    </form>
+
+   
+    
 
 </main>
 

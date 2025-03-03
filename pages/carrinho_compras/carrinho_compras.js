@@ -185,6 +185,7 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
     const td_item_1_cod = document.createElement('td');
     td_item_1_cod.innerHTML =dados.codigo;
+    td_item_1_cod.id ='tabela_codigo_' + dados.codigo;
     tr_tbody.appendChild(td_item_1_cod);
 
     const td_item_1_quant = document.createElement('td');
@@ -305,3 +306,43 @@ function criarProduto(){
 }
 
 
+
+
+function Alerta_compra(){
+
+
+    const desejaDeletarProduto = confirm();    
+    
+    if(desejaDeletarProduto == true){
+       alert("Compra Finalizada");
+    }
+}
+
+
+
+
+
+
+
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA ESCONDER OU MOSTRAR AS OPÇOES DE ENTREGA OU RETIRADA *****************************************/
+/*******************************************************************************************/
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const radioButtons = document.querySelectorAll('input[name="opcao"]');
+    const opcao_entrega_id = document.getElementById('opcao_entrega_id');
+    const opcao_retirada_id = document.getElementById('opcao_retirada_id');
+
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'entrega') {
+                opcao_entrega_id.style.display = "block";
+                opcao_retirada_id.style.display = "none";
+            } else if (this.value === 'retirada') {
+                opcao_entrega_id.style.display = "none";
+                opcao_retirada_id.style.display = "block";
+            }
+        });
+    });
+});
