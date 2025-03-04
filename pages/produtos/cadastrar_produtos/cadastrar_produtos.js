@@ -307,9 +307,6 @@ function isFromValid(){
 const form = {
 
 
-  
-
-
     date_criacao:() => document.getElementById('date_criacao_id'),
     date_criacaoInvalido:() => document.getElementById('date_criacaoInvalido_id'),
 

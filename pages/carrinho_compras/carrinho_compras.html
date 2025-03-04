@@ -136,7 +136,7 @@
 
                         <div>
                             <label >nome: </label>
-                            <input type="text" id="apartamento_id" placeholder="roberto">
+                            <input type="text" id="nome_entrega_id" placeholder="roberto">
                         </div>
                 </div>
 
@@ -144,21 +144,17 @@
 
                     <div class="formulario_margem_para_cada_elemento">
                         <label >nome: </label>
-                        <input type="text" id="apartamento_id" placeholder="roberto">
+                        <input type="text" id="nome_retirada_id" placeholder="felipe">
                     </div>
                 </div>
-            
-
         </div>
-              
-    
     </form>
 
     <form>
         <div class="formulario"> 
             <div class="formulario_margem_para_cada_elemento">
                 <div><label>FORMA DE PAGAMENTO:</label></div>
-                <select id="selecao_endereco_id">
+                <select id="selecao_forma_pagamento_id">
                     <option selected>PIX</option>
                     <option>DEBITO</option>
                     <option>CREDITO</option>
@@ -166,23 +162,15 @@
                     <option>VOUCHER</option>
                 </select>
             </div>
-            <button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR</button>
-    <button class="button_1" onclick="Alerta_compra()" >CANCELAR</button>
+            
+            
         </div>
-
-    
     </form>
-
-    <form>
-        
-    </form>
-
-   
-    
 
 </main>
 
-
+<button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR</button>
+<button class="button_1" onclick="criar_comanda_pedido()" >CANCELAR</button>
 
 <button class="fab fixo baixo direita" onclick="Add_Item_Carrinho()">+</button>
 

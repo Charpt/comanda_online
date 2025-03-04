@@ -24,13 +24,16 @@ function deslogar(){
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
-        buscarDados(user);
-        obter_quantidade_de_carrinhos_fechados(user);
+        buscarDados(user);// BUSCA AS INFORMAÇÕES DOS ITENS JA CADASTRADOS NO CARRINHO ATUAL
+        obter_quantidade_de_carrinhos_fechados(user); // BUSCA A QUANTIDADE DE CARINHOS JA CADASTRADOS 
     }
 })
 
 
-// obter quantidade de carrinhos de compras
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA OBTER QUANTOS CARINHOS DE COMPRAS JA FORAM CONCLUIDOS
+ * E RETORNAR O VALOR PARA A VARIAVEL NUMERO *******/
+/*******************************************************************************************/
 
 var numero;
 function obter_quantidade_de_carrinhos_fechados(user){
@@ -50,30 +53,70 @@ function obter_quantidade_de_carrinhos_fechados(user){
             numero_de_carrinho1.appendChild(numero_de_carrinho);
 
      });
-         
-     
-     
- 
      }).catch(error =>
      {
          removeLoading();
          console.log(error);
          alert("Erro ao recuperar dados");
     })
-
     return numero;
+
+}
+
+// INSERINDO A QUANTIDADE NO CARRINHO 
+function Add_quantidade_de_carrinhos_fechados(){
+    const dados = criar_novo_numero_carrinho();
+    ShowLoading();
+    
+    Atualizar_quantidade_carrinho_fechado(dados);
+
 
 }
 
 
 
 
+function Atualizar_quantidade_carrinho_fechado(dados){
+    dados_servicos.Atualizar_quantidade_carrinho_finalizado(dados)
+    .then(()=>{
+        
+        console.log("novo numero de carrinho criado" + dados.quantidade);
+       
+
+    }).catch(()=>{
+       removeLoading();
+       alert("Erro ao salvar Produto");
+    })
+}
+
+
+function criar_novo_numero_carrinho(){
+    
+    return{
+        quantidade:  numero,
+        user:{
+            uid: firebase.auth().currentUser.uid
+        }
+    }
+}
+
+
+
+
+
+
+/***************************************************************************
+ *  BUSCA OS DADOS 
+ * 
+ */
+var quantidade_de_itens_carrinho;
 function buscarDados(user)
 {
    dados_servicos.BuscarPorUsuario_Carrinho_de_Compras(user)
    .then(dados =>
     {
         Criar_Carrinho_de_Compras(dados);
+        quantidade_de_itens_carrinho = dados.length;
         
         
 
@@ -123,13 +166,15 @@ function Criar_Carrinho_de_Compras(dados){
 
 Criar_Colunas_Carrinho_de_Compras(carrinho);
 
-
+i=0;
 dados.forEach(dados => {    
-    Add_Item_Carrinho_de_Compras(carrinho,dados);
+    Add_Item_Carrinho_de_Compras(carrinho,dados,i++);
     
-console.log(dados.date_criacao);
+//console.log(dados.date_criacao);
     
 });
+
+
 
 //SOMA AS COLUNAS DA TABELA EXIBINDO O VALOR TOTAL
 const total_carrinho = document.getElementById('total_carrinho');
@@ -170,7 +215,7 @@ function Criar_Colunas_Carrinho_de_Compras(carrinho){
 }
 
 
-function Add_Item_Carrinho_de_Compras(carrinho, dados){
+function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
 
     const tbody = document.createElement('tbody');
     carrinho.appendChild(tbody);
@@ -185,30 +230,34 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
     const td_item_1_cod = document.createElement('td');
     td_item_1_cod.innerHTML =dados.codigo;
-    td_item_1_cod.id ='tabela_codigo_' + dados.codigo;
+    td_item_1_cod.id ='item_codigo_tb_' + numero_item;
     tr_tbody.appendChild(td_item_1_cod);
 
     const td_item_1_quant = document.createElement('td');
     td_item_1_quant.innerHTML =dados.quantidade;
+    td_item_1_quant.id ='item_quant_tb_' + numero_item;
     td_item_1_quant.classList.add('evidente');
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
     td_item_1_produtos.innerHTML =dados.item_nome +"<br> <b class=obs> obs: "+ dados.observacao;
+    td_item_1_produtos.id ='item_produto_tb_' + numero_item;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
     tr_tbody.appendChild(td_item_1_produtos);
 
     const td_item_1_uni_preco = document.createElement('td');
     td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('en', {minimumFractionDigits: 2});
+    td_item_1_uni_preco.id ='item_uni_preco_tb_' + numero_item;
     tr_tbody.appendChild(td_item_1_uni_preco);
 
     const td_item_1_preco = document.createElement('td');
     td_item_1_preco.classList.add('evidente');
     td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('en', {minimumFractionDigits: 2});
+    td_item_1_preco.id ='item_preco_tb_' + numero_item;
     tr_tbody.appendChild(td_item_1_preco);
  
-    const total_carrinho = document.getElementById('total_carrinho');
+    const total_carrinho = document.getElementById('total_carrinho');    
     total_carrinho.innerHTML = somar_Colunas("carrinho",4).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }
 
@@ -230,7 +279,7 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
 
         soma+= parseFloat(valorCelula) || 0;
-        console.log(parseFloat(valorCelula).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
+        //console.log(parseFloat(valorCelula).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
         
     }
 
@@ -240,13 +289,13 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados){
 
 
 
-// deletar produtotos do carrinho
 
 
 
+// funcao para perguntar se deseja deletar produtotos do carrinho
  function Deseja_Deletar_Produto_carrinho_de_compras(dados)
 {
-    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO AAAA');
     if(desejaDeletarProduto == true){
         Deletar_Produto_carrinho_de_compras(dados);
     }
@@ -269,41 +318,7 @@ function Deletar_Produto_carrinho_de_compras(dados){
    })
 }
 
-// INSERINDO A QUANTIDADE NO CARRINHO 
-function AtualizarDadosDoProduto(){
-    const dados = criarProduto();
 
-    ShowLoading();
-    
-    finalizar(dados);
-
-
-}
-
-
-
-function finalizar(dados){
-    dados_servicos.Add_quantidade_carrinho_finalizado(dados)
-    .then(()=>{
-       
-       
-
-    }).catch(()=>{
-       removeLoading();
-       alert("Erro ao salvar Produto");
-    })
-}
-
-
-function criarProduto(){
-    
-    return{
-        quantidade:  numero,
-        user:{
-            uid: firebase.auth().currentUser.uid
-        }
-    }
-}
 
 
 
@@ -346,3 +361,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+/*************************************************
+ * CRIAR A COMANDA DO PEDIDO
+ */
+function criar_comanda_pedido(){
+    console.log(obter_dados_comanda_pedido());
+}
+
+function obter_dados_comanda_pedido() {
+    var dados = {}; // Objeto para armazenar os dados
+
+    for (var i = 0; i < quantidade_de_itens_carrinho; i++) {
+        // Obtém o elemento da tabela
+       
+        var elemento2 = document.getElementById('item_quant_tb_' + (i + 0));
+        var elemento3 = document.getElementById('item_produto_tb_' + (i + 0));
+        
+
+
+        
+        // Verifica se o elemento existe antes de acessar o texto
+        if (elemento3) {
+            // Armazena o conteúdo de texto no objeto
+            
+            dados['td_item_prod_' + (i + 1)] = elemento2.textContent + "/"+elemento3.textContent|| elemento2.innerText + "/"+elemento3.innerText;
+        } else {
+            // Se o elemento não existir, armazena null ou uma mensagem de erro
+            dados['td_item_cod_' + (i + 1)] = null;
+        }
+    }
+
+    return dados; // Retorna o objeto com todos os dados
+}
+
+    const form = {
+
+
+        //date_criacao:() => document.getElementById('date_criacao_id'),
+       // date_criacaoInvalido:() => document.getElementById('date_criacaoInvalido_id'),
+    
+        entrega:() => document.getElementById('entrega_id'),
+    
+        retirada:() => document.getElementById('retirada_id'),
+    
+        endereco:() => document.getElementById('selecao_endereco_id'), 
+        nome_condominio:() => document.getElementById('selecao_condominio_id'),      
+        
+        nome_entrega:() => document.getElementById('nome_entrega_id'),  
+        nome_retirada:() => document.getElementById('nome_retirada_id'),  
+
+        bloco:() => document.getElementById('bloco_id'),
+       
+    
+        apartamento:() => document.getElementById('apartamento_id'),
+       
+        forma_pagamento:() => document.getElementById('selecao_forma_pagamento_id'),
+
+        //observacao:() => document.getElementById('observacao_id'),      
+        
+    }

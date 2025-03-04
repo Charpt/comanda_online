@@ -93,7 +93,7 @@ const dados_servicos ={
 
 
 
-
+// busca quantos carrinhos de compras ja foram vendidos finalizados fechados
     Buscar_Carrinho_de_Compras_quantidade: user  =>{
         
         return firebase.firestore()
@@ -113,8 +113,8 @@ const dados_servicos ={
  
          
      },
-
-     Add_quantidade_carrinho_finalizado: quantidade_para_atualizar => {
+// atualiza a quantidade de carrinhos ja vendidos pra dar o novo numero ao carrinho atual
+     Atualizar_quantidade_carrinho_finalizado: quantidade_para_atualizar => {
         return firebase.firestore()
         .collection('quant_carrinhos_compra')
         .doc('2DSs00ACRiil1spiwPM4')
@@ -185,7 +185,7 @@ const deleteCollection = async (collectionPath) => {
         await batch.commit();
         console.log(`Todos os documentos da coleção ${collectionPath} foram deletados.`);
         alert("Coleção deletada com sucesso!");
-        AtualizarDadosDoProduto();
+        Add_quantidade_de_carrinhos_fechados();
        location.reload();
     } catch (error) {
         console.error("Erro ao deletar a coleção: ", error);
