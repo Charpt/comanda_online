@@ -91,12 +91,10 @@ ol{
 
 
  .tempo_preparo{
-    background-color: #b8ae28;
-    padding: 5px;
+  
     font-size: 18pt;
     text-align: center;
-    border: 1px solid black;
-    border-radius: 5px;
+    
     
   
 
@@ -105,12 +103,31 @@ ol{
 .retirada{
 
 text-align: center;
-   color: rgb(34, 34, 155);
-   background-color: #ffffff;
+   color: rgb(242, 242, 253);
+   background-color: #821091;
    border: 1px solid black;
    border-radius: 5px;
    
 
 }
 
+.entrega{
 
+   text-align: center;
+      color: rgb(6, 6, 160);
+      background-color: #1482a3;
+      border: 1px solid black;
+      border-radius: 5px;
+      
+   
+   }
+
+.observacao{
+   color: rgb(119, 40, 40);
+   font-weight: 900;
+}
+
+.item_infos{
+   color: #050101;
+font-weight: 900;
+}

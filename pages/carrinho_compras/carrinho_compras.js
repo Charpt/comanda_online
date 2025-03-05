@@ -240,7 +240,7 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
-    td_item_1_produtos.innerHTML =dados.item_nome +"<br> <b class=obs> obs: "+ dados.observacao;
+    td_item_1_produtos.innerHTML =dados.item_nome +"<br> <b class=obs> /"+ dados.observacao;
     td_item_1_produtos.id ='item_produto_tb_' + numero_item;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
@@ -353,10 +353,9 @@ document.addEventListener('DOMContentLoaded', function() {
         radio.addEventListener('change', function() {
             if (this.value === 'entrega') {
                 opcao_entrega_id.style.display = "block";
-                opcao_retirada_id.style.display = "none";
             } else if (this.value === 'retirada') {
                 opcao_entrega_id.style.display = "none";
-                opcao_retirada_id.style.display = "block";
+                
             }
         });
     });
@@ -380,6 +379,7 @@ function obter_dados_comanda_pedido() {
         uid: firebase.auth().currentUser.uid
     };
 
+   
     
     if(form.entrega().checked == true){
 
@@ -406,7 +406,7 @@ function obter_dados_comanda_pedido() {
 
         dados['apartamento'] = form.apartamento().value;
 
-        dados['nome_entrega'] = form.nome_entrega().value;
+        dados['nome_cliente'] = form.nome_cliente().value;
         
         dados['forma_pagamento'] = form.forma_pagamento().value;
 
@@ -414,32 +414,34 @@ function obter_dados_comanda_pedido() {
 
         dados['data_pedido'] =   "2025-02-21T00:05";
 
-    }else{
-        if(form.retirada().checked == true){
+    }
 
-            if(form.reserva().checked == true){
-                dados['reserva'] =   "sim";
-            }else{
-                if(form.reserva().checked == false){
-                    dados['reserva'] =   "nao";
-                }
-    
+    if(form.retirada().checked == true){
+
+        if(form.reserva().checked == true){
+            dados['reserva'] =   "sim";
+        }else{
+            if(form.reserva().checked == false){
+                dados['reserva'] =   "nao";
             }
 
-            dados['status'] =   "ativo";
-
-        dados['forma_envio'] =   "entrega";
-
-        dados['nome_entrega'] = form.nome_entrega().value;
-        
-        dados['forma_pagamento'] = form.forma_pagamento().value;
-
-        dados['tempo_preparo'] =   "00:40:00";
-
-        dados['data_pedido'] =   "2025-02-21T00:05";
-    
         }
+
+        dados['numero_carrinho'] = form.id_carrinho().textContent;
+        dados['status'] =   "ativo";
+
+    dados['forma_envio'] =   "retirada";
+
+    dados['nome_cliente'] = form.nome_cliente().value;
+    
+    dados['forma_pagamento'] = form.forma_pagamento().value;
+
+    dados['tempo_preparo'] =   "00:40:00";
+
+    dados['data_pedido'] =   "2025-02-21T00:05";
+
     }
+    
     
 
 
@@ -491,8 +493,8 @@ function obter_dados_comanda_pedido() {
         endereco:() => document.getElementById('selecao_endereco_id'), 
         nome_condominio:() => document.getElementById('selecao_condominio_id'),      
         
-        nome_entrega:() => document.getElementById('nome_entrega_id'),  
-        nome_retirada:() => document.getElementById('nome_retirada_id'),  
+        nome_cliente:() => document.getElementById('nome_cliente_id'),  
+        
 
         bloco:() => document.getElementById('bloco_id'),
         apartamento:() => document.getElementById('apartamento_id'),

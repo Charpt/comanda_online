@@ -45,7 +45,7 @@ function buscar_itens_pedidos_ativos(user){
          removeLoading();
  
          inserir_dados_pedidos_ativos(dados);
-         //console.log(dados);
+         console.log(dados);
  
      }).catch(error =>
      {
@@ -72,22 +72,23 @@ const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comand
         const li = criar_elemento_li_com_os_dados(dados)    
 
         li.appendChild(criar_elemento_p_com_o_valor("tempo de preparo "+dados.tempo_preparo,'tempo_preparo'));
-        li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,'retirada'));
-        li.appendChild(criar_elemento_p_com_o_valor(dados.nome_entrega,'nome_entrega'));  
-        li.appendChild(criar_elemento_p_com_o_valor(dados.endereco+": "+dados.nome_condominios,'titulo_card')); 
+        li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,dados.forma_envio));
+        
+
+        li.appendChild(criar_elemento_p_com_o_valor("Clinte: "+dados.nome_cliente+"<br>"+dados.endereco+": "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
        
 
         // Itera sobre as propriedades do objeto `dados` para encontrar `td_item_prod_`
         for (const key in dados) {
             if (key.startsWith('td_item_prod_')) {
                 // Adiciona cada item como um novo parágrafo
-                li.appendChild(criar_elemento_p_com_o_valor(`- ${dados[key]}`));
+                li.appendChild(criar_elemento_p_com_o_valor(`${dados[key]}`),'item_infos');
             }
         }
 
        
             
-        
+        li.appendChild(criar_elemento_button_com_evento(dados));
     orderList.appendChild(li);
     });
      console.log('inserindo dados de identificacao');
@@ -124,11 +125,20 @@ function criar_elemento_p_com_o_valor(value,info){
         if(info == 'tempo_preparo'){
             elemento.classList.add('tempo_preparo');
         }else{
-            if(info == 'nome_entrega'){
-                elemento.classList.add('nome_entrega');
+            if(info == 'nome_cliente'){
+                elemento.classList.add('nome_cliente');
             }else{
                 if(info == 'titulo_card'){
                     elemento.classList.add('titulo_card');
+                }else{
+                    if(info == 'entrega'){
+                        elemento.classList.add('entrega');
+                    }else{
+                        if(info == 'item_infos'){
+                            elemento.classList.add('item_infos');
+                            
+                        }
+                    }
                 }
             }
         }
