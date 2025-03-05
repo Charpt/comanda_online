@@ -120,38 +120,35 @@ const dados_servicos ={
         .doc('2DSs00ACRiil1spiwPM4')
         .update(quantidade_para_atualizar);
     },
-
-
-
-
-/*************************************************************
- * PEDIDOS
- **************************************************************/
-
-
-  /*  buscar_itens_bd_pedidos_ativos: user  =>{
-        
+   
+    //CADASTRA NOVOS ITENS
+    Cadastrar_novo_pedido: (dados_produtos,caminho_colecao) => {
         return firebase.firestore()
-         .collection('pedidos_ativos').doc('pMNkSp0pCcrR9ItIRBJk').collection('pedido_n1')
-         .where('user.uid','==', user.uid)
-         .get()
-         .then(snapshot =>
-         {
-             return snapshot.docs.map(doc => (
-                 {
-                     ...doc.data(),
-                     uid: doc.id
-                 }));
- 
-             
-         })
- 
-         
-     },*/
+        .collection(caminho_colecao)
+        .add(dados_produtos);
+    },
 
 
-    
-    
+//BUSCA OS PRODUTOS JA CADASTRADOS
+Buscar_pedidos: (user,colecao)  =>{
+        
+    return firebase.firestore()
+     .collection(colecao)
+     .where('user.uid','==', user.uid)
+     .orderBy('numero_carrinho','asc')
+     .get()
+     .then(snapshot =>
+     {
+         return snapshot.docs.map(doc => (
+             {
+                 ...doc.data(),
+                 uid: doc.id
+             }));
+     }) 
+ },
+
+
+
 }
 
 // Função para deletar uma coleção ASSIM É PSSOVEL LIMPAR A COLECAO E COMEÇAR OUTRA 

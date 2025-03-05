@@ -15,6 +15,7 @@
 <body >
 
 
+
     <header>
         <section class="top_header">
            <div class="interface">
@@ -60,14 +61,16 @@
 
 <div class="titulo_da_pagina">
 
-    <label id="quantidade_carrinhos1">CARRINHO DE COMPRAS  Nº </label>
+    <label for="quantidade_carrinhos1">CARRINHO DE COMPRAS  Nº </label><label id="quantidade_carrinhos1"></label>
     
     
 
 </div>
 
 
-<main >
+<main>
+
+    
 
     <table id="carrinho"></table>
 
@@ -93,11 +96,26 @@
     <form >
         <div class="formulario">  
 
+            
+            <div class="formulario_margem_para_cada_elemento">
+
+                <label for="reserva_id" class="checkbox-container">
+                    <input type="checkbox" name="verificar_retirada_ou_Nao" value="reserva" id="reserva_id">
+                    <span>Reserva</span>
+                </label>
+
+            </div>
+            
+                
+       
+
             <div class="formulario_margem_para_cada_elemento">
                                 
-                <input type="radio"  name="opcao" checked value="entrega"  id="entrega_id"> <label for="status_ativo_id">entrega</label>
+                <input type="radio"  name="opcao" value="entrega"  id="entrega_id" checked > <label>entrega</label>
     
-                <input type="radio"  name="opcao" value="retirada" id="retirada_id"> <label for="status_desativado_id">retirada</label>
+                <input type="radio"  name="opcao" value="retirada" id="retirada_id"> <label >retirada</label>
+
+                
     
                 </div>
 
@@ -196,3 +214,4 @@
 <link rel="stylesheet" href="../../global.css">
 <link rel="stylesheet" href="carrinho_compras.css">
 </html>
+

@@ -104,11 +104,12 @@ ol{
 
 .retirada{
 
-   color: blue;
-   text-align: center;
+text-align: center;
+   color: rgb(34, 34, 155);
    background-color: #ffffff;
    border: 1px solid black;
    border-radius: 5px;
+   
 
 }
 

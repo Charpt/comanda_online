@@ -69,3 +69,9 @@ li {
     background-color: #218838;
     text-align: start;
 }
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

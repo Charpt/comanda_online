@@ -367,12 +367,85 @@ document.addEventListener('DOMContentLoaded', function() {
  * CRIAR A COMANDA DO PEDIDO
  */
 function criar_comanda_pedido(){
-    console.log(obter_dados_comanda_pedido());
+    const dados =obter_dados_comanda_pedido();
+
+    Cadastrar_Pedido(dados);
 }
 
 function obter_dados_comanda_pedido() {
+
     var dados = {}; // Objeto para armazenar os dados
 
+    dados.user = {
+        uid: firebase.auth().currentUser.uid
+    };
+
+    
+    if(form.entrega().checked == true){
+
+        if(form.reserva().checked == true){
+            dados['reserva'] =   "sim";
+        }else{
+            if(form.reserva().checked == false){
+                dados['reserva'] =   "nao";
+            }
+
+        }
+        
+        dados['numero_carrinho'] = form.id_carrinho().textContent;
+
+        dados['status'] =   "ativo";
+
+        dados['forma_envio'] =   "entrega";
+
+        dados['endereco'] = form.endereco().value;
+
+        dados['nome_condominios'] = form.nome_condominio().value;
+
+        dados['bloco'] = form.bloco().value;
+
+        dados['apartamento'] = form.apartamento().value;
+
+        dados['nome_entrega'] = form.nome_entrega().value;
+        
+        dados['forma_pagamento'] = form.forma_pagamento().value;
+
+        dados['tempo_preparo'] =   "00:40:00";
+
+        dados['data_pedido'] =   "2025-02-21T00:05";
+
+    }else{
+        if(form.retirada().checked == true){
+
+            if(form.reserva().checked == true){
+                dados['reserva'] =   "sim";
+            }else{
+                if(form.reserva().checked == false){
+                    dados['reserva'] =   "nao";
+                }
+    
+            }
+
+            dados['status'] =   "ativo";
+
+        dados['forma_envio'] =   "entrega";
+
+        dados['nome_entrega'] = form.nome_entrega().value;
+        
+        dados['forma_pagamento'] = form.forma_pagamento().value;
+
+        dados['tempo_preparo'] =   "00:40:00";
+
+        dados['data_pedido'] =   "2025-02-21T00:05";
+    
+        }
+    }
+    
+
+
+       
+
+    
     for (var i = 0; i < quantidade_de_itens_carrinho; i++) {
         // Obtém o elemento da tabela
        
@@ -391,10 +464,17 @@ function obter_dados_comanda_pedido() {
             // Se o elemento não existir, armazena null ou uma mensagem de erro
             dados['td_item_cod_' + (i + 1)] = null;
         }
+
+        dados['quantidade_de_item_na_comanda'] = i + 1;
     }
+
+    
 
     return dados; // Retorna o objeto com todos os dados
 }
+
+
+
 
     const form = {
 
@@ -402,6 +482,8 @@ function obter_dados_comanda_pedido() {
         //date_criacao:() => document.getElementById('date_criacao_id'),
        // date_criacaoInvalido:() => document.getElementById('date_criacaoInvalido_id'),
     
+       reserva:() => document.getElementById('reserva_id'),
+
         entrega:() => document.getElementById('entrega_id'),
     
         retirada:() => document.getElementById('retirada_id'),
@@ -413,12 +495,30 @@ function obter_dados_comanda_pedido() {
         nome_retirada:() => document.getElementById('nome_retirada_id'),  
 
         bloco:() => document.getElementById('bloco_id'),
-       
-    
         apartamento:() => document.getElementById('apartamento_id'),
        
         forma_pagamento:() => document.getElementById('selecao_forma_pagamento_id'),
 
-        //observacao:() => document.getElementById('observacao_id'),      
+        //observacao:() => document.getElementById('observacao_id'),   
+        id_carrinho:() => document.getElementById('quantidade_carrinhos1'),
+        
         
     }
+
+
+
+    /******************************************************
+ * CADASTRA NOVOS pedidos no bacnod e dados
+ *********************************************/
+function Cadastrar_Pedido(dados){
+    dados_servicos.Cadastrar_novo_pedido(dados,"pedidos")
+    .then(()=>{
+       
+
+       window.location.href = "../tela_pedidos/tela_pedidos.html";
+
+    }).catch(()=>{
+       removeLoading();
+       alert("Erro ao salvar Produto");
+    })
+}

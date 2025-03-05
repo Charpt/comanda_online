@@ -29,102 +29,70 @@ SE O USUSARIO ESTIVER LOGADO ELE EXECULTA O BUSCAR DADOS
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
-        //buscar_info_identificacao_pedidos_ativos("add_dados_itens_pedidos_ativos_na_comanda");
-       // buscar_itens_pedidos_ativos(user);
+        
+       buscar_itens_pedidos_ativos(user);
         
     }
 })
 
-/*******************************************************************************************/
-/** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS O DOCUMENTO EXPECIFICO COM AS INFORMAÇÕES DO CLIENTE QUE O PEDIU 
-/*******************************************************************************************/
-
-/*
-function buscar_info_identificacao_pedidos_ativos()
-{
+function buscar_itens_pedidos_ativos(user){
 
     ShowLoading();
 
-    firebase.firestore()
-         .collection('pedidos_ativos').doc('pMNkSp0pCcrR9ItIRBJk').collection('pedido_n1').doc('identificacao_pedidon1')
-         .get()
-         .then((doc) => {
-        if (doc.exists) {
-          //console.log("Dados do documento:", doc.data());
-           add_dados_itens_pedidos_ativos_na_comanda(doc.data());
-          removeLoading();
-          
-        } else {
-          console.log("Documento não encontrado!");
-          removeLoading();
-        }
-      }).catch(error =>
-    {
-        removeLoading();
-        console.log(error);
-        alert("Erro ao recuperar dados");
-   })
+    dados_servicos.Buscar_pedidos(user,'pedidos')
+    .then(dados =>
+     {
+         removeLoading();
+ 
+         inserir_dados_pedidos_ativos(dados);
+         //console.log(dados);
+ 
+     }).catch(error =>
+     {
+         removeLoading();
+         console.log(error);
+         alert("Erro ao recuperar dados");
+    })
 }
 
-
-
-/*******************************************************************************************/
-/** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS OS DADOS DOS ITENS CADASTRADOS 
-/*******************************************************************************************/
-
-/*
-function buscar_itens_pedidos_ativos(user)
-{
-
-    ShowLoading();
-
-   dados_servicos.buscar_itens_bd_pedidos_ativos(user)
-   .then(dados =>
-    {
-        removeLoading();
-
-        inserir_dados_pedidos_ativos(dados);
-
-    }).catch(error =>
-    {
-        removeLoading();
-        console.log(error);
-        alert("Erro ao recuperar dados");
-   })
-}
 
 /*******************************************************************************************/
 /** FUNÇÃO PARA ADICIONAR OS ITENS DO BANCO DE DADOS EM UM LISTA ORDENADA ASSIM ADICIONAMOS
  * OS DADOS DOS ITENS NO LI
 /*******************************************************************************************/
 
-/*
-function add_dados_itens_pedidos_ativos_na_comanda(dados){
-    const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
-    if(!dados.empty){
-        const li = criar_elemento_li_com_os_dados(dados)    
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=tempo_preparo>tempo de preparo "+dados.tempo_preparo+"</i>"));
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=retirada>"+dados.meio_de_envio+"</i>"));
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=cliente>"+dados.cliente+"</i>"));      
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=titulo_card>"+dados.endereco+"</i>")); 
-        orderList.appendChild(li);
-    }
-}
 
 
 function inserir_dados_pedidos_ativos(dados){
-    const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
+
+const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
+
      dados.forEach(dados => {
-        console.log(dados.ident.uid);
-        const li = document.getElementById(dados.ident.uid);   
-        if(dados.ident.uid != ""){
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=text_info_card > <b class=info_item>"+dados.quantidade+"- "+dados.item_pedido+"</i>"));  
-            li.appendChild(criar_elemento_p_com_o_valor("<i class=observacao>"+dados.observacao+"</i>"));
-            orderList.appendChild(li);
-        }  
+
+        const li = criar_elemento_li_com_os_dados(dados)    
+
+        li.appendChild(criar_elemento_p_com_o_valor("tempo de preparo "+dados.tempo_preparo,'tempo_preparo'));
+        li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,'retirada'));
+        li.appendChild(criar_elemento_p_com_o_valor(dados.nome_entrega,'nome_entrega'));  
+        li.appendChild(criar_elemento_p_com_o_valor(dados.endereco+": "+dados.nome_condominios,'titulo_card')); 
+       
+
+        // Itera sobre as propriedades do objeto `dados` para encontrar `td_item_prod_`
+        for (const key in dados) {
+            if (key.startsWith('td_item_prod_')) {
+                // Adiciona cada item como um novo parágrafo
+                li.appendChild(criar_elemento_p_com_o_valor(`- ${dados[key]}`));
+            }
+        }
+
+       
+            
+        
+    orderList.appendChild(li);
     });
      console.log('inserindo dados de identificacao');
 }
+
 
 
 /*******************************************************************************************/
@@ -148,8 +116,24 @@ function criar_elemento_li_com_os_dados(dados){
 /*******************************************************************************************/
 /** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) QUE REPRESENTA UM PARAGRAFO DAS INFORMAÇÕES DOS ITENS  
 /*******************************************************************************************/
-function criar_elemento_p_com_o_valor(value){
+function criar_elemento_p_com_o_valor(value,info){
     const elemento = document.createElement('p');
+    if(info == 'retirada'){
+        elemento.classList.add('retirada');
+    }else{
+        if(info == 'tempo_preparo'){
+            elemento.classList.add('tempo_preparo');
+        }else{
+            if(info == 'nome_entrega'){
+                elemento.classList.add('nome_entrega');
+            }else{
+                if(info == 'titulo_card'){
+                    elemento.classList.add('titulo_card');
+                }
+            }
+        }
+    }
+    
     elemento.innerHTML =  value;
     return elemento;
 }
