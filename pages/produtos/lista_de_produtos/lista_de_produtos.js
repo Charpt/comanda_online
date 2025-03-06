@@ -83,7 +83,7 @@ dados.forEach(dados => {
 
     const li = Criar_lista_dos_dados(dados)   
     
-    li.appendChild(CriarImagemDosDados());    
+   // li.appendChild(CriarImagemDosDados());    
     li.appendChild(Criar_Paragrafos(""+dados.produto)).classList.add('titulo_card');
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> status: <b class=info_item>"+dados.status));   
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> codigo: <b class=info_item>"+dados.codigo)).classList.add('text_info_card');   

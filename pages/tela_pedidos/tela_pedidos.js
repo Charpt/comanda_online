@@ -45,7 +45,7 @@ function buscar_itens_pedidos_ativos(user){
          removeLoading();
  
          inserir_dados_pedidos_ativos(dados);
-         console.log(dados);
+         //console.log(dados);
  
      }).catch(error =>
      {
@@ -71,18 +71,28 @@ const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comand
 
         const li = criar_elemento_li_com_os_dados(dados)    
 
-        li.appendChild(criar_elemento_p_com_o_valor("tempo de preparo "+dados.tempo_preparo,'tempo_preparo'));
-        li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,dados.forma_envio));
+        li.appendChild(criar_elemento_p_com_o_valor('nº'+dados.numero_carrinho,'numero_pedido'));
+        if(dados.reserva =='sim'){
+            li.appendChild(criar_elemento_p_com_o_valor('reservado','reservado'));
+        }
         
 
-        li.appendChild(criar_elemento_p_com_o_valor("Clinte: "+dados.nome_cliente+"<br>"+dados.endereco+": "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
-       
+        li.appendChild(criar_elemento_p_com_o_valor("tempo: "+dados.tempo_preparo,'tempo_preparo'));
+        li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,dados.forma_envio));
+        
+        if(dados.forma_envio == "entrega"){
+            li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente+"<br>"+dados.endereco+": "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
+
+        }else{
+            li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente,'titulo_card')); 
+        }
 
         // Itera sobre as propriedades do objeto `dados` para encontrar `td_item_prod_`
         for (const key in dados) {
             if (key.startsWith('td_item_prod_')) {
                 // Adiciona cada item como um novo parágrafo
-                li.appendChild(criar_elemento_p_com_o_valor(`${dados[key]}`),'item_infos');
+                li.appendChild(criar_elemento_p_com_o_valor('<br><b>'+extrairPalavrasEntreAspas(`${dados[key]}`)[0] +' - '+ extrairPalavrasEntreAspas(`${dados[key]}`)[1]+'</b>'+'<br><b class=color_observacao>'+extrairPalavrasEntreAspas(`${dados[key]}`)[2]+'</b>'),'item_info_pedidos');
+                
             }
         }
 
@@ -134,9 +144,14 @@ function criar_elemento_p_com_o_valor(value,info){
                     if(info == 'entrega'){
                         elemento.classList.add('entrega');
                     }else{
-                        if(info == 'item_infos'){
-                            elemento.classList.add('item_infos');
+                        if(info == 'item_info_pedidos'){
+                            elemento.classList.add('item_info_pedidos');
                             
+                        }else{
+                            if(info == 'reservado'){
+                                elemento.classList.add('reservado');
+                                
+                            }
                         }
                     }
                 }
@@ -162,4 +177,23 @@ function criar_elemento_button_com_evento(dados){
     });
     
     return botaoDeletar;
+}
+
+
+function removerAspasDuplas(str) {
+    // Remove todas as aspas duplas da string
+    return str.replace(/"/g, '-');
+}
+
+function extrairPalavrasEntreAspas(str) {
+    // Usa uma expressão regular para encontrar todas as palavras entre aspas duplas
+    const matches = str.match(/"(.*?)"/g);
+
+    // Se não houver matches, retorna um array vazio
+    if (!matches) {
+        return [];
+    }
+
+    // Remove as aspas duplas de cada match e retorna o array
+    return matches.map(match => match.replace(/"/g, ''));
 }

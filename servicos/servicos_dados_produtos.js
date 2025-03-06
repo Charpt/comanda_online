@@ -154,6 +154,7 @@ Buscar_pedidos: (user,colecao)  =>{
 // Função para deletar uma coleção ASSIM É PSSOVEL LIMPAR A COLECAO E COMEÇAR OUTRA 
 const deleteCollection = async (collectionPath) => {
     try {
+
         console.log(`Iniciando exclusão da coleção: ${collectionPath}`);
 
         // Obtém todos os documentos da coleção
@@ -163,6 +164,8 @@ const deleteCollection = async (collectionPath) => {
         if (querySnapshot.empty) {
             console.log("A coleção está vazia. Nada para deletar.");
             return;
+        }else{
+            criar_comanda_pedido();
         }
 
         // Confirmação do usuário
@@ -182,8 +185,11 @@ const deleteCollection = async (collectionPath) => {
         await batch.commit();
         console.log(`Todos os documentos da coleção ${collectionPath} foram deletados.`);
         alert("Coleção deletada com sucesso!");
+
+        
         Add_quantidade_de_carrinhos_fechados();
-       location.reload();
+        window.location.href = "../tela_pedidos/tela_pedidos.html";
+       
     } catch (error) {
         console.error("Erro ao deletar a coleção: ", error);
         alert("Erro ao deletar a coleção. Verifique o console para mais detalhes.");

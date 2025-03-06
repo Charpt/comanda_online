@@ -127,7 +127,28 @@ text-align: center;
    font-weight: 900;
 }
 
-.item_infos{
-   color: #050101;
+.item_info_pedidos{
+   color: #000000;
 font-weight: 900;
+}
+
+.reservado{
+   text-align: center;
+   background-color: #6d1717;
+   color: #ffffff;
+   border-radius: 2px;
+   font-size: 24pt;
+}
+
+button{
+   margin-top: 20px;
+}
+
+.color_observacao{
+color: #6d1717;
+}
+
+.numero_pedido{
+color: #000000;
+font-weight: 100;
 }

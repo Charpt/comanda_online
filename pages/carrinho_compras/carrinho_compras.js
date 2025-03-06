@@ -240,7 +240,7 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
-    td_item_1_produtos.innerHTML =dados.item_nome +"<br> <b class=obs> /"+ dados.observacao;
+    td_item_1_produtos.innerHTML = dados.item_nome +"<br> <b class=obs> \" \" "+ dados.observacao;
     td_item_1_produtos.id ='item_produto_tb_' + numero_item;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
@@ -461,7 +461,7 @@ function obter_dados_comanda_pedido() {
         if (elemento3) {
             // Armazena o conteúdo de texto no objeto
             
-            dados['td_item_prod_' + (i + 1)] = elemento2.textContent + "/"+elemento3.textContent|| elemento2.innerText + "/"+elemento3.innerText;
+            dados['td_item_prod_' + (i + 1)] = "\" "+elemento2.textContent + "\" \" "+elemento3.textContent+ " \"" ||  "\" "+elemento2.innerText + " \" \" "+elemento3.innerText+ " \"";
         } else {
             // Se o elemento não existir, armazena null ou uma mensagem de erro
             dados['td_item_cod_' + (i + 1)] = null;
@@ -517,7 +517,8 @@ function Cadastrar_Pedido(dados){
     .then(()=>{
        
 
-       window.location.href = "../tela_pedidos/tela_pedidos.html";
+       
+       
 
     }).catch(()=>{
        removeLoading();
