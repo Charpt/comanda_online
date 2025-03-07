@@ -6,8 +6,7 @@
 
 ol{
 
-   display: flex ;
-   flex-wrap: wrap;
+   display: block ;
    justify-content: space-between;
    align-items: center;
 }
@@ -26,7 +25,7 @@ ol{
     border-radius: 10px;
     box-shadow: 4px 4px 12px;
     text-transform:uppercase; 
-    margin: 5px;
+    margin-bottom: 50px;
 }
 
 

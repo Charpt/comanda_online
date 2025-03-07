@@ -35,6 +35,9 @@ if(!Item_novo_ou_atualizacao()){
     Buscar_uid_item(uid);
     
     
+}else{
+    // ele busca o ultimo id adicionado e adiciona mais um numero para que seja o id do item
+    add_ou_buscar_id_item('busca');
 }
 
 function Obter_informacao_url_uid(){
@@ -67,12 +70,12 @@ function Buscar_uid_item(uid){
 
         }else{
             alert("Documento nao encontrado");
-            window.location.href ="../lista_de_produtos/lista_de_produtos.html";
+            window.location.href ="../lista_de_item/lista_de_item.html";
         }
     }).catch(()=>{
         removeLoading();
         alert("Erro ao salvar Produto");
-        window.location.href ="../lista_de_produtos/lista_de_produtos.html";
+        window.location.href ="../lista_de_item/lista_de_item.html";
      });
      
 }
@@ -114,7 +117,7 @@ function Atualizar_dados_do_item(dados){
     dados_servicos.Atualizar_dados(dados)
      .then(()=>{
         
-        window.location.href = "../lista_de_produtos/lista_de_produtos.html";
+        window.location.href = "../lista_de_item/lista_de_item.html";
 
      }).catch(()=>{
         removeLoading();
@@ -130,9 +133,15 @@ function Atualizar_dados_do_item(dados){
 function CadastrarNovoProduto(dados){
      dados_servicos.Cadastrar_novo_dado(dados)
      .then(()=>{
-        
+    
+        add_ou_buscar_id_item("add");
 
-        window.location.href = "../lista_de_produtos/lista_de_produtos.html";
+        // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+        setTimeout(() => {
+            window.location.href = "../lista_de_item/lista_de_item.html";
+}, 1000); // 2000 milissegundos = 2 segundos
+        
+        
 
      }).catch(()=>{
         removeLoading();
@@ -161,7 +170,7 @@ function Inserir_dados_no_formulario_para_Atualizar(dados_produtos){
             }
         }
     }
-    form.codigo().value = dados_produtos.codigo;
+    form.codigo().innerText = dados_produtos.codigo;
     form.produto().value = dados_produtos.produto;
     form.unidade_medida().value = dados_produtos.unidade_medida;
     form.quantidade().value = dados_produtos.quantidade;
@@ -207,7 +216,7 @@ function criarProduto(){
     return{
         
         status: status_radio,
-        codigo: form.codigo().value,
+        codigo: parseInt(form.codigo().innerText),
         produto: form.produto().value.toUpperCase(),
         unidade_medida: form.unidade_medida().value,
         quantidade: form.quantidade().value,
@@ -235,14 +244,6 @@ function OnChangeDate_criacao(){
     form.date_criacaoInvalido().style.display = !date_criacao ? "block" : "none";
     ToggleCadastrarProdutoButton();
  
-}
-
-
-function OnChangeCodigo(){
-    const codigo = form.codigo().value;
-    form.codigoObrigatorio().style.display = codigo ? "none":"block";
-    form.codigoInvalido().style.display = codigo  <= 0 ? "block": "none";   
-    ToggleCadastrarProdutoButton();
 }
 
 function OnChangeProduto(){
@@ -278,10 +279,6 @@ function ToggleCadastrarProdutoButton(){
 }
 
 function isFromValid(){
-    const codigo = form.codigo().value;
-    if(!codigo || codigo <= 0){
-        return false;
-    }
 
     const produto = form.produto().value;
     if(!produto){
@@ -319,8 +316,6 @@ const form = {
     status_pausado:() => document.getElementById('status_pausado_id'),
 
     codigo:() => document.getElementById('codigo_id'),
-    codigoObrigatorio:() => document.getElementById('codigo_obrigatorio_id'),
-    codigoInvalido:() => document.getElementById('codigo_invalido_id'),
 
     produto:() => document.getElementById('produto_nome_id'),    
 
@@ -343,3 +338,41 @@ const form = {
    
     
 }
+
+// funcao que crias o id do item verificando o ultimo id registrado no banco de dados e adicionando mais um numero nele ou buscando o id para visualizar
+async function add_ou_buscar_id_item(add_ou_busca) {
+
+    const docRef = db.collection("contador").doc("ultimoNumero");
+
+    try {
+        // Inicia uma transação para garantir que o número seja único
+        const nextNumber = await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+
+            let ultimoNumero;
+            if (doc.exists) {
+                ultimoNumero = doc.data().numero;
+            } else {
+                ultimoNumero = 0; // Começa do zero se o documento não existir
+            }
+
+            const proximoNumero = ultimoNumero + 1;
+
+            // Atualiza o último número no Firestore
+            if(add_ou_busca == "add"){
+                transaction.set(docRef, { numero: proximoNumero });
+                console.log("entramos")
+                
+            }
+            
+
+            return proximoNumero;
+        });
+
+        // Exibe o próximo número para o usuário
+        document.getElementById("codigo_id").innerText = " " + nextNumber;
+    } catch (error) {
+        console.error("Erro ao obter o próximo número: ", error);
+    }
+}
+

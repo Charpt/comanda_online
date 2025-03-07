@@ -27,7 +27,7 @@ function deslogar(){
 /****************** FUNÇÃO PARA ABRIR A PAGINA DE CADASTRO DOS ITENS *****************************************/
 /*******************************************************************************************/
 function CadastrarProdutoPage(){
-    window.location.href ="../cadastrar_produtos/cadastrar_produtos.html";
+    window.location.href ="../cadastrar_item/cadastrar_item.html";
 }
 
 
@@ -115,7 +115,7 @@ function Criar_lista_dos_dados(dados){
     li.id = dados.uid;
     
     li.addEventListener('click',()=> {
-        window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
+        window.location.href ="../cadastrar_item/cadastrar_item.html?uid="+dados.uid;
     })
     return li;
 }

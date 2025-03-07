@@ -162,16 +162,16 @@ const deleteCollection = async (collectionPath) => {
 
         // Verifica se há documentos para deletar
         if (querySnapshot.empty) {
-            console.log("A coleção está vazia. Nada para deletar.");
+            alert("O CARRINHO ESTA VAZIO .");
             return;
         }else{
             criar_comanda_pedido();
         }
 
         // Confirmação do usuário
-        const userConfirmed = confirm(`Tem certeza que deseja deletar a coleção "${collectionPath}"? Esta ação não pode ser desfeita.`);
+        const userConfirmed = confirm(`DESEJA FINALIZAR COMPRA?`);
         if (!userConfirmed) {
-            console.log("Exclusão cancelada pelo usuário.");
+            console.log("OPERACAO CANCELADA PELO USUARIO.");
             return;
         }
 
@@ -183,8 +183,8 @@ const deleteCollection = async (collectionPath) => {
 
         // Executa o batch
         await batch.commit();
-        console.log(`Todos os documentos da coleção ${collectionPath} foram deletados.`);
-        alert("Coleção deletada com sucesso!");
+        
+        alert("COMPRA FINALIZADA COM SUCESSO!!!");
 
         
         Add_quantidade_de_carrinhos_fechados();
