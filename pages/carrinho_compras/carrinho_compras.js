@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * CRIAR A COMANDA DO PEDIDO
  */
 function criar_comanda_pedido(){
-    const dados =obter_dados_comanda_pedido();
+    const dados = obter_dados_comanda_pedido();
 
     Cadastrar_Pedido(dados);
 }
@@ -394,7 +394,7 @@ function obter_dados_comanda_pedido() {
         
         dados['numero_carrinho'] = form.id_carrinho().textContent;
 
-        dados['status'] =   "ativo";
+        dados['status'] =   "preparando";
 
         dados['forma_envio'] =   "entrega";
 

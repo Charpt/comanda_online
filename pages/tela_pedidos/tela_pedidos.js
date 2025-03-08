@@ -30,30 +30,57 @@ firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
         
-       buscar_itens_pedidos_ativos(user);
+        buscar_itens_pedidos_ativos(user);
         
     }
 })
 
+const status_selecao = document.getElementById('selecao_status_pedidos_id');
+
+// Recuperar o valor selecionado do localStorage
+var selecao = localStorage.getItem('selecao');
+if (selecao) {
+    document.getElementById('selecao_status_pedidos_id').value = selecao;
+}
+status_selecao.addEventListener('change', function() {
+    localStorage.setItem('selecao', status_selecao.value);
+    window.location.href ="tela_pedidos.html?status_selecao="+status_selecao.value;
+});
+
+
+
+function Obter_informacao_url_uid(){
+    const urlParametros = new URLSearchParams(window.location.search);
+    //retorna o parametro da url que seja = uid  ex... pagina.html  ? uid = MvPYiwBPTfT1jwPnLjnw
+    return urlParametros.get('status_selecao');
+}
+
+
 function buscar_itens_pedidos_ativos(user){
 
-    ShowLoading();
+// Escuta mudanças na coleção "minhaColecao"
+db.collection("pedidos")
+.where('user.uid','==', user.uid)
+.where('status','==', Obter_informacao_url_uid())
+.orderBy('numero_carrinho','asc')
+.onSnapshot((querySnapshot) => {
+removeLoading();
+const dados = querySnapshot.docs.map(doc => (
+        {
+            ...doc.data(),
+            uid: doc.id
+        }));
 
-    dados_servicos.Buscar_pedidos(user,'pedidos')
-    .then(dados =>
-     {
-         removeLoading();
- 
-         inserir_dados_pedidos_ativos(dados);
-         //console.log(dados);
- 
-     }).catch(error =>
-     {
-         removeLoading();
-         console.log(error);
-         alert("Erro ao recuperar dados");
-    })
+        playBeep();
+        inserir_dados_pedidos_ativos(dados);
+
+  });
+
 }
+
+
+
+
 
 
 /*******************************************************************************************/
@@ -65,7 +92,10 @@ function buscar_itens_pedidos_ativos(user){
 
 function inserir_dados_pedidos_ativos(dados){
 
+
 const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
+
+orderList.innerHTML = "";
 
      dados.forEach(dados => {
 
@@ -97,8 +127,10 @@ const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comand
         }
 
        
-            
-        li.appendChild(criar_elemento_button_com_evento(dados));
+           
+        li.appendChild(criar_elemento_button_com_evento(dados,status_selecao.value));
+
+
     orderList.appendChild(li);
     });
      console.log('inserindo dados de identificacao');
@@ -167,17 +199,90 @@ function criar_elemento_p_com_o_valor(value,info){
 /** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (BUTTON) QUE TEM O EVENTO DE CLIQUE PARA ACIOANR UM EVENTO 
 /*******************************************************************************************/
 
-function criar_elemento_button_com_evento(dados){
+function criar_elemento_button_com_evento(dados,tela){
+    
     const botaoDeletar = document.createElement('button');
-    botaoDeletar.innerHTML =  "FINALIZAR PEDIDO";
+
+
+if(tela == 'preparando'){
+    botaoDeletar.innerHTML =  "PEDIDO PRONTO";
     botaoDeletar.addEventListener('click',Event => {
         Event.stopPropagation();
-        //DesejaDeletarProduto(dados);
+        console.log(dados.uid);
+        dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('pronto'));
+                // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+                setTimeout(() => {
+                    location.reload();
+        }, 1000); // 1000 milissegundos = 1 segundos
 
     });
+}else{
+
+    if(tela == 'pronto'){
+        botaoDeletar.innerHTML =  "ROTA DE ENTREGA";
+        botaoDeletar.addEventListener('click',Event => {
+            Event.stopPropagation();
+            console.log(dados.uid);
+            dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('rota entrega'));
+                    // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+                    setTimeout(() => {
+                        location.reload();
+            }, 1000); // 1000 milissegundos = 1 segundos
+    
+        });
+    }else{
+    
+        if(tela == 'rota entrega'){
+            botaoDeletar.innerHTML =  "FINALIZAR";
+            botaoDeletar.addEventListener('click',Event => {
+                Event.stopPropagation();
+                console.log(dados.uid);
+                dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('finalizados'));
+                        // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+                        setTimeout(() => {
+                            location.reload();
+                }, 1000); // 1000 milissegundos = 1 segundos
+        
+            });
+        }else{
+
+            if(tela == 'finalizados'){
+                botaoDeletar.innerHTML =  "ver informcações";
+                botaoDeletar.addEventListener('click',Event => {
+                    Event.stopPropagation();
+                    /*console.log(dados.uid);
+                    dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('finalizados'));
+                            // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+                            setTimeout(() => {
+                                location.reload();
+                    }, 1000); // 1000 milissegundos = 1 segundos
+            */
+                });
+
+
+            }else{
+    
+                
+            
+            }
+        
+        }
+    }
+
+}
     
     return botaoDeletar;
 }
+
+  
+    function mudar_status_comanda_pedidos(status) {
+
+        var dados = {}; // Objeto para armazenar os dados
+        dados['status'] =  status;
+        return dados; // Retorna o objeto com todos os dados
+    }
+
+    
 
 
 function removerAspasDuplas(str) {
@@ -197,3 +302,4 @@ function extrairPalavrasEntreAspas(str) {
     // Remove as aspas duplas de cada match e retorna o array
     return matches.map(match => match.replace(/"/g, ''));
 }
+

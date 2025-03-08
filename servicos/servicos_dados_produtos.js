@@ -130,24 +130,34 @@ const dados_servicos ={
 
 
 //BUSCA OS PRODUTOS JA CADASTRADOS
-Buscar_pedidos: (user,colecao)  =>{
+Buscar_pedidos: (user,colecao,status)  =>{
         
     return firebase.firestore()
      .collection(colecao)
      .where('user.uid','==', user.uid)
+     .where('status','==', status)
      .orderBy('numero_carrinho','asc')
-     .get()
-     .then(snapshot =>
-     {
-         return snapshot.docs.map(doc => (
-             {
-                 ...doc.data(),
-                 uid: doc.id
-             }));
-     }) 
+     .onSnapshot((querySnapshot) => {
+        
+        removeLoading();
+        return querySnapshot.docs.map(doc => (
+                {
+                    ...doc.data(),
+                    uid: doc.id
+                }));
+             }); 
  },
 
 
+
+
+// ATUALIZA OS ITEN JA CADASTRADOS nos pedidos
+Atualizar_dados_pedidos: (colecao,doc,dados_produtos) =>{
+    return firebase.firestore()
+    .collection(colecao)
+    .doc(doc)
+    .update(dados_produtos);
+},
 
 }
 
@@ -188,7 +198,8 @@ const deleteCollection = async (collectionPath) => {
 
         
         Add_quantidade_de_carrinhos_fechados();
-        window.location.href = "../tela_pedidos/tela_pedidos.html";
+       // window.location.href = "../tela_pedidos/tela_pedidos.html?status_selecao=preparando";
+       location.reload();
        
     } catch (error) {
         console.error("Erro ao deletar a coleção: ", error);
@@ -197,5 +208,13 @@ const deleteCollection = async (collectionPath) => {
 };
 
 
-
+function playBeep() {
+    var context = new (window.AudioContext || window.webkitAudioContext)();
+    var oscillator = context.createOscillator();
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(440, context.currentTime); // valor em Hz
+    oscillator.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.1); // duração do beep em segundos
+}
 
