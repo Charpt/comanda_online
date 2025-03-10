@@ -1,77 +1,24 @@
-*{
-    margin: 0;
-    padding: 0;
-    
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* Estilos padrão (para PCs e telas maiores) */
+body {
+    font-size: 18px;
+    background-color: lightblue;
 }
 
-.container {
-    background-color: #fff;
+header {
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+    background-color: navy;
+    color: white;
 }
 
-input[type="text"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
+/* Estilos para telas menores (celulares) */
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 14px;
+        background-color: lightcoral;
+    }
 
-button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-#loading {
-    margin-top: 10px;
-    color: #555;
-    font-style: italic;
-}
-
-.hidden {
-    display: none;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background-color: #f8f9fa;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
-    background-color: #218838;
-    text-align: start;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    header {
+        padding: 10px;
+        background-color: darkred;
+    }
 }

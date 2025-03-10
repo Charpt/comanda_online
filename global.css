@@ -1,5 +1,8 @@
 *{ margin: 0;
 padding: 0;}
+
+/*@media only screen and (max-width: 600px) {}*/
+
 /*************************************/
   /* CONFIGURACAO DA ANIMACAO DE CARREGAMENTO*/
 /*************************************/
@@ -181,8 +184,12 @@ select{
 }
 
 .formulario .formulario_margem_para_cada_elemento{
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  
+  padding: 5px;
+  background-color: #b1906f;
+  border-radius: 2px;
 }
 
 
@@ -217,16 +224,17 @@ select{
 
 
 
-  input[type="text"],button{
+  input[type="text"],input[type="select"],input[type="number"],input[type="datetime-local"],button{
     color: black;
     padding: 10px;
-    
+    font-size: 12pt;
+    font-weight: 700;
+    text-transform: uppercase;
     width: -webkit-fill-available;
   }
+
   
-  input[type="radio"]{
-    width: auto;
-  }
+
 
 
   footer{

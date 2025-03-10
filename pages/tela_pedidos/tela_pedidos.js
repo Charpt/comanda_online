@@ -92,22 +92,28 @@ const dados = querySnapshot.docs.map(doc => (
 
 function inserir_dados_pedidos_ativos(dados){
 
-
+    
 const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comanda');
 
 orderList.innerHTML = "";
 
      dados.forEach(dados => {
 
-        const li = criar_elemento_li_com_os_dados(dados)    
+        
 
+
+        const li = criar_elemento_li_com_os_dados(dados)    
+        
         li.appendChild(criar_elemento_p_com_o_valor('nº'+dados.numero_carrinho,'numero_pedido'));
+
         if(dados.reserva =='sim'){
             li.appendChild(criar_elemento_p_com_o_valor('reservado','reservado'));
         }
         
+        
 
-        li.appendChild(criar_elemento_p_com_o_valor("tempo: "+dados.tempo_preparo,'tempo_preparo'));
+        li.appendChild(criar_elemento_p_com_o_valor("tempo: "+dados.tempo_preparo,'tempo_preparo',dados.uid));
+        
         li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,dados.forma_envio));
         
         if(dados.forma_envio == "entrega"){
@@ -126,13 +132,16 @@ orderList.innerHTML = "";
             }
         }
 
-       
+        
            
         li.appendChild(criar_elemento_button_com_evento(dados,status_selecao.value));
 
-
+        
     orderList.appendChild(li);
+
     });
+
+    
      console.log('inserindo dados de identificacao');
 }
 
@@ -149,6 +158,7 @@ function criar_elemento_li_com_os_dados(dados){
     li.classList.add('ativo');
     li.classList.add('card');
     li.id = dados.uid;
+
     
     li.addEventListener('click',()=> {
         //window.location.href ="../cadastrar_produtos/cadastrar_produtos.html?uid="+dados.uid;
@@ -159,13 +169,17 @@ function criar_elemento_li_com_os_dados(dados){
 /*******************************************************************************************/
 /** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) QUE REPRESENTA UM PARAGRAFO DAS INFORMAÇÕES DOS ITENS  
 /*******************************************************************************************/
-function criar_elemento_p_com_o_valor(value,info){
+function criar_elemento_p_com_o_valor(value,info,uid_item){
     const elemento = document.createElement('p');
+
     if(info == 'retirada'){
         elemento.classList.add('retirada');
     }else{
         if(info == 'tempo_preparo'){
             elemento.classList.add('tempo_preparo');
+               
+            
+            
         }else{
             if(info == 'nome_cliente'){
                 elemento.classList.add('nome_cliente');

@@ -175,6 +175,9 @@ function Inserir_dados_no_formulario_para_Atualizar(dados_produtos){
     form.unidade_medida().value = dados_produtos.unidade_medida;
     form.quantidade().value = dados_produtos.quantidade;
     form.preco().value = dados_produtos.preco;
+    form.tempo_preparo_hora().value = dados_produtos.tempo_preparo_hora;
+    form.tempo_preparo_minuto().value = dados_produtos.tempo_preparo_minuto;
+    
     form.observacao().value = dados_produtos.observacao;
     form.date_criacao().value = dados_produtos.date_criacao;
 
@@ -221,6 +224,8 @@ function criarProduto(){
         unidade_medida: form.unidade_medida().value,
         quantidade: form.quantidade().value,
         preco: form.preco().value,
+        tempo_preparo_hora: form.tempo_preparo_hora().value,
+        tempo_preparo_minuto: form.tempo_preparo_minuto().value,
         observacao: form.observacao().value,
         user:{
             uid: firebase.auth().currentUser.uid
@@ -268,6 +273,19 @@ function OnChangePreco(){
     ToggleCadastrarProdutoButton();
 }
 
+function OnChangeTempo_preparo_hora(){
+    const tempo_preparo_hora = form.tempo_preparo_hora().value;
+    form.tempo_preparo().style.display = tempo_preparo_hora  < 60 ? "none": "block";
+    ToggleCadastrarProdutoButton();
+}
+function OnChangeTempo_preparo_minuto(){
+    const tempo_preparo_minuto = form.tempo_preparo_minuto().value;
+    form.tempo_preparo().style.display = tempo_preparo_minuto  < 60 ? "none": "block";
+
+    ToggleCadastrarProdutoButton();
+}
+
+
 
 
 
@@ -294,8 +312,16 @@ function isFromValid(){
     if(!preco || preco <= 0){
         return false;
     }
-   
-        return true;   
+
+
+    const tempo_preparo_minuto = form.tempo_preparo_minuto().value;
+    const tempo_preparo_hora = form.tempo_preparo_hora().value;
+
+    if(!tempo_preparo_minuto && !tempo_preparo_hora || tempo_preparo_hora<=0 && tempo_preparo_minuto <= 0){
+        console.log('horas');
+        return false;
+    } 
+     return true;   
 
 
 }
@@ -331,6 +357,11 @@ const form = {
     preco:() => document.getElementById('preco_id'),
     precoObrigatorio:() => document.getElementById('preco_obrigatorio_id'),
     precoInvalido:() => document.getElementById('preco_invalido_id'),
+
+    tempo_preparo_hora:() => document.getElementById('tempo_preparo_hora_id'),
+    tempo_preparo_minuto:() => document.getElementById('tempo_preparo_minuto_id'),
+    tempo_preparo_segundos:() => document.getElementById('tempo_preparo_segundos_id'),
+    tempo_preparo:() => document.getElementById('tempo_preparo_id'),
 
     observacao:() => document.getElementById('observacao_id'),
 
@@ -370,7 +401,7 @@ async function add_ou_buscar_id_item(add_ou_busca) {
         });
 
         // Exibe o próximo número para o usuário
-        document.getElementById("codigo_id").innerText = " " + nextNumber;
+        document.getElementById("codigo_id").innerText = "" + nextNumber;
     } catch (error) {
         console.error("Erro ao obter o próximo número: ", error);
     }

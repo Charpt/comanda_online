@@ -33,7 +33,7 @@
                <nav>
                    <ul>
                     <li><a href="../../home/home.html">INICIO</a></li>
-                    <li><a href="../lista_de_item/lista_de_item.html">PRODUTOS</a></li>
+                    <li><a href="../lista_de_item/lista_de_item.html?status_selecao=preparando">PRODUTOS</a></li>
                     <li><a href="../../carrinho_compras/carrinho_compras.html">NOVA VENDA</a></li>
                     <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
                        
@@ -55,8 +55,12 @@
     
     <main class="centralizar">
         <form>
-            <div class="formulario">           
-           
+            <div class="formulario">   
+
+                <div class="formulario_margem_para_cada_elemento">
+                    <label for="">Codigo: <label id="codigo_id"></label></label>
+                </div>
+
             <div class="formulario_margem_para_cada_elemento">
                 <div><label>DATA:</label></div>
                 <input type="datetime-local" name="date_criacao" id="date_criacao_id" onchange="OnChangeDate_criacao()">
@@ -67,19 +71,17 @@
             <div class="formulario_margem_para_cada_elemento">
             <div><label>Status:</label></div>
             
-            <input type="radio"  name="type" checked id="status_ativo_id"> <label for="status_ativo_id">ativo</label>
+             <label for="status_ativo_id" class="radio_label"><input type="radio"  name="type" checked id="status_ativo_id"> ativo</label>
 
-            <input type="radio"  name="type"  id="status_desativado_id"> <label for="status_desativado_id">desativado</label>
+           <label for="status_desativado_id" class="radio_label"> <input type="radio"  name="type"  id="status_desativado_id"> desativado</label>
 
-            <input type="radio"  name="type"  id="status_falta_id"> <label for="status_falta_id">falta</label>
+             <label for="status_falta_id" class="radio_label"><input type="radio"  name="type"  id="status_falta_id">falta</label>
 
-            <input type="radio"  name="type"  id="status_pausado_id"> <label for="status_pausado_id">pausado</label>
+            <label for="status_pausado_id" class="radio_label"><input type="radio"  name="type"  id="status_pausado_id"> pausado</label>
+        
             </div>
             
-            <div class="formulario_margem_para_cada_elemento">
-                <div><label>Codigo:<label id="codigo_id"></label></label></div>
-                
-            </div>
+           
 
             <div class="formulario_margem_para_cada_elemento">
                 <div><label>Produto:</label></div>
@@ -110,6 +112,19 @@
                 <input type="number" step="0.01" min="0.01" name="preco"  id="preco_id" onchange="OnChangePreco()" placeholder="ex: 10,99">
                 <div class="error" id="preco_obrigatorio_id">Preço  é Obrigatorio</div>
                 <div class="error" id="preco_invalido_id">Preço Invalido</div>
+            </div>
+
+            <div class="formulario_margem_para_cada_elemento">
+                <div><label>TEMPO DE PREPARO</label></div>
+
+                <input type="number" step="0" min="0" name="tempo_preparo_hora" class="tempo_preparo_input" id="tempo_preparo_hora_id" onchange="OnChangeTempo_preparo_hora()"  placeholder="0">
+                <input type="number" step="0" min="0"  max="59" name="tempo_preparo_minuto"  class="tempo_preparo_input" id="tempo_preparo_minuto_id" onchange="OnChangeTempo_preparo_minuto()"  placeholder="0 A 59">
+
+
+                <div class="error" id="tempo_preparo_id">minutos deve ser menor ou igual a 59</div>
+                
+                
+                
             </div>
 
             <div class="formulario_margem_para_cada_elemento">

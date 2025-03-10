@@ -410,7 +410,7 @@ function obter_dados_comanda_pedido() {
         
         dados['forma_pagamento'] = form.forma_pagamento().value;
 
-        dados['tempo_preparo'] =   "00:40:00";
+        dados['tempo_preparo'] =   +"00";
 
         dados['data_pedido'] =   "2025-02-21T00:05";
 
