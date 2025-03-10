@@ -82,11 +82,17 @@ const searchFirestore = async (searchText) => {
 
                             item_unidade_medida_id.textContent =doc.data().unidade_medida;
                             item_quantidade_id.value = doc.data().quantidade;
+
                             item_preco_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-                            item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (doc.data().preco * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
+
+                            item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (parseFloat(formatarDinheiro(doc.data().preco)) * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
 
                             item_quantidade_id.addEventListener('input',()=>{
-                            item_valor_total_id.textContent = doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})+" x "+item_quantidade_id.value +" = "+ (doc.data().preco * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
+                                
+                            item_valor_total_id.textContent = 
+                            doc.data().preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+                            +" x "+item_quantidade_id.value +" = "+ 
+                            (parseFloat(formatarDinheiro(doc.data().preco))  * item_quantidade_id.value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) ;
                                 
                             })
 
@@ -169,7 +175,9 @@ function criarProduto(){
         item_nome: document.getElementById('item_selecionado_id').textContent,
         unidade_medida: document.getElementById('item_unidade_medida_id').textContent,
         quantidade: parseInt(document.getElementById('item_quantidade_id').value),
-        unidade_preco: parseFloat(document.getElementById('item_preco_id').textContent),
+
+        unidade_preco: parseFloat(formatarDinheiro(document.getElementById('item_preco_id').textContent)),
+
         observacao: document.getElementById('item_observacao_id').value,
         uid_principal: document.getElementById('item_uid_principal_id').textContent,
         user:{

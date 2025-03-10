@@ -247,13 +247,13 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
     tr_tbody.appendChild(td_item_1_produtos);
 
     const td_item_1_uni_preco = document.createElement('td');
-    td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('en', {minimumFractionDigits: 2});
+    td_item_1_uni_preco.innerHTML =(dados.unidade_preco).toLocaleString('pt-br', {minimumFractionDigits: 2});
     td_item_1_uni_preco.id ='item_uni_preco_tb_' + numero_item;
     tr_tbody.appendChild(td_item_1_uni_preco);
 
     const td_item_1_preco = document.createElement('td');
     td_item_1_preco.classList.add('evidente');
-    td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('en', {minimumFractionDigits: 2});
+    td_item_1_preco.innerHTML =(dados.unidade_preco * dados.quantidade).toLocaleString('pt-br', {minimumFractionDigits: 2});
     td_item_1_preco.id ='item_preco_tb_' + numero_item;
     tr_tbody.appendChild(td_item_1_preco);
  
@@ -275,8 +275,8 @@ function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
 
     for(let i =1; i< tabela.rows.length;i++){
 
-        const valorCelula = String(tabela.rows[i].cells[indice_Coluna].innerHTML);
-
+        const valorCelula = String(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
+console.log(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
 
         soma+= parseFloat(valorCelula) || 0;
         //console.log(parseFloat(valorCelula).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
@@ -352,14 +352,65 @@ document.addEventListener('DOMContentLoaded', function() {
     radioButtons.forEach(radio => {
         radio.addEventListener('change', function() {
             if (this.value === 'entrega') {
-                opcao_entrega_id.style.display = "block";
+                esconder_select_lugares_id.style.display = "block";
+            esconder_select_condominios_id.style.display = "block";
+            esconder_select_bloco_id.style.display = "block";
+            esconder_select_ap_id.style.display = "block";
+            digite_endereco_id.style.display = "none";
+
             } else if (this.value === 'retirada') {
-                opcao_entrega_id.style.display = "none";
+
+            esconder_select_lugares_id.style.display = "none";
+            esconder_select_condominios_id.style.display = "none";
+            esconder_select_bloco_id.style.display = "none";
+            esconder_select_ap_id.style.display = "none";
+            digite_endereco_id.style.display = "none";
                 
             }
         });
     });
 });
+
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA ESCONDER OU MOSTRAR AS OPÇOES DE ENTREGAR NO CONDOMINIO *****************************************/
+/*******************************************************************************************/
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const selectElement = document.querySelector('select[name="opcao_endereco"]');
+    const digite_endereco_id = document.getElementById('digite_endereco_id');
+    const esconder_select_lugares_id = document.getElementById('esconder_select_lugares_id');
+    const esconder_select_condominios_id = document.getElementById('esconder_select_condominios_id'); 
+    const esconder_select_bloco_id = document.getElementById('esconder_select_bloco_id');
+    const esconder_select_ap_id = document.getElementById('esconder_select_ap_id');
+
+    selectElement.addEventListener('change', function() {
+        if (this.value === 'condominio') {
+            esconder_select_lugares_id.style.display = "block";
+            esconder_select_condominios_id.style.display = "block";
+            esconder_select_bloco_id.style.display = "block";
+            esconder_select_ap_id.style.display = "block";
+            digite_endereco_id.style.display = "none";
+
+        } else if (this.value === 'casa') {
+            esconder_select_lugares_id.style.display = "block";
+            esconder_select_bloco_id.style.display = "none";
+            esconder_select_ap_id.style.display = "none";
+            digite_endereco_id.style.display = "block";
+           
+            esconder_select_condominios_id.style.display = "none";
+        } else if (this.value === 'empresa') {
+            esconder_select_lugares_id.style.display = "none";
+            esconder_select_condominios_id.style.display = "none";
+            esconder_select_bloco_id.style.display = "none";
+            esconder_select_ap_id.style.display = "none";
+            digite_endereco_id.style.display = "block";
+            
+        }
+    });
+});
+
+
 
 
 /*************************************************
@@ -410,7 +461,7 @@ function obter_dados_comanda_pedido() {
         
         dados['forma_pagamento'] = form.forma_pagamento().value;
 
-        dados['tempo_preparo'] =   +"00";
+        dados['tempo_preparo'] =   "00:40:00";
 
         dados['data_pedido'] =   "2025-02-21T00:05";
 
@@ -427,17 +478,12 @@ function obter_dados_comanda_pedido() {
 
         }
 
-        dados['numero_carrinho'] = form.id_carrinho().textContent;
-        dados['status'] =   "ativo";
-
+    dados['numero_carrinho'] = form.id_carrinho().textContent;
+    dados['status'] =   "preparando";
     dados['forma_envio'] =   "retirada";
-
     dados['nome_cliente'] = form.nome_cliente().value;
-    
     dados['forma_pagamento'] = form.forma_pagamento().value;
-
     dados['tempo_preparo'] =   "00:40:00";
-
     dados['data_pedido'] =   "2025-02-21T00:05";
 
     }

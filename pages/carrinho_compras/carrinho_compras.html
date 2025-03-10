@@ -39,9 +39,9 @@
                <nav>
                    <ul>
                     <li><a href="../../index.html">INICIO</a></li>
-                    <li><a href="../cadastro_e_listagem_item/lista_de_item/lista_de_item.html?status_selecao=preparando">PRODUTOS</a></li>
+                    <li><a href="../cadastro_e_listagem_item/lista_de_item/lista_de_item.html">PRODUTOS</a></li>
                     <li><a href="#">VENDA</a></li>
-                    <li><a href="../tela_pedidos/tela_pedidos.html">PEDIDOS</a></li>
+                    <li><a href="../tela_pedidos/tela_pedidos.html?status_selecao=preparando">PEDIDOS</a></li>
                     <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
                        
                    </ul>
@@ -118,43 +118,48 @@
                 
     
                 </div>
-
-                <div id="opcao_entrega_id">
-
-                        <div class="formulario_margem_para_cada_elemento">
-                    <label>Endereco:</label>
-                    <select id="selecao_endereco_id">
-                        <option selected>Condominio</option>
-                        <option>Loja</option>
-                        <option>Casa</option>
-                        <option>Empresa</option>
-                    </select>
-                    </div>    
+                
+                <div id="esconder_select_lugares_id" class="formulario_margem_para_cada_elemento">
+                        <label>Endereco:</label>
+                        <select id="selecao_endereco_id" name="opcao_endereco">
+                            <option id="condominio_id" value="condominio" selected>condominio</option>
+                            <option  id="casa_id"  value="casa" >casa</option>
+                            <option  id="empresa_id"  value="empresa" >empresa</option>
+                        </select>
+                        </div> 
+                      
                     
-                    <div class="formulario_margem_para_cada_elemento">
+                    <div id="esconder_select_condominios_id" class="formulario_margem_para_cada_elemento">
                         <select id="selecao_condominio_id">
                             <option selected>SANTA LUCIA</option>
                             <option>vila Alegre</option>
                             <option>Monica</option>
                             <option>Bolevard</option>
                         </select>
-                    
+
+                        
+
                         </div>
                     
-                        <div>
+                        <div id="esconder_select_bloco_id">
                             <label >BLoco: </label>
                             <input type="text" id="bloco_id" placeholder="EX... 16">
                         </div>
                     
                         
-                        <div>
+                        <div id="esconder_select_ap_id">
                             <label >AP: </label>
                             <input type="text" id="apartamento_id" placeholder="EX... 303">
                         </div>
 
                         
-                </div>
                 
+
+                <div id="digite_endereco_id">
+                    <label >DIGITE O ENDEREÇO </label>
+                    <input type="text" id="endereco_digitado_id" placeholder="AVENIDA RIVER, 465, AGUA CHATA, GUARULHOS-SP">
+                </div>
+
                 <div>
                     <label >nome cliente: </label>
                     <input type="text" id="nome_cliente_id" placeholder="roberto">
@@ -202,6 +207,7 @@
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 <script src="../../firebase_init.js"></script>
+<script src="../../servicos/formatacao_dinheiro.js"></script>
 <script src="carrinho_compras.js"></script>
 
 

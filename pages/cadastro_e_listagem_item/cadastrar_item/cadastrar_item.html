@@ -33,8 +33,10 @@
                <nav>
                    <ul>
                     <li><a href="../../home/home.html">INICIO</a></li>
-                    <li><a href="../lista_de_item/lista_de_item.html?status_selecao=preparando">PRODUTOS</a></li>
+                    <li><a href="../lista_de_item/lista_de_item.html">PRODUTOS</a></li>
                     <li><a href="../../carrinho_compras/carrinho_compras.html">NOVA VENDA</a></li>
+                    <li><a href="../../tela_pedidos/tela_pedidos.html?status_selecao=preparando">PEDIDOS</a></li>
+                    
                     <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
                        
                    </ul>
@@ -109,7 +111,7 @@
             
             <div class="formulario_margem_para_cada_elemento">
                 <div><label>PREÇO:</label></div>
-                <input type="number" step="0.01" min="0.01" name="preco"  id="preco_id" onchange="OnChangePreco()" placeholder="ex: 10,99">
+                <input type="text" name="preco"  id="preco_id" onchange="OnChangePreco()" placeholder="ex: 10,99">
                 <div class="error" id="preco_obrigatorio_id">Preço  é Obrigatorio</div>
                 <div class="error" id="preco_invalido_id">Preço Invalido</div>
             </div>
