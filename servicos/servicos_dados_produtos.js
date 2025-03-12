@@ -6,12 +6,13 @@ const dados_servicos ={
  **************************************************************/
 
 //BUSCA OS PRODUTOS JA CADASTRADOS
-    BuscarPorUsuario: user  =>{
+    Buscar_Item: (colecao,user,status,campo,ordem)  =>{
         
        return firebase.firestore()
-        .collection('produtos')
+        .collection(colecao)
         .where('user.uid','==', user.uid)
-        .orderBy('codigo','asc')
+        .where('status','==', status)
+        .orderBy(campo,ordem)
         .get()
         .then(snapshot =>
         {
@@ -24,10 +25,10 @@ const dados_servicos ={
     },
 
 // DELETA OS ITEM CADASTRADOS
-    DeleteDados: dados_produtos =>{
+    Delete_item: (colecao,uid_do_item) =>{
         return firebase.firestore()
-        .collection('produtos')
-        .doc(dados_produtos.uid)
+        .collection(colecao)
+        .doc(uid_do_item)
         .delete();
     },
 
@@ -92,34 +93,6 @@ const dados_servicos ={
     },
 
 
-
-// busca quantos carrinhos de compras ja foram vendidos finalizados fechados
-    Buscar_Carrinho_de_Compras_quantidade: user  =>{
-        
-        return firebase.firestore()
-         .collection('quant_carrinhos_compra')
-         .where('user.uid','==', user.uid)
-         .get()
-         .then(snapshot =>
-         {
-              return snapshot.docs.map(doc => (
-             {
-                 ...doc.data(),
-                 uid: doc.id
-             }));
- 
-             
-         })
- 
-         
-     },
-// atualiza a quantidade de carrinhos ja vendidos pra dar o novo numero ao carrinho atual
-     Atualizar_quantidade_carrinho_finalizado: quantidade_para_atualizar => {
-        return firebase.firestore()
-        .collection('quant_carrinhos_compra')
-        .doc('2DSs00ACRiil1spiwPM4')
-        .update(quantidade_para_atualizar);
-    },
    
     //CADASTRA NOVOS ITENS
     Cadastrar_novo_pedido: (dados_produtos,caminho_colecao) => {
@@ -161,51 +134,7 @@ Atualizar_dados_pedidos: (colecao,doc,dados_produtos) =>{
 
 }
 
-// Função para deletar uma coleção ASSIM É PSSOVEL LIMPAR A COLECAO E COMEÇAR OUTRA 
-const deleteCollection = async (collectionPath) => {
-    try {
 
-        console.log(`Iniciando exclusão da coleção: ${collectionPath}`);
-
-        // Obtém todos os documentos da coleção
-        const querySnapshot = await db.collection(collectionPath).get();
-
-        // Verifica se há documentos para deletar
-        if (querySnapshot.empty) {
-            alert("O CARRINHO ESTA VAZIO .");
-            return;
-        }else{
-            criar_comanda_pedido();
-        }
-
-        // Confirmação do usuário
-        const userConfirmed = confirm(`DESEJA FINALIZAR COMPRA?`);
-        if (!userConfirmed) {
-            console.log("OPERACAO CANCELADA PELO USUARIO.");
-            return;
-        }
-
-        // Deleta cada documento
-        const batch = db.batch(); // Usa um batch para deletar em lote
-        querySnapshot.forEach(doc => {
-            batch.delete(doc.ref); // Adiciona a operação de exclusão ao batch
-        });
-
-        // Executa o batch
-        await batch.commit();
-        
-        alert("COMPRA FINALIZADA COM SUCESSO!!!");
-
-        
-        Add_quantidade_de_carrinhos_fechados();
-       // window.location.href = "../tela_pedidos/tela_pedidos.html?status_selecao=preparando";
-       location.reload();
-       
-    } catch (error) {
-        console.error("Erro ao deletar a coleção: ", error);
-        alert("Erro ao deletar a coleção. Verifique o console para mais detalhes.");
-    }
-};
 
 
 function playBeep() {
@@ -218,3 +147,66 @@ function playBeep() {
     oscillator.stop(context.currentTime + 0.1); // duração do beep em segundos
 }
 
+/************************************************************************************************************** */
+// funcao que cria o id do item verificando o ultimo id registrado no banco de dados
+//  e adicionando mais um numero nele ou buscando o id para visualizar
+/*************************************************************************************************************** */
+
+async function add_ou_buscar_id_item(add_ou_busca,colecao,documento,elemento_id) {
+
+    const docRef = db.collection(colecao).doc(documento);
+
+    try {
+        // Inicia uma transação para garantir que o número seja único
+        const nextNumber = await db.runTransaction(async (transaction) => {
+            const doc = await transaction.get(docRef);
+
+            let ultimoNumero;
+            if (doc.exists) {
+                ultimoNumero = doc.data().id;
+            } else {
+                ultimoNumero = 0; // Começa do zero se o documento não existir
+            }
+
+            const proximoNumero = ultimoNumero + 1;
+
+            // Atualiza o último número no Firestore
+            if(add_ou_busca == "add"){
+                transaction.set(docRef, { id: proximoNumero });
+                               
+            }
+            
+
+            return proximoNumero;
+        });
+
+        // Exibe o próximo número para o usuário
+        document.getElementById(elemento_id).innerText = "" + nextNumber;
+    } catch (error) {
+        console.error("Erro ao obter o próximo número: ", error);
+    }
+}
+
+
+function recordar_dados(elemento_id,limpar_dados){
+    // Verifica se há um valor salvo no localStorage
+const input = document.getElementById(elemento_id);
+
+const savedValue = localStorage.getItem(elemento_id);
+
+if(limpar_dados == 'nao_limpar_dados'){
+    if (savedValue) {
+        input.value = savedValue; // Preenche o input com o valor salvo
+    }
+    
+    // Salva o valor no localStorage sempre que o usuário digitar algo
+    input.addEventListener('input', function() {
+        localStorage.setItem(elemento_id, this.value);
+    });
+
+}else{
+
+    localStorage.setItem(elemento_id, "");
+}
+
+}

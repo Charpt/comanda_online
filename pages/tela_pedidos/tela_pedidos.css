@@ -140,7 +140,7 @@ font-weight: 900;
    font-size: 24pt;
 }
 
-button{
+.button_acao_pedidos{
    margin-top: 20px;
 }
 
@@ -160,6 +160,3 @@ text-transform: uppercase;
 text-align: center;
 }
 
-.label_input{
-   
-}

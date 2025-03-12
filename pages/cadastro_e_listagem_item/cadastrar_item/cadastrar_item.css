@@ -33,3 +33,12 @@ input[type="radio"]{
 .div tempo_preparo_input{
     background-color: aliceblue;
 }
+
+#botao_delete_id{
+    display: none;
+    background-color: brown;
+    color: beige;
+    font-weight: 900;
+}
+
+

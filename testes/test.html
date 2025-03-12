@@ -13,11 +13,18 @@
 
     <body>
 
-        <div class="container">
-            <label for="valor">Digite o valor:</label>
-            <input type="text" id="valor" placeholder="0,00">
+    <!-- Botão para abrir o modal -->
+    <button id="openModal">Abrir Caixa de Alerta</button>
+
+    <!-- CAIXA DE DIALOGO PARA CONFIRMAR DELETAR ITEM -->
+    <div id="customAlert" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>SENHA PARA DELETAR</h2>
+            <input type="password" id="passwordInput" placeholder="Senha">
+            <button id="submitPassword">Enviar</button>
         </div>
-    
+    </div>
         
     
        

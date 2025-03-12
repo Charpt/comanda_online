@@ -48,3 +48,11 @@ ul  {
 #item_uid_principal_id{
     text-transform: none;
 }
+
+#pesquisa_codigo_name{
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+#item_uid_principal_id{
+    display: none;
+}

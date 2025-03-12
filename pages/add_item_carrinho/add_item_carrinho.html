@@ -39,7 +39,7 @@
                    <ul>
                         <li><a href="../../index.html">INICIO</a></li>
                         <li><a href="../cadastro_e_listagem_item/lista_de_item/lista_de_item.html">PRODUTOS</a></li>
-                        <li><a href="../carrinho_compras/carrinho_compras.html">NOVA VENDA</a></li>
+                        <li><a href="../carrinho_compras/carrinho_compras.html">VENDA</a></li>
                         <li><a href="../tela_pedidos/tela_pedidos.html?status_selecao=preparando">PEDIDOS</a></li>
                         <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
                    </ul>
@@ -65,8 +65,8 @@
         <DIV class="formulario">
 
         <div class="formulario_margem_para_cada_elemento">
-            <div><label>PESQUISAR POR CODIGO OU NOME:</label></div>
-            <input type="text" name="pesquisa"  id="pesquisa_codigo_name" placeholder="ex: 123 ex: frango grelhado">
+            <div><label>PESQUISAR POR NOME:</label></div>
+            <input type="text" name="pesquisa"  id="pesquisa_codigo_name" placeholder="ex: frango grelhado">
             <div class="error" id="codigo_obrigatorio_id">Codigo é Obrigatorio</div>
             <div class="error" id="codigo_invalido_id">codigo Invalido</div>
         </div>
@@ -82,11 +82,8 @@
                 
             </div>
 
-            <div class="formulario_margem_para_cada_elemento">
-                <div><label>uid_p: </label><label id="item_uid_principal_id" class="item_uid_principal_selecionado">#</label></div>
-                
-                
-            </div>
+            <!---- nescessario para quardar o numero do uid do item-->
+            <label id="item_uid_principal_id" class="item_uid_principal_selecionado">#</label>
             
 
             <div class="formulario_margem_para_cada_elemento">

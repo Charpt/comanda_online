@@ -25,85 +25,9 @@ firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
         buscarDados(user);// BUSCA AS INFORMAÇÕES DOS ITENS JA CADASTRADOS NO CARRINHO ATUAL
-        obter_quantidade_de_carrinhos_fechados(user); // BUSCA A QUANTIDADE DE CARINHOS JA CADASTRADOS 
+        add_ou_buscar_id_item('busca','ultimo_id_carrinho_adicionado','ultimo_id_carrinho_adicionado','carrinho_id');
     }
 })
-
-
-/*******************************************************************************************/
-/****************** FUNÇÃO PARA OBTER QUANTOS CARINHOS DE COMPRAS JA FORAM CONCLUIDOS
- * E RETORNAR O VALOR PARA A VARIAVEL NUMERO *******/
-/*******************************************************************************************/
-
-var numero;
-function obter_quantidade_de_carrinhos_fechados(user){
-    const numero_de_carrinho1 = document.getElementById('quantidade_carrinhos1')
-    const numero_de_carrinho = document.createElement('label');
-    dados_servicos.Buscar_Carrinho_de_Compras_quantidade(user)
-    .then(dados =>
-     {
-        dados.forEach(dados => {    
-            
-            numero_de_carrinho.classList.add('quantidade_carrinhos');
-            numero_de_carrinho.id ='quantidade_carrinhos2';
-
-            numero_de_carrinho.innerHTML = (dados.quantidade + 1);
-            numero = (dados.quantidade + 1);
-       
-            numero_de_carrinho1.appendChild(numero_de_carrinho);
-
-     });
-     }).catch(error =>
-     {
-         removeLoading();
-         console.log(error);
-         alert("Erro ao recuperar dados");
-    })
-    return numero;
-
-}
-
-// INSERINDO A QUANTIDADE NO CARRINHO 
-function Add_quantidade_de_carrinhos_fechados(){
-    const dados = criar_novo_numero_carrinho();
-    ShowLoading();
-    
-    Atualizar_quantidade_carrinho_fechado(dados);
-
-
-}
-
-
-
-
-function Atualizar_quantidade_carrinho_fechado(dados){
-    dados_servicos.Atualizar_quantidade_carrinho_finalizado(dados)
-    .then(()=>{
-        
-        console.log("novo numero de carrinho criado" + dados.quantidade);
-       
-
-    }).catch(()=>{
-       removeLoading();
-       alert("Erro ao salvar Produto");
-    })
-}
-
-
-function criar_novo_numero_carrinho(){
-    
-    return{
-        quantidade:  numero,
-        user:{
-            uid: firebase.auth().currentUser.uid
-        }
-    }
-}
-
-
-
-
-
 
 /***************************************************************************
  *  BUSCA OS DADOS 
@@ -137,19 +61,7 @@ function Add_Item_Carrinho(){
 }
 
 
-// Verifica se há um valor salvo no localStorage
-const input = document.getElementById('bloco_id');
 
-const savedValue = localStorage.getItem('inputValue');
-
-if (savedValue) {
-    input.value = savedValue; // Preenche o input com o valor salvo
-}
-
-// Salva o valor no localStorage sempre que o usuário digitar algo
-input.addEventListener('input', function() {
-    localStorage.setItem('inputValue', this.value);
-});
 
 
 function Criar_Carrinho_de_Compras(dados){ 
@@ -160,8 +72,8 @@ function Criar_Carrinho_de_Compras(dados){
 
     const caption = document.createElement('caption');
     caption.classList.add('evidente_destaque_1');
-    caption.id = ('capition_endereco');
-    caption.innerHTML = "Produtos";
+    caption.id = ('capition_carrinho_vazio');
+    caption.innerHTML = "CARRINHO VAZIO";
     carrinho.appendChild(caption);
 
 Criar_Colunas_Carrinho_de_Compras(carrinho);
@@ -215,7 +127,16 @@ function Criar_Colunas_Carrinho_de_Compras(carrinho){
 }
 
 
+
 function Add_Item_Carrinho_de_Compras(carrinho, dados,numero_item){
+
+
+    const capition = document.getElementById('capition_carrinho_vazio');
+    capition.style.display = 'none';
+
+// dados que precisa ser recordados
+recordar_dados_formulario('nao_limpar_dados');
+
 
     const tbody = document.createElement('tbody');
     carrinho.appendChild(tbody);
@@ -295,7 +216,7 @@ console.log(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
 // funcao para perguntar se deseja deletar produtotos do carrinho
  function Deseja_Deletar_Produto_carrinho_de_compras(dados)
 {
-    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO AAAA');
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
     if(desejaDeletarProduto == true){
         Deletar_Produto_carrinho_de_compras(dados);
     }
@@ -307,9 +228,15 @@ function Deletar_Produto_carrinho_de_compras(dados){
 
     dados_servicos.Delete_dados_carrinho_de_compras(dados)
    .then(snapshot =>{
+    
     removeLoading();
+            // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+            setTimeout(() => {
 
-    document.getElementById(dados.uid).remove();
+                location.reload();
+                
+            }, 1000); // 1000 milissegundos = 1 segundos
+    
 
    }).catch(error =>{
     removeLoading();
@@ -443,7 +370,7 @@ function obter_dados_comanda_pedido() {
 
         }
         
-        dados['numero_carrinho'] = form.id_carrinho().textContent;
+        dados['numero_carrinho'] = form.carrinho_id().textContent;
 
         dados['status'] =   "preparando";
 
@@ -478,7 +405,7 @@ function obter_dados_comanda_pedido() {
 
         }
 
-    dados['numero_carrinho'] = form.id_carrinho().textContent;
+    dados['numero_carrinho'] = form.carrinho_id().textContent;
     dados['status'] =   "preparando";
     dados['forma_envio'] =   "retirada";
     dados['nome_cliente'] = form.nome_cliente().value;
@@ -548,7 +475,7 @@ function obter_dados_comanda_pedido() {
         forma_pagamento:() => document.getElementById('selecao_forma_pagamento_id'),
 
         //observacao:() => document.getElementById('observacao_id'),   
-        id_carrinho:() => document.getElementById('quantidade_carrinhos1'),
+        carrinho_id:() => document.getElementById('carrinho_id'),
         
         
     }
@@ -570,4 +497,66 @@ function Cadastrar_Pedido(dados){
        removeLoading();
        alert("Erro ao salvar Produto");
     })
+}
+
+
+
+// Função para deletar uma coleção ASSIM É PSSOVEL LIMPAR A COLECAO E COMEÇAR OUTRA 
+const deleteCollection = async (collectionPath) => {
+    try {
+
+        console.log(`Iniciando exclusão da coleção: ${collectionPath}`);
+
+        // Obtém todos os documentos da coleção
+        const querySnapshot = await db.collection(collectionPath).get();
+
+        // Verifica se há documentos para deletar
+        if (querySnapshot.empty) {
+            alert("O CARRINHO ESTA VAZIO .");
+            return;
+        }else{
+            criar_comanda_pedido();
+        }
+
+        // Confirmação do usuário
+        const userConfirmed = confirm(`DESEJA FINALIZAR COMPRA?`);
+        if (!userConfirmed) {
+            console.log("OPERACAO CANCELADA PELO USUARIO.");
+            return;
+        }
+
+        // Deleta cada documento
+        const batch = db.batch(); // Usa um batch para deletar em lote
+        querySnapshot.forEach(doc => {
+            batch.delete(doc.ref); // Adiciona a operação de exclusão ao batch
+        });
+
+        // Executa o batch
+        await batch.commit();
+        
+        alert("COMPRA FINALIZADA COM SUCESSO!!!");
+
+        recordar_dados_formulario('limpar_dados');
+        add_ou_buscar_id_item('add','ultimo_id_carrinho_adicionado','ultimo_id_carrinho_adicionado','carrinho_id');
+       
+        // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+        setTimeout(() => {
+
+            location.reload();
+
+        }, 1000); // 1000 milissegundos = 1 segundos
+       
+       
+    } catch (error) {
+        console.error("Erro ao deletar a coleção: ", error);
+        alert("Erro ao deletar a coleção. Verifique o console para mais detalhes.");
+    }
+};
+
+function recordar_dados_formulario(limpar){
+
+    recordar_dados('bloco_id',limpar);
+    recordar_dados('apartamento_id',limpar);
+    recordar_dados('nome_cliente_id',limpar);
+
 }

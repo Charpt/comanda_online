@@ -96,4 +96,10 @@ font-weight: 0;
 }
 
 
-
+#botao_add_item_carrinho_id{
+    margin-top:15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px;
+    background-color: #9ebd77;
+}

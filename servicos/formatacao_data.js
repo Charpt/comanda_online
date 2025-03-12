@@ -14,4 +14,4 @@ function formatar_data(date){
 
     const dataatual = new Date();
 
-    document.getElementById('date_criacao_id').value = formatar_data(dataatual);
+    document.getElementById('date_criacao_id').value = formatar_data(dataatual);88

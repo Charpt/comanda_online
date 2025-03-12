@@ -113,4 +113,4 @@ function OnchangePassword(){
         botaoRegistrar:()=>document.getElementById('password_id'),
 }
 
-    
+    recordar_dados('email_id','nao_limpar_dados');

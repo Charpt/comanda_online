@@ -34,48 +34,38 @@ function CadastrarProdutoPage(){
 
 /******************************************************************************************
 O METODO onAuthStateChanged VERIFICA SE TEVE ALGUMA ALTERAÇÃO NO STATUS DO USUARIO LOGADO
-SE O USUSARIO ESTIVER LOGADO ELE EXECULTA O BUSCAR DADOS
+SE O USUSARIO ESTIVER LOGADO ELE EXECULTA A BUSCAR DADOS
 /*******************************************************************************************/
 
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
-        buscarDados(user);
+        ShowLoading();
+        dados_servicos.Buscar_Item('produtos',user,'ativo','codigo','asc')
+        .then(dados =>
+         {
+             removeLoading();
+             Add_Dados_nos_Elementos(dados);
+     
+         }).catch(error =>
+         {
+             removeLoading();
+             console.log(error);
+             alert("Erro ao recuperar dados");
+        })
     }
 })
 
 
 
-/*******************************************************************************************/
-/** FUNÇÃO PARA BUSCAR DENTRO DO BANCO DE DADOS OS DADOS DOS ITENS CADASTRADOS 
-/*******************************************************************************************/
 
-function buscarDados(user)
-{
-
-    ShowLoading();
-
-   dados_servicos.BuscarPorUsuario(user)
-   .then(dados =>
-    {
-        removeLoading();
-
-        AddDados(dados);
-
-    }).catch(error =>
-    {
-        removeLoading();
-        console.log(error);
-        alert("Erro ao recuperar dados");
-   })
-}
 
 /*******************************************************************************************/
 /** FUNÇÃO PARA ADICIONAR OS ITENS DO BANCO DE DADOS EM UM LISTA ORDENADA ASSIM ADICIONAMOS
  * OS DADOS DOS ITENS NO LI
 /*******************************************************************************************/
 
-function AddDados(dados){
+function Add_Dados_nos_Elementos(dados){
 
 const orderList = document.getElementById('lista_dados');
 
@@ -92,11 +82,10 @@ dados.forEach(dados => {
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> Acompanhamenentos: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
     li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> unidade de medida: <b class=info_item>"+dados.unidade_medida)).classList.add('text_info_card');    
     li.appendChild(Criar_Paragrafos( "<b class=texto_indicador_info> data da criação: <b class=info_item>"+formatar_date(dados.date_criacao))).classList.add('text_info_card');
-    li.appendChild(CriarBotaoDelete(dados));
     orderList.appendChild(li);
     
     
-console.log(dados);
+
     
 });
 
@@ -124,11 +113,13 @@ function Criar_lista_dos_dados(dados){
 /** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (BUTTON) QUE TEM O EVENTO DE CLIQUE PARA ACIOANR UM EVENTO 
 /*******************************************************************************************/
 
-function CriarBotaoDelete(dados){
+function Criar_Botao_Delete(dados){
     const botaoDeletar = document.createElement('button');
+
     botaoDeletar.innerHTML =  "deletar";
     botaoDeletar.classList.add("outline");
     botaoDeletar.classList.add("danger");
+
     botaoDeletar.addEventListener('click',Event => {
         Event.stopPropagation();
         DesejaDeletarProduto(dados);
@@ -156,30 +147,7 @@ function CriarImagemDosDados(){
     return img;
 }
 
-function DesejaDeletarProduto(dados)
-{
-    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
-    if(desejaDeletarProduto == true){
-        DeletarProduto(dados);
-    }
 
-}
-
-function DeletarProduto(dados){
-    ShowLoading();
-
-    dados_servicos.DeleteDados(dados)
-   .then(snapshot =>{
-    removeLoading();
-
-    document.getElementById(dados.uid).remove();
-
-   }).catch(error =>{
-    removeLoading();
-    console.log(error);
-    alert("Erro ao deletar dados");
-   })
-}
 
 
 function formatar_date(data){

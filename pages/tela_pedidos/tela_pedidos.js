@@ -117,7 +117,13 @@ orderList.innerHTML = "";
         li.appendChild(criar_elemento_p_com_o_valor(dados.forma_envio,dados.forma_envio));
         
         if(dados.forma_envio == "entrega"){
-            li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente+"<br>"+dados.endereco+": "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
+            if(dados.endereco == 'condominio'){
+                li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente+"<br>Cond: "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
+
+            }else{
+                li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente+"<br>"+dados.endereco+": "+dados.nome_condominios+" - B "+dados.bloco+" AP "+dados.apartamento,'titulo_card')); 
+
+            }
 
         }else{
             li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente,'titulo_card')); 
@@ -215,12 +221,13 @@ function criar_elemento_p_com_o_valor(value,info,uid_item){
 
 function criar_elemento_button_com_evento(dados,tela){
     
-    const botaoDeletar = document.createElement('button');
-
+    const button_acao_pedidos = document.createElement('button');
+    
+    button_acao_pedidos.classList.add('button_acao_pedidos');
 
 if(tela == 'preparando'){
-    botaoDeletar.innerHTML =  "PEDIDO PRONTO";
-    botaoDeletar.addEventListener('click',Event => {
+    button_acao_pedidos.innerHTML =  "PEDIDO PRONTO";
+    button_acao_pedidos.addEventListener('click',Event => {
         Event.stopPropagation();
         console.log(dados.uid);
         dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('pronto'));
@@ -233,8 +240,8 @@ if(tela == 'preparando'){
 }else{
 
     if(tela == 'pronto'){
-        botaoDeletar.innerHTML =  "ROTA DE ENTREGA";
-        botaoDeletar.addEventListener('click',Event => {
+        button_acao_pedidos.innerHTML =  "ROTA DE ENTREGA";
+        button_acao_pedidos.addEventListener('click',Event => {
             Event.stopPropagation();
             console.log(dados.uid);
             dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('rota entrega'));
@@ -247,8 +254,8 @@ if(tela == 'preparando'){
     }else{
     
         if(tela == 'rota entrega'){
-            botaoDeletar.innerHTML =  "FINALIZAR";
-            botaoDeletar.addEventListener('click',Event => {
+            button_acao_pedidos.innerHTML =  "FINALIZAR";
+            button_acao_pedidos.addEventListener('click',Event => {
                 Event.stopPropagation();
                 console.log(dados.uid);
                 dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('finalizados'));
@@ -261,8 +268,8 @@ if(tela == 'preparando'){
         }else{
 
             if(tela == 'finalizados'){
-                botaoDeletar.innerHTML =  "ver informcações";
-                botaoDeletar.addEventListener('click',Event => {
+                button_acao_pedidos.innerHTML =  "ver informcações";
+                button_acao_pedidos.addEventListener('click',Event => {
                     Event.stopPropagation();
                     /*console.log(dados.uid);
                     dados_servicos.Atualizar_dados_pedidos('pedidos',dados.uid,mudar_status_comanda_pedidos('finalizados'));
@@ -285,7 +292,7 @@ if(tela == 'preparando'){
 
 }
     
-    return botaoDeletar;
+    return button_acao_pedidos;
 }
 
   

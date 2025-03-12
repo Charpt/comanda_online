@@ -8,6 +8,9 @@ firebase.auth().onAuthStateChanged(user =>{
     }
 })
 
+
+
+
 /*******************************************************************************************/
 /****************** FUNÇÃO PARA DESLOGAR O USUARIO *****************************************/
 /*******************************************************************************************/
@@ -20,14 +23,24 @@ function deslogar(){
     })
 }
 
+
+
+
+
 /******************************************************************************************
-*FUNÇÃO PARA VERIFICAR COMO CHEGAMOS A PAGINA DE CADASTRAR NOVO ITEM
-* SE CASO CHEGAMOS AQUI ATRAVEZ DE TER CLICADO EM UM PRODUTO, ISSO SIGNIFICA QUE IREMOS ATUALIZAR OS DADOS DO ITEM
+*FUNÇÃO PARA VERIFICAR COMO CHEGAMOS A PAGINA DE "CADASTRAR NOVO ITEM"
+* SE CASO CHEGAMOS AQUI ATRAVEZ DE TER CLICADO EM UM PRODUTO NA PAGINA LISTA DE PRODUTOS,
+ ISSO SIGNIFICA QUE IREMOS ATUALIZAR OS DADOS DO ITEM
  SE NAO IREMOS INICIAR UM NOVO CADASRTO
 
  ESSA INFORMAÇÃO FOI ENVIADA ATRAVES DA URLSearchParams ENVIANDO O UID DO ITEM CLICADO
 /*******************************************************************************************/
-// se NovoProdutoOuAtualizacao retornar verdadadeiro ele pega a informaçaõ da funcao Obter_informacao_url_uid e coloca na variavel uid e faz a busca no bancod e dados pela uid
+// SE(Item_novo_ou_atualizacao)  retornar verdadadeiro
+//  ele pega a informaçaõ da funcao Obter_informacao_url_uid e coloca na variavel uid
+//  e faz a busca no banco de dados pela uid
+// SE NAO ELE CHAMA A FUNCAO add_ou_buscar_id_item
+//  QUE BUSCA NO BANCO DE DADOS O ULTIMO ID CODIGO ADICIONADO
+//  E SOMA MAIS 1 NESSE ID PARA SER USADO COMO ID DO PROXIMO ITEM
 if(!Item_novo_ou_atualizacao()){
 
     
@@ -37,7 +50,11 @@ if(!Item_novo_ou_atualizacao()){
     
 }else{
     // ele busca o ultimo id adicionado e adiciona mais um numero para que seja o id do item
-    add_ou_buscar_id_item('busca');
+    // para usar vc precisa fornecer a ele a 
+    // funcao 'add' ou 'busca' 
+    // a colecao e o documento 
+    // e qual elemento_id html ira receber os dados trazidos do banco de dados use uma label
+    add_ou_buscar_id_item('busca','ultimo_id_adicionado','ultimo_id_adicionado','codigo_id');
 }
 
 function Obter_informacao_url_uid(){
@@ -50,6 +67,11 @@ function Obter_informacao_url_uid(){
 function Item_novo_ou_atualizacao(){
     return Obter_informacao_url_uid() ? false : true;
 }
+
+
+
+
+
 
 /**************************************************
  * BUSCA UM DOCUMENTO QUE TENHA A UID DE PROCURA 
@@ -66,6 +88,7 @@ function Buscar_uid_item(uid){
         if(doc.exists){
             removeLoading();
             Inserir_dados_no_formulario_para_Atualizar(doc.data());
+            
             ToggleCadastrarProdutoButton();
 
         }else{
@@ -80,37 +103,119 @@ function Buscar_uid_item(uid){
      
 }
 
+/**************************************************
+ * FUNCAO PARA ADICIONAR AS INFORMAÇÕES BUSCADA PELA FUNCAO Buscar_uid_item(uid)
+ * NOS ELEMENTOS DA TELA DE ATUALIZACAO
+ ****************************************************/
+
+function Inserir_dados_no_formulario_para_Atualizar(dados){
+
+// DADOS PARA SEREM INSERIDO 
+
+    if(dados.status == "status_ativo"){
+        form.status_ativo().checked = true;
+
+    }else{
+        if(dados.status == "desativado"){
+            form.status_desativado().checked = true;
+    
+        }else{
+            if(dados.status == "falta"){
+                form.status_falta().checked = true;
+        
+            }else{
+                if(dados.status == "pausado"){
+                    form.status_pausado().checked = true;
+            
+                }
+            }
+        }
+    }
+    form.codigo().innerText = dados.codigo;
+    form.produto().value = dados.produto;
+    form.unidade_medida().value = dados.unidade_medida;
+    form.quantidade().value = dados.quantidade;
+    form.preco().value = dados.preco;
+    form.tempo_preparo_hora().value = dados.tempo_preparo_hora;
+    form.tempo_preparo_minuto().value = dados.tempo_preparo_minuto;
+    
+    form.observacao().value = dados.observacao;
+    form.date_criacao().value = dados.date_criacao;
+
+    
+    form.botao_delete_id().style.display = 'block';
+
+}
+
+
+
+
+// se caso um item foi buscado para atualizacao ele tbm pode ser deletado
+function Deseja_Deletar_item(colecao,uid_do_item)
+{
+    
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    if(desejaDeletarProduto == true){
+        ShowLoading();
+        
+        dados_servicos.Delete_item(colecao,uid_do_item)
+       .then(snapshot =>{
+        removeLoading();
+    
+        
+        // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+        setTimeout(() => {
+    
+    
+            window.location.href ="../lista_de_item/lista_de_item.html";
+            
+        }, 1000); // 1000 milissegundos = 1 segundos
+    
+       }).catch(error =>{
+        removeLoading();
+        console.log(error);
+        alert("Erro ao deletar dados");
+       })
+    }
+
+}
+
+
 
 
 /*******************************************************************************************/
-/****************** FUNÇÃO PARA CADASTRAR NOVO ITEM *****************************************/
+/****************** FUNÇÃO PARA VERIFICAR SE O USUARIO QUER ATUALIZAR OU CADASTRAR UM ITEM */
 /*******************************************************************************************/
 
 
-function CadastrarProduto(){
+function Verificar_Atualizacao_ou_Cadastro(){
 
+// cria uma pequena animacao de carregamento na tela
 ShowLoading();
 
+// cria um objeto com as informações do item
+const dados = Criar_Item();
 
+//retorna o parametro da url que seja = uid  ex... pagina.html  ? uid = MvPYiwBPTfT1jwPnLjnw
 
-    const dados = criarProduto();
-    
+// A FUNÇÃO CadastrarNovoProduto(dados); É CHAMADA SE O VALOR FOR VAZIO EM Obter_informacao_url_uid()
 
+// A FUNCAO Atualizar_dados_do_item(dados); É CHAMADA SE O VALOR FOR IGUAL A UID DO ITEM EM Obter_informacao_url_uid()
     if(!Obter_informacao_url_uid()){
-        
+
         CadastrarNovoProduto(dados);
 
     }else{
 
         Atualizar_dados_do_item(dados);
-    }
 
-
-    
+    }  
 }
+
+
 /******************************************************
- * ATUALIZA OS DADOS DOS ITENS
- *********************************************/
+ * FUNCAO PARA ATUALIZAR OS DADOS CADASTRADOS DOS ITENS 
+ ********************************************************/
 function Atualizar_dados_do_item(dados){
 
     ShowLoading();
@@ -127,6 +232,9 @@ function Atualizar_dados_do_item(dados){
 }
 
 
+
+
+
 /******************************************************
  * CADASTRA NOVOS ITENS
  *********************************************/
@@ -134,12 +242,13 @@ function CadastrarNovoProduto(dados){
      dados_servicos.Cadastrar_novo_dado(dados)
      .then(()=>{
     
-        add_ou_buscar_id_item("add");
+        
+        add_ou_buscar_id_item("add",'ultimo_id_adicionado','ultimo_id_adicionado','codigo_id');
 
-        // faz essperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+        // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
         setTimeout(() => {
             window.location.href = "../lista_de_item/lista_de_item.html";
-}, 1000); // 2000 milissegundos = 2 segundos
+}, 1000); // 1000 milissegundos = 1 segundos
         
         
 
@@ -149,45 +258,14 @@ function CadastrarNovoProduto(dados){
      })
 }
 
-function Inserir_dados_no_formulario_para_Atualizar(dados_produtos){
 
-    if(dados_produtos.status == "status_ativo"){
-        form.status_ativo().checked = true;
 
-    }else{
-        if(dados_produtos.status == "desativado"){
-            form.status_desativado().checked = true;
-    
-        }else{
-            if(dados_produtos.status == "falta"){
-                form.status_falta().checked = true;
-        
-            }else{
-                if(dados_produtos.status == "pausado"){
-                    form.status_pausado().checked = true;
-            
-                }
-            }
-        }
-    }
-    form.codigo().innerText = dados_produtos.codigo;
-    form.produto().value = dados_produtos.produto;
-    form.unidade_medida().value = dados_produtos.unidade_medida;
-    form.quantidade().value = dados_produtos.quantidade;
-    form.preco().value = dados_produtos.preco;
-    form.tempo_preparo_hora().value = dados_produtos.tempo_preparo_hora;
-    form.tempo_preparo_minuto().value = dados_produtos.tempo_preparo_minuto;
-    
-    form.observacao().value = dados_produtos.observacao;
-    form.date_criacao().value = dados_produtos.date_criacao;
 
-    
 
-    
-
-}
-
-function criarProduto(){
+/*********************************************************************
+ * FUNÇÃO PARA CRIAR O OBJETO ITEM QUE SERA SALVO NO BANCO DE DADOS
+ **************************************************************/
+function Criar_Item(){
 
     var status_radio = "vazio";
 
@@ -211,10 +289,6 @@ function criarProduto(){
         }
 
     }
-    
-
-    
-   
 
     return{
         
@@ -232,16 +306,14 @@ function criarProduto(){
 
         },
         date_criacao: form.date_criacao().value
-
-        
-       
-
-        
-
     }
 }
 
 
+
+/*********************************************************************
+ * FUNÇÃO PARA VALIDAÇÃO DO FORMULARIO
+ **************************************************************/
 
 function OnChangeDate_criacao(){
     
@@ -286,11 +358,6 @@ function OnChangeTempo_preparo_minuto(){
 }
 
 
-
-
-
-
-
 function ToggleCadastrarProdutoButton(){
     form.btnCadastrar().disabled = !isFromValid();
     
@@ -326,6 +393,11 @@ function isFromValid(){
 
 }
 
+/*********************************************************************
+ * FUNÇÃO PARA ASSOCIAR OS ELEMENTOS HTML PELO ID
+ * , ASSIM CONSEGUINDO BUSCAR AS INFORMAÇÃO DIGITADAS NOS FORMULARIOS
+ *  E CONSEGUINDO INSERIR AS INFORMAÇÕES CASO SEJA SOLICITADO UMA ATUALIZACAO DOS DADOS 
+ **************************************************************/
 
 const form = {
 
@@ -366,76 +438,60 @@ const form = {
     observacao:() => document.getElementById('observacao_id'),
 
     btnCadastrar:() => document.getElementById('btnCadastrarProduto_id'),
+    botao_delete_id :() =>  document.getElementById('botao_delete_id'),
    
     
 }
 
+// FUNCAO PARA CRIAR UMA MASCARA MONETARIA NO CAMPO PREÇO, EM UM INPUT DO TIPO TEXT, VOCE SO PRECISA PASSAR O ID DO ELEMENTO INPUT TEXT
+// A FUNCAO COMPLETA ESTA NO ARQUIVO serviços_dados_produtos.js
+Mascara_monetaria_input('preco_id');
 
-document.getElementById('preco_id').addEventListener('input', function (e) {
-    let valor = e.target.value;
 
-    // Remove tudo que não é número
-    valor = valor.replace(/\D/g, '');
 
-    // Se não houver valor, define como "0,00"
-    if (valor === '') {
-        e.target.value = '0,00';
-        return;
+
+// funcao que abre a caixa de dialogo caso queira deletar um item
+document.addEventListener('DOMContentLoaded', function() {
+    // Pegar elementos do DOM
+    var modal = document.getElementById('customAlert');
+    var btn = document.getElementById('botao_delete_id');
+    var span = document.getElementsByClassName('close')[0];
+    var submitBtn = document.getElementById('submitPassword');
+    var passwordInput = document.getElementById('passwordInput');
+
+    // Abrir o modal quando o botão é clicado
+    btn.onclick = function() {
+        modal.style.display = 'block';
     }
 
-    // Garante que o valor tenha pelo menos 2 dígitos (para centavos)
-    if (valor.length === 1) {
-        valor = '0' + valor;
+    // Fechar o modal quando o botão de fechar é clicado
+    span.onclick = function() {
+        modal.style.display = 'none';
     }
 
-    // Separa reais e centavos
-    const reais = valor.slice(0, -2) || '0'; // Se não houver reais, define como "0"
-    const centavos = valor.slice(-2);
+    // Fechar o modal quando o usuário clica fora dele
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
 
-    // Remove zeros à frente dos reais
-    const reaisSemZeros = String(Number(reais)); // Converte para número e depois para string para remover zeros à frente
+    // Validar a senha quando o botão de enviar é clicado
+    submitBtn.onclick = function() {
+        var password = passwordInput.value;
+        if (password === "123") { // Substitua "senha123" pela senha desejada
+            alert('Senha correta!');
+            Deseja_Deletar_item('produtos',Obter_informacao_url_uid());
 
-    // Formata os reais com pontos para milhares
-    const reaisFormatados = reaisSemZeros.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    // Atualiza o valor no campo de entrada
-    e.target.value = `${reaisFormatados},${centavos}`;
-});
-
-// funcao que crias o id do item verificando o ultimo id registrado no banco de dados e adicionando mais um numero nele ou buscando o id para visualizar
-async function add_ou_buscar_id_item(add_ou_busca) {
-
-    const docRef = db.collection("contador").doc("ultimoNumero");
-
-    try {
-        // Inicia uma transação para garantir que o número seja único
-        const nextNumber = await db.runTransaction(async (transaction) => {
-            const doc = await transaction.get(docRef);
-
-            let ultimoNumero;
-            if (doc.exists) {
-                ultimoNumero = doc.data().numero;
-            } else {
-                ultimoNumero = 0; // Começa do zero se o documento não existir
-            }
-
-            const proximoNumero = ultimoNumero + 1;
-
-            // Atualiza o último número no Firestore
-            if(add_ou_busca == "add"){
-                transaction.set(docRef, { numero: proximoNumero });
-                console.log("entramos")
-                
-            }
             
 
-            return proximoNumero;
-        });
-
-        // Exibe o próximo número para o usuário
-        document.getElementById("codigo_id").innerText = "" + nextNumber;
-    } catch (error) {
-        console.error("Erro ao obter o próximo número: ", error);
+            modal.style.display = 'none';
+        } else {
+            alert('Senha incorreta! Tente novamente.');
+        }
     }
-}
+});
+
+
+
 

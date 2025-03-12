@@ -58,6 +58,9 @@
     <main class="centralizar">
         <form>
             <div class="formulario">   
+                <div>
+                    <button type="button" id="botao_delete_id" onclick="bt_delete()">deletar</button>
+                </div>
 
                 <div class="formulario_margem_para_cada_elemento">
                     <label for="">Codigo: <label id="codigo_id"></label></label>
@@ -138,7 +141,7 @@
         </div>
             
             <div>
-                <button type="button" class="solid"  id="btnCadastrarProduto_id" disabled="true" onclick="CadastrarProduto()">Cadastrar Produto</button>
+                <button type="button" class="solid"  id="btnCadastrarProduto_id" disabled="true" onclick="Verificar_Atualizacao_ou_Cadastro()">Cadastrar Produto</button>
             </div>
     
             <div>
@@ -149,7 +152,15 @@
         </form>
     </main>
     
-
+    <!-- CAIXA DE DIALOGO PARA CONFIRMAR DELETAR ITEM -->
+    <div id="customAlert" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>SENHA PARA DELETAR </h2>
+            <input type="password" id="passwordInput" placeholder="Senha">
+            <button id="submitPassword">Enviar</button>
+        </div>
+    </div>
 
     <footer>
         &copy; 2025 CharptArtCode Todos os direitos reservados.
@@ -170,10 +181,13 @@
 
 <script src="../../../firebase_init.js"></script>
 <script src="../../../validacao.js"></script>
-<script src="cadastrar_item.js"></script>
-
 <script src="../../../servicos/servicos_dados_produtos.js"></script>
 <script src="../../../servicos/formatacao_data.js"></script>
+<script src="../../../servicos/formatacao_dinheiro.js"></script>
+
+<script src="cadastrar_item.js"></script>
+
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="../../../global.css">
