@@ -67,7 +67,7 @@
 
 </div>
 
-<button id="botao_add_item_carrinho_id" onclick="Add_Item_Carrinho()">ADICIONAR ITEM NO CARRINHO</button>
+<button id="botao_add_item_carrinho_id" onclick="Add_Item_Carrinho()">CLIQUE PARA ADICIONAR</button>
 <main>
 
     
@@ -188,7 +188,7 @@
 
 </main>
 
-<button class="button_1" onclick="deleteCollection('carrinhos_de_compras')" >FINALIZAR</button>
+<button class="button_1" onclick="salvar_comanda()" >FINALIZAR</button>
 <button class="button_1" onclick="" >CANCELAR</button>
 
 
@@ -207,7 +207,8 @@
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth-compat.js";></script>
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 <script src="../../firebase_init.js"></script>
-<script src="../../servicos/formatacao_dinheiro.js"></script>
+
+<script src="../../servicos/formatacao_e_mascaras.js"></script>
 <script src="../../servicos/servicos_dados_produtos.js"></script>
 <script src="carrinho_compras.js"></script>
 

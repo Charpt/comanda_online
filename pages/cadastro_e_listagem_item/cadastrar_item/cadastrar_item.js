@@ -27,6 +27,7 @@ function deslogar(){
 
 
 
+
 /******************************************************************************************
 *FUNÇÃO PARA VERIFICAR COMO CHEGAMOS A PAGINA DE "CADASTRAR NOVO ITEM"
 * SE CASO CHEGAMOS AQUI ATRAVEZ DE TER CLICADO EM UM PRODUTO NA PAGINA LISTA DE PRODUTOS,
@@ -46,6 +47,7 @@ if(!Item_novo_ou_atualizacao()){
     
     const uid = Obter_informacao_url_uid();
     Buscar_uid_item(uid);
+
     
     
 }else{
@@ -54,7 +56,18 @@ if(!Item_novo_ou_atualizacao()){
     // funcao 'add' ou 'busca' 
     // a colecao e o documento 
     // e qual elemento_id html ira receber os dados trazidos do banco de dados use uma label
+    document.getElementById('tempo_preparo_hora_id').value = 0;
+    document.getElementById('tempo_preparo_minuto_id').value = 0;
+    document.getElementById('quantidade_id').value = 1;
+    document.getElementById('preco_id').value = '0,00';
+    document.getElementById('acompanhamento_id').value = 'Arroz, Feijão, Batata Frita, Farofa e Salada';
+
+    Inserir_date('date_criacao_id');
+
+
     add_ou_buscar_id_item('busca','ultimo_id_adicionado','ultimo_id_adicionado','codigo_id');
+
+    
 }
 
 function Obter_informacao_url_uid(){
@@ -139,11 +152,12 @@ function Inserir_dados_no_formulario_para_Atualizar(dados){
     form.tempo_preparo_hora().value = dados.tempo_preparo_hora;
     form.tempo_preparo_minuto().value = dados.tempo_preparo_minuto;
     
-    form.observacao().value = dados.observacao;
+    form.acompanhamento().value = dados.acompanhamento;
     form.date_criacao().value = dados.date_criacao;
 
-    
+    // caso seja uma atualizacao o botao delete ira aparecer e o nome do botao cadastrar muda para atualizar
     form.botao_delete_id().style.display = 'block';
+    form.btnCadastrar().innerText = 'atualizar';
 
 }
 
@@ -300,7 +314,7 @@ function Criar_Item(){
         preco: form.preco().value,
         tempo_preparo_hora: form.tempo_preparo_hora().value,
         tempo_preparo_minuto: form.tempo_preparo_minuto().value,
-        observacao: form.observacao().value,
+        acompanhamento: form.acompanhamento().value,
         user:{
             uid: firebase.auth().currentUser.uid
 
@@ -432,10 +446,9 @@ const form = {
 
     tempo_preparo_hora:() => document.getElementById('tempo_preparo_hora_id'),
     tempo_preparo_minuto:() => document.getElementById('tempo_preparo_minuto_id'),
-    tempo_preparo_segundos:() => document.getElementById('tempo_preparo_segundos_id'),
     tempo_preparo:() => document.getElementById('tempo_preparo_id'),
 
-    observacao:() => document.getElementById('observacao_id'),
+    acompanhamento:() => document.getElementById('acompanhamento_id'),
 
     btnCadastrar:() => document.getElementById('btnCadastrarProduto_id'),
     botao_delete_id :() =>  document.getElementById('botao_delete_id'),

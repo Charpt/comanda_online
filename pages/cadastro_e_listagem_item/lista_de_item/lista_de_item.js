@@ -34,7 +34,7 @@ function CadastrarProdutoPage(){
 
 /******************************************************************************************
 O METODO onAuthStateChanged VERIFICA SE TEVE ALGUMA ALTERAÇÃO NO STATUS DO USUARIO LOGADO
-SE O USUSARIO ESTIVER LOGADO ELE EXECULTA A BUSCAR DADOS
+SE O USUSARIO ESTIVER LOGADO ELE EXECUTA A BUSCAR DADOS
 /*******************************************************************************************/
 
 firebase.auth().onAuthStateChanged(user =>{
@@ -45,7 +45,7 @@ firebase.auth().onAuthStateChanged(user =>{
         .then(dados =>
          {
              removeLoading();
-             Add_Dados_nos_Elementos(dados);
+             Set_Dados_nos_Elementos(dados);
      
          }).catch(error =>
          {
@@ -65,30 +65,67 @@ firebase.auth().onAuthStateChanged(user =>{
  * OS DADOS DOS ITENS NO LI
 /*******************************************************************************************/
 
-function Add_Dados_nos_Elementos(dados){
+function Set_Dados_nos_Elementos(dados){
 
 const orderList = document.getElementById('lista_dados');
 
 dados.forEach(dados => {
 
     const li = Criar_lista_dos_dados(dados)   
+    const div1 = Criar_div();
     
    // li.appendChild(CriarImagemDosDados());    
-    li.appendChild(Criar_Paragrafos(""+dados.produto)).classList.add('titulo_card');
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> status: <b class=info_item>"+dados.status));   
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> codigo: <b class=info_item>"+dados.codigo)).classList.add('text_info_card');   
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> quantidade: <b class=info_item>"+dados.quantidade)).classList.add('text_info_card');    
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> preço: <b class=info_item>"+dados.preco)).classList.add('text_info_card');
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> Acompanhamenentos: <b class=info_item>"+dados.observacao)).classList.add('text_info_card');
-    li.appendChild(Criar_Paragrafos("<b class=texto_indicador_info> unidade de medida: <b class=info_item>"+dados.unidade_medida)).classList.add('text_info_card');    
-    li.appendChild(Criar_Paragrafos( "<b class=texto_indicador_info> data da criação: <b class=info_item>"+formatar_date(dados.date_criacao))).classList.add('text_info_card');
-    orderList.appendChild(li);
-    
-    
+    li.appendChild(Criar_Paragrafos_Titulos(dados.produto));
+
+    li.appendChild(Criar_Paragrafos_indicador_resultado('Acompanhamenentos: ',dados.acompanhamento));
+
+   
+
+   if(dados.tempo_preparo_hora < 10 && dados.tempo_preparo_minuto < 10){
+    li.appendChild(Criar_Paragrafos_indicador_resultado('tempo Preparo: ','0'+dados.tempo_preparo_hora+':0'+dados.tempo_preparo_minuto));   
+   }else{
+    if(dados.tempo_preparo_hora < 10 && dados.tempo_preparo_minuto > 10){
+        li.appendChild(Criar_Paragrafos_indicador_resultado('tempo Preparo: ','0'+dados.tempo_preparo_hora+':'+dados.tempo_preparo_minuto));   
+       }else{
+        if(dados.tempo_preparo_hora > 10 && dados.tempo_preparo_minuto < 10){
+            li.appendChild(Criar_Paragrafos_indicador_resultado('tempo Preparo: ',dados.tempo_preparo_hora+':0'+dados.tempo_preparo_minuto));   
+           }else{
+            if(dados.tempo_preparo_hora > 10 && dados.tempo_preparo_minuto > 10){
+                li.appendChild(Criar_Paragrafos_indicador_resultado('tempo Preparo: ',dados.tempo_preparo_hora+':'+dados.tempo_preparo_minuto));   
+               }else{
+                
+               }
+           }
+       }
+   }
 
     
+    li.appendChild(Criar_Paragrafos_indicador_resultado('quantidade:',dados.quantidade));
+    li.appendChild(Criar_Paragrafos_indicador_resultado('preço: ',dados.preco));
+    
+    li.appendChild(Criar_Paragrafos_indicador_resultado('tipo medida: ',dados.unidade_medida));    
+    li.appendChild(Criar_Paragrafos_indicador_resultado( 'data da criação:',formatar_date(dados.date_criacao)));
+
+    li.appendChild(div1);
+    div1.appendChild(Criar_Paragrafos_roda_pe_card('Status: ',dados.status));
+    div1.appendChild(Criar_Paragrafos_roda_pe_card('Codigo: ',dados.codigo));
+    orderList.appendChild(li);
+
 });
 
+}
+
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (div) 
+/*******************************************************************************************/
+
+
+function Criar_div(){
+    
+    const div = document.createElement('div');
+    div.classList.add('div_separador');    
+    
+    return div;
 }
 
 /*******************************************************************************************/
@@ -134,65 +171,61 @@ function Criar_Botao_Delete(dados){
 /*******************************************************************************************/
 /** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) QUE REPRESENTA UM PARAGRAFO DAS INFORMAÇÕES DOS ITENS  
 /*******************************************************************************************/
-function Criar_Paragrafos(value){
+function Criar_Paragrafos_indicador_resultado(texto_indicador,texto_resultado){
+
     const elemento = document.createElement('p');
-    elemento.innerHTML =  value;
+
+    const elemento_texto_indicador = document.createElement('label');
+    const elemento_texto_resultado = document.createElement('label');
+
+    elemento_texto_indicador.classList.add('texto_indicador');    
+    elemento_texto_resultado.classList.add('texto_resultado');
+
+    
+    
+    elemento_texto_indicador.innerHTML =  texto_indicador;
+    elemento_texto_resultado.innerHTML =  texto_resultado;
+
+    elemento.appendChild(elemento_texto_indicador);
+    elemento.appendChild(elemento_texto_resultado);
     return elemento;
 }
 
-function CriarImagemDosDados(){
-    const img = document.createElement('img');
-    img.src =  "produto_teste.jpg";
-    img.alt = "carne de panela com batata";
-    return img;
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) PARA OS TITULOS
+/*******************************************************************************************/
+function Criar_Paragrafos_Titulos(texto_titulo_card){
+
+    const elemento_texto_titulo = document.createElement('p');
+    elemento_texto_titulo.classList.add('texto_titulo_card');    
+    elemento_texto_titulo.innerHTML =  texto_titulo_card;
+    return elemento_texto_titulo;
 }
 
+/*******************************************************************************************/
+/** FUNÇÃO PARA QUE CRIA CADA ELEMENTO (p) PARA OS TITULOS
+/*******************************************************************************************/
+function Criar_Paragrafos_roda_pe_card(texto_roda_pe_indicador,texto_roda_pe_resultado){
 
 
+    const elemento = document.createElement('p');
 
-function formatar_date(data){
+    const elemento_texto_roda_pe_indicador = document.createElement('label');
+    const elemento_texto_roda_pe_resultado = document.createElement('label');
+
+    elemento_texto_roda_pe_indicador.classList.add('texto_roda_pe_indicador');    
+    elemento_texto_roda_pe_resultado.classList.add('texto_roda_pe_resultado');
+
+    
+    
+    elemento_texto_roda_pe_indicador.innerHTML =  texto_roda_pe_indicador;
+    elemento_texto_roda_pe_resultado.innerHTML =  texto_roda_pe_resultado;
+
+    elemento.appendChild(elemento_texto_roda_pe_indicador);
+    elemento.appendChild(elemento_texto_roda_pe_resultado);
+    return elemento;
 
    
-const dataString = data;
-
-    const date = new Date(dataString);
-    
-    const dia = String(date.getDate()).padStart(2,'0');
-    const mes = String(date.getMonth()+1).padStart(2,'0');
-    const ano = date.getFullYear();
-    const horas = String(date.getHours()).padStart(2,'0');
-    const minutos = String(date.getMinutes()).padStart(2,'0');
-
-    
-
-    const dataformatada =`${dia}/${mes}/${ano} ás ${horas}:${minutos}`;
-
-
-
-    return dataformatada
-
 }
 
 
-/*// Função para calcular a cor com base no tempo restante
-function updateColor(card_id,startTime, totalDuration) {
-    
-    const card = document.getElementById(''+card_id);
-     const now = new Date().getTime(); // Tempo atual em milissegundos
-     const elapsedTime = now - startTime; // Tempo decorrido desde o início
-     const progress = elapsedTime / totalDuration; // Progresso (0 a 1)
- 
-     // Limita o progresso a 1 (100%)
-     if (progress >= 1) {
-         card.style.backgroundColor = 'red'; // Cor final
-         return;
-     }
- 
-     // Calcula a cor intermediária
-     const red = Math.floor(255 * progress); // Aumenta o vermelho
-     const green = Math.floor(255 * (1 - progress)); // Diminui o verde
-     card.style.backgroundColor = `rgb(${red}, ${green}, 0)`; // Aplica a cor
- 
-     // Atualiza a cor a cada segundo
-     requestAnimationFrame(() => updateColor(startTime, totalDuration));
- }*/

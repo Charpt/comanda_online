@@ -1,3 +1,41 @@
+function formatar_date(data){
+
+   console.log(data);
+    const dataString = data;
+    
+        const date = new Date(dataString);
+        
+        const dia = String(date.getDate()).padStart(2,'0');
+        const mes = String(date.getMonth()+1).padStart(2,'0');
+        const ano = date.getFullYear();
+        const horas = String(date.getHours()).padStart(2,'0');
+        const minutos = String(date.getMinutes()).padStart(2,'0');
+    
+        
+    
+        const dataformatada =`${dia} / ${mes} / ${ano} ás ${horas}:${minutos}`;
+    
+    
+        console.log(dataformatada);
+        return dataformatada
+    
+}
+
+function Inserir_date(elemento_id){
+            // Obtém o elemento input
+            const datetimeInput = document.getElementById(elemento_id);
+
+            // Obtém a data e hora atuais
+            const now = new Date();
+    
+            // Ajusta o fuso horário para o local do navegador
+            const timezoneOffset = now.getTimezoneOffset() * 60000; // Converte o offset para milissegundos
+            const localISOTime = (new Date(now - timezoneOffset)).toISOString().slice(0, 16);
+    
+            // Define o valor do input com a data e hora atuais
+            datetimeInput.value = localISOTime;
+}
+
 function formatarDinheiro(valor) {
     // Converte o valor para string
     let valorStr = valor.toString();
@@ -42,3 +80,4 @@ function Mascara_monetaria_input(elemento_id){
         e.target.value = `${reaisFormatados},${centavos}`;
     });
 }
+

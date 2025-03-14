@@ -34,7 +34,7 @@
                    <ul>
                     <li><a href="../../home/home.html">INICIO</a></li>
                     <li><a href="../lista_de_item/lista_de_item.html">PRODUTOS</a></li>
-                    <li><a href="../../carrinho_compras/carrinho_compras.html">NOVA VENDA</a></li>
+                    <li><a href="../../carrinho_compras/carrinho_compras.html">VENDA</a></li>
                     <li><a href="../../tela_pedidos/tela_pedidos.html?status_selecao=preparando">PEDIDOS</a></li>
                     
                     <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
@@ -119,22 +119,19 @@
                 <div class="error" id="preco_invalido_id">Preço Invalido</div>
             </div>
 
-            <div class="formulario_margem_para_cada_elemento">
-                <div><label>TEMPO DE PREPARO</label></div>
-
-                <input type="number" step="0" min="0" name="tempo_preparo_hora" class="tempo_preparo_input" id="tempo_preparo_hora_id" onchange="OnChangeTempo_preparo_hora()"  placeholder="0">
+            <div class="formulario_margem_para_cada_elemento" >
+                <div><label>PREPARO HORAS E MINUTOS</label></div>
+                <input type="number" step="0" min="0" name="tempo_preparo_hora" class="tempo_preparo_input" id="tempo_preparo_hora_id" onchange="OnChangeTempo_preparo_hora()"  placeholder="0"><label> :</label>
                 <input type="number" step="0" min="0"  max="59" name="tempo_preparo_minuto"  class="tempo_preparo_input" id="tempo_preparo_minuto_id" onchange="OnChangeTempo_preparo_minuto()"  placeholder="0 A 59">
 
 
                 <div class="error" id="tempo_preparo_id">minutos deve ser menor ou igual a 59</div>
-                
-                
-                
+                 
             </div>
 
             <div class="formulario_margem_para_cada_elemento">
-                <div><label>Observação:</label></div>
-                <input type="text" name="observacao" id="observacao_id" placeholder="ex.: o produto danificado mas pode ser vendido">
+                <div><label>Acompanhamentos:</label></div>
+                <input type="text" name="acompanhamento" id="acompanhamento_id" placeholder="Arroz, feijao, batata frita, farofa e salada">
             </div>
 
 
@@ -181,9 +178,11 @@
 
 <script src="../../../firebase_init.js"></script>
 <script src="../../../validacao.js"></script>
+
 <script src="../../../servicos/servicos_dados_produtos.js"></script>
-<script src="../../../servicos/formatacao_data.js"></script>
-<script src="../../../servicos/formatacao_dinheiro.js"></script>
+
+<script src="../../../servicos/formatacao_e_mascaras.js"></script>
+
 
 <script src="cadastrar_item.js"></script>
 

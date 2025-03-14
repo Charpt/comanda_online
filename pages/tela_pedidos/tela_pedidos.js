@@ -97,9 +97,7 @@ const orderList = document.getElementById('lista_dos_itens_pedidos_ativos_comand
 
 orderList.innerHTML = "";
 
-     dados.forEach(dados => {
-
-        
+     dados.forEach(dados => {       
 
 
         const li = criar_elemento_li_com_os_dados(dados)    
@@ -129,13 +127,12 @@ orderList.innerHTML = "";
             li.appendChild(criar_elemento_p_com_o_valor("Cliente: "+dados.nome_cliente,'titulo_card')); 
         }
 
-        // Itera sobre as propriedades do objeto `dados` para encontrar `td_item_prod_`
-        for (const key in dados) {
-            if (key.startsWith('td_item_prod_')) {
-                // Adiciona cada item como um novo parágrafo
-                li.appendChild(criar_elemento_p_com_o_valor('<br><b>'+extrairPalavrasEntreAspas(`${dados[key]}`)[0] +' - '+ extrairPalavrasEntreAspas(`${dados[key]}`)[1]+'</b>'+'<br><b class=color_observacao>'+extrairPalavrasEntreAspas(`${dados[key]}`)[2]+'</b>'),'item_info_pedidos');
+        
+        for (i=0;i<dados.quantidade_de_item_na_comanda;i++) {
+            
+            li.appendChild(criar_elemento_p_com_o_valor('<b class=item_info_pedidos><br>'+dados['quantidade'+(i+1)]+' - ' +'<b class=item_info_pedidos>'+ dados['item_nome'+(i+1)]+'<br><b class=color_observacao>'+dados['observacao'+(i+1)]+'</b>'),'item_info_pedidos');
                 
-            }
+            
         }
 
         

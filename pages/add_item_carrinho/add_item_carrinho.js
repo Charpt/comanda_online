@@ -169,7 +169,7 @@ function criarProduto(){
     return{
 
         
-        cliente: "felipe",
+        
         desconto: 0,
         codigo: parseInt(document.getElementById('item_codigo_id').textContent),
         item_nome: document.getElementById('item_selecionado_id').textContent,

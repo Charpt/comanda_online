@@ -24,7 +24,7 @@ function deslogar(){
 firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
-        buscarDados(user);// BUSCA AS INFORMAÇÕES DOS ITENS JA CADASTRADOS NO CARRINHO ATUAL
+        Buscar_Dados(user,'carrinho');// BUSCA AS INFORMAÇÕES DOS ITENS JA CADASTRADOS NO CARRINHO ATUAL
         add_ou_buscar_id_item('busca','ultimo_id_carrinho_adicionado','ultimo_id_carrinho_adicionado','carrinho_id');
     }
 })
@@ -34,13 +34,28 @@ firebase.auth().onAuthStateChanged(user =>{
  * 
  */
 var quantidade_de_itens_carrinho;
-function buscarDados(user)
+function Buscar_Dados(user,criar_carrinho_ou_comanda)
 {
+    
    dados_servicos.BuscarPorUsuario_Carrinho_de_Compras(user)
    .then(dados =>
     {
-        Criar_Carrinho_de_Compras(dados);
-        quantidade_de_itens_carrinho = dados.length;
+        if(criar_carrinho_ou_comanda == 'comanda'){
+
+            
+            deleteCollection('carrinhos_de_compras',dados)
+            
+            quantidade_de_itens_carrinho = dados.length;
+
+        }else{
+
+            if(criar_carrinho_ou_comanda == 'carrinho'){
+              
+                Criar_Carrinho_de_Compras(dados);
+                quantidade_de_itens_carrinho = dados.length;
+            }
+        }
+        
         
         
 
@@ -61,7 +76,16 @@ function Add_Item_Carrinho(){
 }
 
 
-
+function salvar_comanda(){
+    firebase.auth().onAuthStateChanged(user =>{
+        if(user){
+    
+            Buscar_Dados(user,'comanda');
+        }
+    })
+    
+    
+   }
 
 
 function Criar_Carrinho_de_Compras(dados){ 
@@ -161,7 +185,7 @@ recordar_dados_formulario('nao_limpar_dados');
     tr_tbody.appendChild(td_item_1_quant);
 
     const td_item_1_produtos = document.createElement('td');
-    td_item_1_produtos.innerHTML = dados.item_nome +"<br> <b class=obs> \" \" "+ dados.observacao;
+    td_item_1_produtos.innerHTML = dados.item_nome +"<br><b class=obs>"+ dados.observacao;
     td_item_1_produtos.id ='item_produto_tb_' + numero_item;
     td_item_1_produtos.classList.add('evidente');
     td_item_1_produtos.classList.add('nome_item');
@@ -343,14 +367,18 @@ document.addEventListener('DOMContentLoaded', function() {
 /*************************************************
  * CRIAR A COMANDA DO PEDIDO
  */
-function criar_comanda_pedido(){
-    const dados = obter_dados_comanda_pedido();
+function criar_comanda_pedido(dados_itens){
+
+        
+    
+    const dados = obter_dados_comanda_pedido(dados_itens);
 
     Cadastrar_Pedido(dados);
 }
 
-function obter_dados_comanda_pedido() {
+function obter_dados_comanda_pedido(dados_itens) {
 
+    console.log(dados_itens);
     var dados = {}; // Objeto para armazenar os dados
 
     dados.user = {
@@ -416,33 +444,22 @@ function obter_dados_comanda_pedido() {
     }
     
     
-
-
+//dados dos itens produtos, todos os itens que foram pedidos no carrinho de compras
+i=0;
+dados_itens.forEach(dados_itens => {    
        
-
-    
-    for (var i = 0; i < quantidade_de_itens_carrinho; i++) {
-        // Obtém o elemento da tabela
-       
-        var elemento2 = document.getElementById('item_quant_tb_' + (i + 0));
-        var elemento3 = document.getElementById('item_produto_tb_' + (i + 0));
-        
-
-
-        
-        // Verifica se o elemento existe antes de acessar o texto
-        if (elemento3) {
-            // Armazena o conteúdo de texto no objeto
-            
-            dados['td_item_prod_' + (i + 1)] = "\" "+elemento2.textContent + "\" \" "+elemento3.textContent+ " \"" ||  "\" "+elemento2.innerText + " \" \" "+elemento3.innerText+ " \"";
-        } else {
-            // Se o elemento não existir, armazena null ou uma mensagem de erro
-            dados['td_item_cod_' + (i + 1)] = null;
-        }
-
+        dados['codigo' + (i + 1)] = String(dados_itens.codigo);
+        dados['item_nome' + (i + 1)] = String(dados_itens.item_nome);
+        dados['desconto' + (i + 1)] = String(dados_itens.desconto);
+        dados['observacao' + (i + 1)] = String(dados_itens.observacao);
+        dados['quantidade' + (i + 1)] = String(dados_itens.quantidade);
+        dados['uid_principal' + (i + 1)] = String(dados_itens.uid_principal);
+        dados['unidade_medida' + (i + 1)] = String(dados_itens.unidade_medida);
+        dados['unidade_preco' + (i + 1)] = String(dados_itens.unidade_preco);
         dados['quantidade_de_item_na_comanda'] = i + 1;
-    }
-
+        i++;
+         
+});
     
 
     return dados; // Retorna o objeto com todos os dados
@@ -488,10 +505,6 @@ function obter_dados_comanda_pedido() {
 function Cadastrar_Pedido(dados){
     dados_servicos.Cadastrar_novo_pedido(dados,"pedidos")
     .then(()=>{
-       
-
-       
-       
 
     }).catch(()=>{
        removeLoading();
@@ -502,7 +515,7 @@ function Cadastrar_Pedido(dados){
 
 
 // Função para deletar uma coleção ASSIM É PSSOVEL LIMPAR A COLECAO E COMEÇAR OUTRA 
-const deleteCollection = async (collectionPath) => {
+const deleteCollection = async (collectionPath,dados) => {
     try {
 
         console.log(`Iniciando exclusão da coleção: ${collectionPath}`);
@@ -515,25 +528,28 @@ const deleteCollection = async (collectionPath) => {
             alert("O CARRINHO ESTA VAZIO .");
             return;
         }else{
-            criar_comanda_pedido();
+            
+            criar_comanda_pedido(dados);
+            
         }
 
         // Confirmação do usuário
         const userConfirmed = confirm(`DESEJA FINALIZAR COMPRA?`);
+
         if (!userConfirmed) {
             console.log("OPERACAO CANCELADA PELO USUARIO.");
             return;
         }
 
-        // Deleta cada documento
+        // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+            // Deleta cada documento
         const batch = db.batch(); // Usa um batch para deletar em lote
         querySnapshot.forEach(doc => {
             batch.delete(doc.ref); // Adiciona a operação de exclusão ao batch
         });
-
         // Executa o batch
         await batch.commit();
-        
+
         alert("COMPRA FINALIZADA COM SUCESSO!!!");
 
         recordar_dados_formulario('limpar_dados');
