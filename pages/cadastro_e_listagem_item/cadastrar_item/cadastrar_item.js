@@ -93,7 +93,7 @@ function Item_novo_ou_atualizacao(){
 function Buscar_uid_item(uid){
    ShowLoading();
     firebase.firestore()
-        .collection('produtos')
+        .collection('itens')
         .doc(uid)
         .get()
     .then(doc => {
@@ -101,8 +101,8 @@ function Buscar_uid_item(uid){
         if(doc.exists){
             removeLoading();
             Inserir_dados_no_formulario_para_Atualizar(doc.data());
-            
-            ToggleCadastrarProdutoButton();
+         
+            ToggleCadastrarItemButton();
 
         }else{
             alert("Documento nao encontrado");
@@ -110,7 +110,7 @@ function Buscar_uid_item(uid){
         }
     }).catch(()=>{
         removeLoading();
-        alert("Erro ao salvar Produto");
+        alert("Erro ao salvar item");
         window.location.href ="../lista_de_item/lista_de_item.html";
      });
      
@@ -145,7 +145,7 @@ function Inserir_dados_no_formulario_para_Atualizar(dados){
         }
     }
     form.codigo().innerText = dados.codigo;
-    form.produto().value = dados.produto;
+    form.item_nome().value = dados.item_nome;
     form.unidade_medida().value = dados.unidade_medida;
     form.quantidade().value = dados.quantidade;
     form.preco().value = dados.preco;
@@ -167,10 +167,7 @@ function Inserir_dados_no_formulario_para_Atualizar(dados){
 // se caso um item foi buscado para atualizacao ele tbm pode ser deletado
 function Deseja_Deletar_item(colecao,uid_do_item)
 {
-    
-    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
-    if(desejaDeletarProduto == true){
-        ShowLoading();
+    ShowLoading();
         
         dados_servicos.Delete_item(colecao,uid_do_item)
        .then(snapshot =>{
@@ -190,7 +187,6 @@ function Deseja_Deletar_item(colecao,uid_do_item)
         console.log(error);
         alert("Erro ao deletar dados");
        })
-    }
 
 }
 
@@ -217,11 +213,11 @@ const dados = Criar_Item();
 // A FUNCAO Atualizar_dados_do_item(dados); É CHAMADA SE O VALOR FOR IGUAL A UID DO ITEM EM Obter_informacao_url_uid()
     if(!Obter_informacao_url_uid()){
 
-        CadastrarNovoProduto(dados);
+        Cadastrar_Novo_item(dados);
 
     }else{
 
-        Atualizar_dados_do_item(dados);
+        Atualizar_dados_do_item('itens',Obter_informacao_url_uid(),dados);
 
     }  
 }
@@ -230,10 +226,10 @@ const dados = Criar_Item();
 /******************************************************
  * FUNCAO PARA ATUALIZAR OS DADOS CADASTRADOS DOS ITENS 
  ********************************************************/
-function Atualizar_dados_do_item(dados){
+function Atualizar_dados_do_item(colecao,doc,dados){
 
     ShowLoading();
-    dados_servicos.Atualizar_dados(dados)
+    dados_servicos.Atualizar_dados(colecao,doc,dados)
      .then(()=>{
         
         window.location.href = "../lista_de_item/lista_de_item.html";
@@ -252,8 +248,8 @@ function Atualizar_dados_do_item(dados){
 /******************************************************
  * CADASTRA NOVOS ITENS
  *********************************************/
-function CadastrarNovoProduto(dados){
-     dados_servicos.Cadastrar_novo_dado(dados)
+function Cadastrar_Novo_item(dados){
+     dados_servicos.Salvar_no_Banco_Dados(dados,'itens')
      .then(()=>{
     
         
@@ -268,7 +264,7 @@ function CadastrarNovoProduto(dados){
 
      }).catch(()=>{
         removeLoading();
-        alert("Erro ao salvar Produto");
+        alert("Erro ao salvar itens");
      })
 }
 
@@ -308,7 +304,7 @@ function Criar_Item(){
         
         status: status_radio,
         codigo: parseInt(form.codigo().innerText),
-        produto: form.produto().value.toUpperCase(),
+        item_nome: form.item_nome().value.toUpperCase(),
         unidade_medida: form.unidade_medida().value,
         quantidade: form.quantidade().value,
         preco: form.preco().value,
@@ -333,15 +329,15 @@ function OnChangeDate_criacao(){
     
     const date_criacao = form.date_criacao().value;
     form.date_criacaoInvalido().style.display = !date_criacao ? "block" : "none";
-    ToggleCadastrarProdutoButton();
+    ToggleCadastrarItemButton();
  
 }
 
-function OnChangeProduto(){
-    const produto = form.produto().value;
-    form.produtoObrigatorio().style.display = produto ? "none":"block";
-    form.produtoInvalido().style.display = produto.length  >= 1 ? "none": "block";
-    ToggleCadastrarProdutoButton();
+function OnChange_Item_nome(){
+    const item_nome = form.item_nome().value;
+    form.item_nome_Obrigatorio().style.display = item_nome ? "none":"block";
+    form.item_nome_Invalido().style.display = item_nome.length  >= 1 ? "none": "block";
+    ToggleCadastrarItemButton();
 }
 
 function OnChangeQuantidade(){
@@ -349,38 +345,38 @@ function OnChangeQuantidade(){
     form.quantidadeObrigatorio().style.display = quantidade ? "none":"block";
     form.quantidadeInvalido().style.display = quantidade  > 0? "none": "block";
 
-    ToggleCadastrarProdutoButton();
+    ToggleCadastrarItemButton();
 }
 
 function OnChangePreco(){
     const preco = form.preco().value;
     form.precoObrigatorio().style.display = preco ? "none":"block";
     form.precoInvalido().style.display = preco  <= 0 ? "block": "none";   
-    ToggleCadastrarProdutoButton();
+    ToggleCadastrarItemButton();
 }
 
 function OnChangeTempo_preparo_hora(){
     const tempo_preparo_hora = form.tempo_preparo_hora().value;
     form.tempo_preparo().style.display = tempo_preparo_hora  < 60 ? "none": "block";
-    ToggleCadastrarProdutoButton();
+    ToggleCadastrarItemButton();
 }
 function OnChangeTempo_preparo_minuto(){
     const tempo_preparo_minuto = form.tempo_preparo_minuto().value;
     form.tempo_preparo().style.display = tempo_preparo_minuto  < 60 ? "none": "block";
 
-    ToggleCadastrarProdutoButton();
+    ToggleCadastrarItemButton();
 }
 
 
-function ToggleCadastrarProdutoButton(){
+function ToggleCadastrarItemButton(){
     form.btnCadastrar().disabled = !isFromValid();
     
 }
 
 function isFromValid(){
 
-    const produto = form.produto().value;
-    if(!produto){
+    const item_nome = form.item_nome().value;
+    if(!item_nome){
         return false;
     }
 
@@ -429,10 +425,10 @@ const form = {
 
     codigo:() => document.getElementById('codigo_id'),
 
-    produto:() => document.getElementById('produto_nome_id'),    
+    item_nome:() => document.getElementById('item_nome_id'),    
 
-    produtoObrigatorio:() => document.getElementById('produto_nome_obrigatorio_id'),
-    produtoInvalido:() => document.getElementById('produto_nome_invalido_id'),
+    item_nome_Obrigatorio:() => document.getElementById('item_nome_obrigatorio_id'),
+    item_nome_Invalido:() => document.getElementById('item_nome_invalido_id'),
 
     unidade_medida:() => document.getElementById('selecao_unidade_medida_id'),
 
@@ -459,52 +455,6 @@ const form = {
 // FUNCAO PARA CRIAR UMA MASCARA MONETARIA NO CAMPO PREÇO, EM UM INPUT DO TIPO TEXT, VOCE SO PRECISA PASSAR O ID DO ELEMENTO INPUT TEXT
 // A FUNCAO COMPLETA ESTA NO ARQUIVO serviços_dados_produtos.js
 Mascara_monetaria_input('preco_id');
-
-
-
-
-// funcao que abre a caixa de dialogo caso queira deletar um item
-document.addEventListener('DOMContentLoaded', function() {
-    // Pegar elementos do DOM
-    var modal = document.getElementById('customAlert');
-    var btn = document.getElementById('botao_delete_id');
-    var span = document.getElementsByClassName('close')[0];
-    var submitBtn = document.getElementById('submitPassword');
-    var passwordInput = document.getElementById('passwordInput');
-
-    // Abrir o modal quando o botão é clicado
-    btn.onclick = function() {
-        modal.style.display = 'block';
-    }
-
-    // Fechar o modal quando o botão de fechar é clicado
-    span.onclick = function() {
-        modal.style.display = 'none';
-    }
-
-    // Fechar o modal quando o usuário clica fora dele
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-
-    // Validar a senha quando o botão de enviar é clicado
-    submitBtn.onclick = function() {
-        var password = passwordInput.value;
-        if (password === "123") { // Substitua "senha123" pela senha desejada
-            alert('Senha correta!');
-            Deseja_Deletar_item('produtos',Obter_informacao_url_uid());
-
-            
-
-            modal.style.display = 'none';
-        } else {
-            alert('Senha incorreta! Tente novamente.');
-        }
-    }
-});
-
-
-
+// funcao para chamar uma caixa de dialogo para deletar um item
+Caixa_dialogo_deletar('botao_delete_id','cadastrar_item');
 

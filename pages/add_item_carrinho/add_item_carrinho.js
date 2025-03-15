@@ -24,12 +24,12 @@ function deslogar(){
 }
 
 // Referência para o campo de pesquisa e a lista de resultados
-const pesquisa_codigo_name = document.getElementById('pesquisa_codigo_name');
+const pesquisa_name = document.getElementById('pesquisa_codigo_name');
 const resultsList = document.getElementById('results');
 
 
  // Adiciona um evento de digitação
- pesquisa_codigo_name.addEventListener('input', function () {
+ pesquisa_name.addEventListener('input', function () {
      // Converte o valor do input para maiúsculas
      this.value = this.value.toUpperCase();
  });
@@ -41,9 +41,9 @@ const searchFirestore = async (searchText) => {
     if (searchText.length > 0) {
         
         // Consulta o Firestore
-        db.collection('produtos')
-            .where('produto', '>=', searchText)
-            .where('produto', '<=', searchText +'\uf8ff')
+        db.collection('itens')
+            .where('item_nome', '>=', searchText)
+            .where('item_nome', '<=', searchText +'\uf8ff')
             .get()
             .then((querySnapshot) => {
                                 
@@ -72,7 +72,7 @@ const searchFirestore = async (searchText) => {
                             item_uid_principal_id.textContent = doc.id;                            
 
                             const item_selecionado_id =document.getElementById('item_selecionado_id');
-                            item_selecionado_id.textContent = doc.data().produto;
+                            item_selecionado_id.textContent = doc.data().item_nome;
 
                             const item_unidade_medida_id =document.getElementById('item_unidade_medida_id');
                             const item_quantidade_id =document.getElementById('item_quantidade_id');
@@ -97,12 +97,9 @@ const searchFirestore = async (searchText) => {
                             })
 
                             resultsList.innerHTML = ''; // Limpa os resultados anteriores
-                            
-                           
 
-                            
                         })
-                        li.textContent = doc.data().codigo+" - "+doc.data().produto; // Substitua pelo campo que deseja exibir
+                        li.textContent = doc.data().codigo+" - "+doc.data().item_nome; // Substitua pelo campo que deseja exibir
                         resultsList.appendChild(li);
                     });
                 }
@@ -129,11 +126,11 @@ function debounce(func, delay) {
 const debouncedSearch = debounce(searchFirestore, 300);
 
 // Evento de digitação no campo de pesquisa
-pesquisa_codigo_name.addEventListener('input', (e) => {
+pesquisa_name.addEventListener('input', (e) => {
     const searchText = e.target.value.trim();
     debouncedSearch(searchText); // Chama a função debounced
 
-    console.log(pesquisa_codigo_name.value);
+    console.log(pesquisa_name.value);
 });
 
 
@@ -157,7 +154,7 @@ function Add_Item_Carrinho_bd(dados){
 
     }).catch(()=>{
        removeLoading();
-       alert("Erro ao salvar Produto");
+       alert("Erro ao salvar item");
     })
 }
 

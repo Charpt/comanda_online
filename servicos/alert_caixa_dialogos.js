@@ -1,11 +1,12 @@
-// script.js
+function Caixa_dialogo_deletar(elemento_botaoDeleta_id,pagina){
+    // script.js
 document.addEventListener('DOMContentLoaded', function() {
     // Pegar elementos do DOM
     var modal = document.getElementById('customAlert');
     var modal1 = document.getElementById('customAlert1');
     var modal2 = document.getElementById('customAlert2');
 
-    var btn = document.getElementById('openModal');
+    var btn = document.getElementById(elemento_botaoDeleta_id);
     var btn_ok = document.getElementById('botao_ok_id');
     var btn_deletar = document.getElementById('botao_deletar_id');
     var botao_cancelar = document.getElementById('botao_cancelar_id');
@@ -16,7 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Abrir o modal quando o botão é clicado
     btn_deletar.onclick = function() {
         modal1.style.display = 'none';
-        Deseja_Deletar_item('itens',Obter_informacao_url_uid());
+        if(pagina == 'cadastrar_item'){
+            Deseja_Deletar_item('itens',Obter_informacao_url_uid());
+        }
+        
         modal2.style.display = 'block';
        
     }
@@ -75,3 +79,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+
+
+
+
+
+
+}

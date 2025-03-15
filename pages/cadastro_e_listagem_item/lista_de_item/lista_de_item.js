@@ -41,7 +41,7 @@ firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
         ShowLoading();
-        dados_servicos.Buscar_Item('produtos',user,'ativo','codigo','asc')
+        dados_servicos.Buscar_Item('itens',user,'ativo','codigo','asc')
         .then(dados =>
          {
              removeLoading();
@@ -75,7 +75,7 @@ dados.forEach(dados => {
     const div1 = Criar_div();
     
    // li.appendChild(CriarImagemDosDados());    
-    li.appendChild(Criar_Paragrafos_Titulos(dados.produto));
+    li.appendChild(Criar_Paragrafos_Titulos(dados.item_nome));
 
     li.appendChild(Criar_Paragrafos_indicador_resultado('Acompanhamenentos: ',dados.acompanhamento));
 

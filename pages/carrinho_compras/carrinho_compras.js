@@ -503,7 +503,7 @@ dados_itens.forEach(dados_itens => {
  * CADASTRA NOVOS pedidos no bacnod e dados
  *********************************************/
 function Cadastrar_Pedido(dados){
-    dados_servicos.Cadastrar_novo_pedido(dados,"pedidos")
+    dados_servicos.Salvar_no_Banco_Dados(dados,"pedidos")
     .then(()=>{
 
     }).catch(()=>{

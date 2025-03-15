@@ -32,22 +32,22 @@ const dados_servicos ={
         .delete();
     },
 
-//CADASTRA NOVOS ITENS
-    Cadastrar_novo_dado: dados_produtos => {
+    //CADASTRA NOVOS ITENS
+    Salvar_no_Banco_Dados: (dados_produtos,caminho_colecao) => {
         return firebase.firestore()
-        .collection('produtos')
+        .collection(caminho_colecao)
         .add(dados_produtos);
     },
 
-// ATUALIZA OS ITEN JA CADASTRADOS
-    Atualizar_dados: dados_produtos =>{
-        return firebase.firestore()
-        .collection('produtos')
-        .doc(Obter_informacao_url_uid())
-        .update(dados_produtos);
-    },
 
 
+// ATUALIZA OS ITEN JA CADASTRADOS nos pedidos
+Atualizar_dados: (colecao,doc,dados_produtos) =>{
+    return firebase.firestore()
+    .collection(colecao)
+    .doc(doc)
+    .update(dados_produtos);
+},
     
 /*************************************************************
  * CARRINHO DE COMPRAS
@@ -94,12 +94,7 @@ const dados_servicos ={
 
 
    
-    //CADASTRA NOVOS ITENS
-    Cadastrar_novo_pedido: (dados_produtos,caminho_colecao) => {
-        return firebase.firestore()
-        .collection(caminho_colecao)
-        .add(dados_produtos);
-    },
+
 
 
 //BUSCA OS PRODUTOS JA CADASTRADOS
@@ -124,13 +119,7 @@ Buscar_pedidos: (user,colecao,status)  =>{
 
 
 
-// ATUALIZA OS ITEN JA CADASTRADOS nos pedidos
-Atualizar_dados_pedidos: (colecao,doc,dados_produtos) =>{
-    return firebase.firestore()
-    .collection(colecao)
-    .doc(doc)
-    .update(dados_produtos);
-},
+
 
 }
 
