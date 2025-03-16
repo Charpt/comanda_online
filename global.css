@@ -8,7 +8,6 @@ padding: 0;}
 /*************************************/
 
 body{
-
   justify-items: center;
   background-color: #c5e0c2;
   height: 100vh;
@@ -19,6 +18,7 @@ body{
   /* CONFIGURACAO DA ANIMACAO DE CARREGAMENTO*/
 /*************************************/
 .loading{
+  
   background: rgba(0,0,0,0.5);
   position: fixed;
   color:#fff;

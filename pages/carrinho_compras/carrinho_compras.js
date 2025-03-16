@@ -499,7 +499,7 @@ dados_itens.forEach(dados_itens => {
 
 
 
-    /******************************************************
+/******************************************************
  * CADASTRA NOVOS pedidos no bacnod e dados
  *********************************************/
 function Cadastrar_Pedido(dados){

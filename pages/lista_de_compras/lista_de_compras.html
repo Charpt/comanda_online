@@ -58,21 +58,26 @@
 
         <div class="formulario_margem_para_cada_elemento">
             <label >nome do item</label>
-            <input type="text" id="item_nome_id">
+            <input type="text" name="item_nome" id="item_nome_id"  onchange="OnChange_Item_nome()" placeholder="Nome do Produto">
+            <div class="error" id="item_nome_obrigatorio_id">Nome do Produto é Obrigatorio</div>
+                <div class="error" id="item_nome_invalido_id">Produto deve ter ao menos 1 caracter</div>
         </div>
 
         <div class="formulario_margem_para_cada_elemento">
             <label >quantidade</label>
-            <input type="number" id="item_quant_id">
+            <input type="number" id="item_quant_id" onchange="OnChange_Item_quant()" placeholder="ex.. 1 ">
+            <div class="error" id="item_quant_obrigatorio_id">quantidade deve ser </div>
+                <div class="error" id="item_quant_Invalido_id">maior ou igual a zero</div>
         </div>
     
        
    
     
-<button id="botao_colocar_na_lista_id" >colocar na lista</button>
+<button id="botao_colocar_na_lista_id" disabled="true" >colocar na lista</button>
     
     </div>
 
+<label id="label_deletar">DELETAR <input type="checkbox" id="checkbox_deletar_id"></label>   
 
 
 
@@ -98,6 +103,8 @@
 <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore-compat.js";></script>
 
 <script src="../../firebase_init.js"></script>
+<script src="../../servicos/servicos_dados_produtos.js"></script>
+
 
 <script src="lista_de_compras.js"></script>
 

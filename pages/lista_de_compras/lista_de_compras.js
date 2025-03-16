@@ -21,15 +21,43 @@ function deslogar(){
     })
 }
 
+firebase.auth().onAuthStateChanged(user =>{
+    if(user){
 
+        Buscar_Dados('lista_de_compra',user,'ativo','item_nome','asc');// BUSCA AS INFORMAÇÕES DOS ITENS JA CADASTRADOS NO CARRINHO ATUAL
+        
+    }
+})
 
+/***************************************************************************
+ *  BUSCA OS DADOS 
+ * 
+ */
 
-
-
+function Buscar_Dados(colecao,user,status,campo,ordem)
+{
     
+   dados_servicos.Buscar_Item(colecao,user,status,campo,ordem)
+   .then(dados =>
+    {
+            
+        Criar_Lista_de_Compras(dados);
+        console.log(dados);
 
-Criar_Carrinho_de_Compras();
-function Criar_Carrinho_de_Compras(){ 
+    }).catch(error =>
+    {
+        removeLoading();
+        console.log(error);
+        alert("Erro ao recuperar dados");
+   })
+}
+
+
+
+
+
+
+function Criar_Lista_de_Compras(dados){ 
 
 
     
@@ -39,7 +67,16 @@ function Criar_Carrinho_de_Compras(){
     caption.innerHTML = "Lista de Compras";
     lista_compras.appendChild(caption);
 
-Criar_Colunas_Carrinho_de_Compras(lista_compras);
+Criar_Colunas_Lista_de_Compras(lista_compras);
+
+i=0;
+dados.forEach(dados => {    
+    add_item_lista_de_compras(lista_compras,dados,i++);
+    
+//console.log(dados.date_criacao);
+    
+});
+
 
 
 }
@@ -48,7 +85,7 @@ Criar_Colunas_Carrinho_de_Compras(lista_compras);
 
 
 
-function Criar_Colunas_Carrinho_de_Compras(lista_compras){
+function Criar_Colunas_Lista_de_Compras(lista_compras){
     
 
     const thead = document.createElement('thead');
@@ -73,37 +110,40 @@ function Criar_Colunas_Carrinho_de_Compras(lista_compras){
 
 }
 
-const btn_add = document.getElementById('botao_colocar_na_lista_id');
+const checkbox_deletar = document.getElementById('checkbox_deletar_id');
+function add_item_lista_de_compras(lista_compras, dados,numero_item){
+    
+    var uid = dados.uid;
 
 
-
-i=0;
-btn_add.onclick = function() {
-
-    const lista_compras = document.getElementById('lista_compras_id');
-
-    const item_nome = document.getElementById('item_nome_id');
-    const item_quant = document.getElementById('item_quant_id')
-
+    
     const tbody = document.createElement('tbody');
+    tbody.id = uid;
     lista_compras.appendChild(tbody);
-
+    
 
 
     const tr_tbody = document.createElement('tr');
+    
+    
     tbody.appendChild(tr_tbody);
 
-
     const td_item_nome = document.createElement('td');
-    td_item_nome.innerHTML = item_nome.value;
+    td_item_nome.innerHTML = dados.item_nome;
     td_item_nome.classList.add('td_item_nome');
-    td_item_nome.id ='td_item_nome_id'+i++;
+    td_item_nome.id ='td_item_nome_id'+numero_item;
+    console.log(td_item_nome.id);
     tr_tbody.appendChild(td_item_nome); 
 
+
+
+
+    
+
     const td_item_quant = document.createElement('td');
-    td_item_quant.innerHTML = item_quant.value;
+    td_item_quant.innerHTML = dados.item_quantidade;
     td_item_quant.classList.add('td_item_quant');
-    td_item_quant.id ='td_item_quant_id'+i++;
+    td_item_quant.id ='td_item_quant_id'+numero_item;
     tr_tbody.appendChild(td_item_quant);
 
 
@@ -112,29 +152,270 @@ btn_add.onclick = function() {
   
     const td_item_checkbox = document.createElement('td');
     td_item_checkbox.classList.add('td_item_checkbox');
-
-    td_item_checkbox.id ='item_checkbox_id'+i++;
+    td_item_checkbox.id ='item_checkbox_id'+numero_item;
+    
 
     
- 
-    input_item_checkbox.addEventListener('change', function () {
 
+    checkbox_deletar.addEventListener('change', function() {   
+        if (this.checked) { // Verifica se a checkbox está marcada
+            td_item_nome.style.backgroundColor = 'rgb(117, 0, 0)';
+            td_item_quant.style.backgroundColor = 'rgb(117, 0, 0)';
+            td_item_checkbox.style.backgroundColor = 'rgb(117, 0, 0)';
+    
+            input_item_checkbox.style.display = 'none';
+    
+            // Função de callback para o evento de clique
+            const handleClick = function(Event) {
+                console.log('oie');
+                Deseja_Deletar_Produto_carrinho_de_compras('lista_de_compra',dados.uid,uid);
+                
+            };
+    
+            // Adiciona o listener de clique
+            td_item_nome.addEventListener('click', handleClick);
+    
+            // Armazena a função de callback para poder removê-la depois
+            td_item_nome._handleClick = handleClick;
+    
+        } else {
+
+            input_item_checkbox.style.display = '';
+                // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+    setTimeout(() => {
+
+        location.reload();
+
+    }, 1000); // 1000 milissegundos = 1 segundos
+        }
+    });
+
+
+if(dados.item_checkbox == true){
+    input_item_checkbox.checked =true;
+    td_item_nome.style.backgroundColor = 'rgb(44, 155, 53)';
+            td_item_quant.style.backgroundColor = 'rgb(44, 155, 53)';
+            td_item_checkbox.style.backgroundColor = 'rgb(44, 155, 53)';
+}else{
+    input_item_checkbox.checked =false;
+    td_item_nome.style.backgroundColor = 'rgb(247, 247, 247)';
+            td_item_quant.style.backgroundColor = 'rgb(255, 255, 255)';
+            td_item_checkbox.style.backgroundColor = 'rgb(255, 255, 255)';
+}
+    
+ 
+    input_item_checkbox.addEventListener('change', function() {
+
+        
+        
         if (this.checked) { // Verifica se a checkbox está marcada
             
             td_item_nome.style.backgroundColor = 'rgb(44, 155, 53)';
             td_item_quant.style.backgroundColor = 'rgb(44, 155, 53)';
             td_item_checkbox.style.backgroundColor = 'rgb(44, 155, 53)';
+
+            var dados ={
+                item_checkbox: true
+            };
+    
+            
+            atualizar_check_box('lista_de_compra',uid,dados);
+
         } else {
             
            td_item_nome.style.backgroundColor = 'rgb(247, 247, 247)';
             td_item_quant.style.backgroundColor = 'rgb(255, 255, 255)';
             td_item_checkbox.style.backgroundColor = 'rgb(255, 255, 255)';
+            var dados ={
+                item_checkbox: false
+            };
+    
+            
+            atualizar_check_box('lista_de_compra',uid,dados);
+            
         }
     });
 
     td_item_checkbox.appendChild(input_item_checkbox);
     tr_tbody.appendChild(td_item_checkbox);
+    i++;
+}
+
+
+
+/******************************************************
+ * FUNCAO PARA ATUALIZAR OS DADOS CADASTRADOS DOS ITENS 
+ ********************************************************/
+function atualizar_check_box(colecao,doc,dados){
+
+
+    dados_servicos.Atualizar_dados(colecao,doc,dados)
+     .then(()=>{
+        
+removeLoading();
+
+     }).catch(()=>{
+        removeLoading();
+        alert("Erro ao salvar Produto");
+     })
+
+}
+
+// funcao para perguntar se deseja deletar produtotos do carrinho
+function Deseja_Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove)
+{
+    const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
+    if(desejaDeletarProduto == true){
+        Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove);
+    }
+
+}
+
+function Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove){
+    ShowLoading();
+
+    dados_servicos.Delete_item(colecao,dados)
+   .then(snapshot =>{
+
+    console.log(elemento_remove);
+    document.getElementById(elemento_remove).remove();
+    
+    removeLoading();
+
+    
+
+   }).catch(error =>{
+    removeLoading();
+    console.log(error);
+    alert("Erro ao deletar dados");
+   })
+}
+
+
+
+
+
+const btn_add = document.getElementById('botao_colocar_na_lista_id');
+btn_add.onclick = function() {
+
+    ShowLoading();
+    salvar_item_lista_de_compra();
+    // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+    setTimeout(() => {
+
+        location.reload();
+
+    }, 1000); // 1000 milissegundos = 1 segundos
+    
   
 }
 
 
+
+
+/*************************************************
+ * CRIAR A COMANDA DO PEDIDO
+ */
+function salvar_item_lista_de_compra(){
+
+    const dados = Obter_dados_Lista_de_compras();
+
+    Cadastrar_Pedido(dados);
+}
+
+i=0
+function Obter_dados_Lista_de_compras() {
+
+    var dados = {}; // Objeto para armazenar os dados
+
+    dados.user = {
+        uid: firebase.auth().currentUser.uid
+    };
+
+    
+    dados['item_nome'] = document.getElementById('item_nome_id').value;
+    dados['item_quantidade'] = document.getElementById('item_quant_id').value;
+    dados['status'] = 'ativo';
+
+    dados['item_checkbox'] = false;
+
+
+    return dados; // Retorna o objeto com todos os dados
+
+
+}
+
+/******************************************************
+ * CADASTRA NOVOS pedidos no bacnod e dados
+ *********************************************/
+function Cadastrar_Pedido(dados){
+    dados_servicos.Salvar_no_Banco_Dados(dados,"lista_de_compra")
+    .then(()=>{
+
+    }).catch(()=>{
+       removeLoading();
+       alert("Erro ao salvar Produto");
+    })
+}
+
+
+// validar cadastro
+
+function OnChange_Item_nome(){
+    const item_nome = form.item_nome().value;
+    form.item_nome_Obrigatorio().style.display = item_nome ? "none":"block";
+    form.item_nome_Invalido().style.display = item_nome.length  >= 1 ? "none": "block";
+    ToggleCadastrarItemButton();
+}
+
+function OnChange_Item_quant(){
+    const item_quant = form.item_quant().value;
+    form.item_quant_Obrigatorio().style.display = item_quant ? "none":"block";
+    form.item_quant_Invalido().style.display = item_quant  > 0? "none": "block";
+
+    ToggleCadastrarItemButton();
+}
+
+function ToggleCadastrarItemButton(){
+    form.btnCadastrar().disabled = !isFromValid();
+    
+}
+
+function isFromValid(){
+
+    const item_nome = form.item_nome().value;
+    if(!item_nome){
+        return false;
+    }
+
+    const item_quant = form.item_quant().value;
+    if(!item_quant || item_quant <= 0){
+        return false;
+    }
+
+    return true;
+
+
+}
+
+/*********************************************************************
+ * FUNÇÃO PARA ASSOCIAR OS ELEMENTOS HTML PELO ID
+ * , ASSIM CONSEGUINDO BUSCAR AS INFORMAÇÃO DIGITADAS NOS FORMULARIOS
+ *  E CONSEGUINDO INSERIR AS INFORMAÇÕES CASO SEJA SOLICITADO UMA ATUALIZACAO DOS DADOS 
+ **************************************************************/
+
+const form = {
+
+    item_nome:() => document.getElementById('item_nome_id'),    
+    item_nome_Obrigatorio:() => document.getElementById('item_nome_obrigatorio_id'),
+    item_nome_Invalido:() => document.getElementById('item_nome_invalido_id'),
+
+    item_quant:() => document.getElementById('item_quant_id'),
+    item_quant_Obrigatorio:() => document.getElementById('item_quant_obrigatorio_id'),
+    item_quant_Invalido:() => document.getElementById('item_quant_Invalido_id'),
+
+    btnCadastrar:() => document.getElementById('botao_colocar_na_lista_id'),
+
+   
+    
+}
