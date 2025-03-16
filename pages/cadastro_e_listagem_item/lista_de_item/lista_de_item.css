@@ -36,11 +36,12 @@
     font-family: "arial";
     color: #ffffff;
     font-weight:bold;
-    background-color: #0d6919;
+    background-color: #18a848;
     padding: 5px;
-   
+   margin-bottom: 20px;
     border-radius: 5px;
     text-align: center;
+    font-size: 18pt;
  }
 
  .card .texto_indicador{
@@ -62,7 +63,8 @@
    text-align: center;
     font-family: "arial";
     color: #050303;
-    font: weight 0;;
+    font: weight 100;
+    margin-bottom: 10px;
     
     
  }
@@ -74,7 +76,7 @@
  
 
  .ativo {
-    background-color: #ca885b;
+    background-color: rgb(113, 153, 140);
 
  }
  .desativado {
@@ -117,7 +119,7 @@
 .card .div_separador{
    font-family: "arial";
    color: #ffffff;
-   background-color: #a04848;   padding: 3px;
+   background-color: #4f926d;   padding: 3px;
 display: flex;
 justify-content: space-between;
    text-align: center;

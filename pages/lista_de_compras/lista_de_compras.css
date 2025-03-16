@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.cores{
+    color: #6d1717;
+}
+
+
+table{
+    
+    border-collapse: collapse;
+    justify-self: center;
+    width: 100%;
+    text-transform: uppercase;
+    max-width: 400px;
+    min-width: 400px;
+    
+    
+}
+table td, table th{
+
+    background-color: rgb(25, 115, 194);
+    border: 2px solid black;
+    padding: 5px;
+    text-align: center;
+    
+    
+    
+}
+
+table td{
+   
+    background-color: rgb(221, 217, 215);
+    color: black;
+    padding: 10px 2px 10px 2px;
+}
+
+table tr{
+    
+    padding: 10px 0px 0px 0px;
+    color: aliceblue;
+}
+
+caption{
+    margin: 20px;
+}
+
+input[type="checkbox"]{
+    width: 25px;
+    height: 25px;
+}
+
+input[type="number"]#item_quant_id{
+
+    text-align: end;
+}
+
+.botao_colocar_na_lista{
+    margin: 10px;
+}
+
+/* Estilo do botão de enviar */
+  
+/* Botão de fechar */
+.botao_deletar_id {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   justify-self: center;
+    color: #960404;
+    font-size: 28px;
+    font-weight: bold;
+width: 25px;
+height:  25px;
+
+    
+  }
+  
+
+
+.td_item_nome{
+    max-width: 400px;
+    word-break: break-word; /* Quebra o texto automaticamente */
+    overflow-wrap: break-word;
+    font-weight: 600;
+    font-size: 12pt;
+}
+
+.td_item_quant{
+    max-width: 25px;
+    font-weight: 600;
+    font-size: 18pt;
+    
+}
+
+.td_item_checkbox{
+    max-width: 25px;
+}
+
+
+
+

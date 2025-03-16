@@ -18,20 +18,18 @@
 
     <header>
         <section class="top_header">
-           <div class="interface">
-               <div class="logo_img">
-                   <a href="#"><img src="../../logo_marca.png" alt=""></a>
-               </div>
-   
-               <div class="botoes_social">
-                   <a href="https://wa.me/5511914608491"><button> <i class="bi bi-whatsapp"></i></button></a>
-                   <a href="#"><button> <i class="bi bi-facebook"></i></i></button></a>
-                   <a href="#"><button> <i class="bi bi-instagram"></i></i></button></a>
-   
-               </div>
-   
-           </div>
-        </section>
+            <div class="interface">
+                <div>
+                    <label class="titulo_pagina_cabecalho">vendas</label>
+                </div>
+    
+                <div class="botoes_social">
+                    <a href="https://wa.me/5511932491991"><button> <i class="bi bi-whatsapp"></i></button></a>
+                    
+    
+                </div>
+            </div>
+         </section>
    
         <section class="bottom_header">
    
@@ -40,9 +38,9 @@
                    <ul>
                     <li><a href="../../index.html">INICIO</a></li>
                     <li><a href="../cadastro_e_listagem_item/lista_de_item/lista_de_item.html">PRODUTOS</a></li>
-                    <li><a href="#">VENDA</a></li>
+                    
                     <li><a href="../tela_pedidos/tela_pedidos.html?status_selecao=preparando">PEDIDOS</a></li>
-                    <li><button id="btn_sair" onclick="deslogar()">SAIR</button></li>
+                    
                        
                    </ul>
                </nav>
@@ -61,7 +59,7 @@
 
 <div class="titulo_da_pagina">
 
-    <label for="quantidade_carrinhos1">CARRINHO DE COMPRAS  Nº </label><label id="carrinho_id"></label>
+    <label for="quantidade_carrinhos1">VENDA Nº </label><label id="carrinho_id"></label>
     
 
 
@@ -70,121 +68,123 @@
 <button id="botao_add_item_carrinho_id" onclick="Add_Item_Carrinho()">CLIQUE PARA ADICIONAR</button>
 <main>
 
+    <section class="section_carrinho">
+        <table id="carrinho"></table>
+
+
+        <table>
+            <caption>TOTAL E FORMAS DE PAGAMENTO</caption>
+            <thead>
+                <tr>
+                    <th>DESCONTO</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr>
+                    <td class="evidente_destaque">0%</td>
+                    <td id="total_carrinho" class="evidente_destaque">400,00</td>
+                </tr>
+            </tbody>
+        </table>
+        
     
-
-    <table id="carrinho"></table>
-
-
-    <table>
-        <caption>TOTAL E FORMAS DE PAGAMENTO</caption>
-        <thead>
-            <tr>
-                <th>DESCONTO</th>
-                <th>TOTAL</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-            <tr>
-                <td class="evidente_destaque">0%</td>
-                <td id="total_carrinho" class="evidente_destaque">400,00</td>
-            </tr>
-        </tbody>
-    </table>
+        <form >
+            <div class="formulario">  
     
-
-    <form >
-        <div class="formulario">  
-
-            
-            <div class="formulario_margem_para_cada_elemento">
-
-                <label for="reserva_id" class="checkbox-container">
-                    <input type="checkbox" name="verificar_retirada_ou_Nao" value="reserva" id="reserva_id">
-                    <span>Reserva</span>
-                </label>
-
+                
+                <div class="formulario_margem_para_cada_elemento">
+    
+                    <label for="reserva_id" class="checkbox-container">
+                        <input type="checkbox" name="verificar_retirada_ou_Nao" value="reserva" id="reserva_id">
+                        <span>Reserva</span>
+                    </label>
+    
+                </div>
+                
+                    
+           
+    
+                <div class="formulario_margem_para_cada_elemento">
+                                    
+                    <input type="radio"  name="opcao" value="entrega"  id="entrega_id" checked > <label>entrega</label>
+        
+                    <input type="radio"  name="opcao" value="retirada" id="retirada_id"> <label >retirada</label>
+    
+                    
+        
+                    </div>
+                    
+                    <div id="esconder_select_lugares_id" class="formulario_margem_para_cada_elemento">
+                            <label>Endereco:</label>
+                            <select id="selecao_endereco_id" name="opcao_endereco">
+                                <option id="condominio_id" value="condominio" selected>condominio</option>
+                                <option  id="casa_id"  value="casa" >casa</option>
+                                <option  id="empresa_id"  value="empresa" >empresa</option>
+                            </select>
+                            </div> 
+                          
+                        
+                        <div id="esconder_select_condominios_id" class="formulario_margem_para_cada_elemento">
+                            <select id="selecao_condominio_id">
+                                <option selected>SANTA LUCIA</option>
+                                <option>vila Alegre</option>
+                                <option>Monica</option>
+                                <option>Bolevard</option>
+                            </select>
+    
+                            
+    
+                            </div>
+                        
+                            <div id="esconder_select_bloco_id">
+                                <label >BLoco: </label>
+                                <input type="text" id="bloco_id" placeholder="EX... 16">
+                            </div>
+                        
+                            
+                            <div id="esconder_select_ap_id">
+                                <label >AP: </label>
+                                <input type="text" id="apartamento_id" placeholder="EX... 303">
+                            </div>
+    
+                            
+                    
+    
+                    <div id="digite_endereco_id">
+                        <label >DIGITE O ENDEREÇO </label>
+                        <input type="text" id="endereco_digitado_id" placeholder="AVENIDA RIVER, 465, AGUA CHATA, GUARULHOS-SP">
+                    </div>
+    
+                    <div>
+                        <label >nome cliente: </label>
+                        <input type="text" id="nome_cliente_id" placeholder="roberto">
+                    </div>
+    
+                    
             </div>
-            
-                
-       
-
-            <div class="formulario_margem_para_cada_elemento">
-                                
-                <input type="radio"  name="opcao" value="entrega"  id="entrega_id" checked > <label>entrega</label>
+        </form>
     
-                <input type="radio"  name="opcao" value="retirada" id="retirada_id"> <label >retirada</label>
-
-                
-    
+        <form>
+            <div class="formulario"> 
+                <div class="formulario_margem_para_cada_elemento">
+                    <div><label>FORMA DE PAGAMENTO:</label></div>
+                    <select id="selecao_forma_pagamento_id">
+                        <option selected>PIX</option>
+                        <option>DEBITO</option>
+                        <option>CREDITO</option>
+                        <option>DINHEIRO</option>
+                        <option>VOUCHER</option>
+                    </select>
                 </div>
                 
-                <div id="esconder_select_lugares_id" class="formulario_margem_para_cada_elemento">
-                        <label>Endereco:</label>
-                        <select id="selecao_endereco_id" name="opcao_endereco">
-                            <option id="condominio_id" value="condominio" selected>condominio</option>
-                            <option  id="casa_id"  value="casa" >casa</option>
-                            <option  id="empresa_id"  value="empresa" >empresa</option>
-                        </select>
-                        </div> 
-                      
-                    
-                    <div id="esconder_select_condominios_id" class="formulario_margem_para_cada_elemento">
-                        <select id="selecao_condominio_id">
-                            <option selected>SANTA LUCIA</option>
-                            <option>vila Alegre</option>
-                            <option>Monica</option>
-                            <option>Bolevard</option>
-                        </select>
-
-                        
-
-                        </div>
-                    
-                        <div id="esconder_select_bloco_id">
-                            <label >BLoco: </label>
-                            <input type="text" id="bloco_id" placeholder="EX... 16">
-                        </div>
-                    
-                        
-                        <div id="esconder_select_ap_id">
-                            <label >AP: </label>
-                            <input type="text" id="apartamento_id" placeholder="EX... 303">
-                        </div>
-
-                        
                 
-
-                <div id="digite_endereco_id">
-                    <label >DIGITE O ENDEREÇO </label>
-                    <input type="text" id="endereco_digitado_id" placeholder="AVENIDA RIVER, 465, AGUA CHATA, GUARULHOS-SP">
-                </div>
-
-                <div>
-                    <label >nome cliente: </label>
-                    <input type="text" id="nome_cliente_id" placeholder="roberto">
-                </div>
-
-                
-        </div>
-    </form>
-
-    <form>
-        <div class="formulario"> 
-            <div class="formulario_margem_para_cada_elemento">
-                <div><label>FORMA DE PAGAMENTO:</label></div>
-                <select id="selecao_forma_pagamento_id">
-                    <option selected>PIX</option>
-                    <option>DEBITO</option>
-                    <option>CREDITO</option>
-                    <option>DINHEIRO</option>
-                    <option>VOUCHER</option>
-                </select>
             </div>
-            
-            
-        </div>
-    </form>
+        </form>
+    </section>
+
+
 
 </main>
 

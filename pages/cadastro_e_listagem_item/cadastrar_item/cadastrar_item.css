@@ -30,7 +30,7 @@ input[type="radio"]{
         margin-right: 8px; /* Espaço entre o botão e o texto */
 }
 
-.div tempo_preparo_input{
+.div .tempo_preparo_input{
     background-color: aliceblue;
 }
 

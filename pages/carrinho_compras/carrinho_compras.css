@@ -103,3 +103,9 @@ font-weight: 0;
     box-shadow: 2px 2px 3px;
     background-color: #ffffff;
 }
+
+.section_carrinho{
+    background-color: rgb(113, 153, 140);
+    border-radius: 5px;
+    padding: 20px;
+}
