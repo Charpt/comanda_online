@@ -5,13 +5,17 @@ padding: 0;}
 
 /*************************************/
   /* CONFIGURACAO DO CORPO DA PAGINA */
-/*************************************/
-
-body{
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: #c5e0c2;
   height: 100vh;
-  
+  gap: 16px;
+  margin: 0;
 }
+
+
 
 /*************************************/
   /* CONFIGURACAO DA ANIMACAO DE CARREGAMENTO*/
@@ -36,13 +40,12 @@ body{
   /* CONFIGURACAO DO CABEÇARIO*/
 /*************************************/
 
-header{
+header {
   width: 100%;
   background-color: #313d4d;
   display: flex;
   flex-wrap: wrap;
-
-
+  box-sizing: border-box;
 }
 
 header button{
