@@ -100,5 +100,32 @@ height:  25px;
 }
 
 
+.label_deletar_class{
+    display: none;
+    
+    color: #960404;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 30px;
 
+}
 
+.label_editar_class{
+    display: inline;
+    
+    color: #1d6e05;
+    font-size: 28px;
+    font-weight: bold;
+    margin-left: 30px;
+
+}
+#btn_deletar_id{
+    display: none;
+    color: #960404;
+
+    margin: 20px;
+}
+
+#uid_id{
+    display: none;
+}
