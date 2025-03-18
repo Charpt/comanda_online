@@ -5,13 +5,14 @@ padding: 0;}
 
 /*************************************/
   /* CONFIGURACAO DO CORPO DA PAGINA */
-body {
- 
-  align-items: center;
+body{
+  
   background-color: #c5e0c2;
-  margin: 0;
+  height: 100vh;
+  
 }
 
+por que o meu header nao ocupa o wedth 100% do body
 
 
 /*************************************/
@@ -37,12 +38,13 @@ body {
   /* CONFIGURACAO DO CABEÇARIO*/
 /*************************************/
 
-header {
+header{
   width: 100%;
   background-color: #313d4d;
   display: flex;
   flex-wrap: wrap;
-  box-sizing: border-box;
+
+
 }
 
 header button{
