@@ -16,6 +16,7 @@ table{
     text-transform: uppercase;
     max-width: 400px;
     min-width: 400px;
+
     
     
 }
@@ -25,7 +26,8 @@ table td, table th{
     border: 2px solid black;
     padding: 5px;
     text-align: center;
-    
+
+    font-family: Segoe UI;
     
     
 }
@@ -38,7 +40,7 @@ table td{
 }
 
 table tr{
-          font-family: Arial;
+          
     padding: 10px 0px 0px 0px;
     color: aliceblue;
 }
