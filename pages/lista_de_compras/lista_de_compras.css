@@ -38,7 +38,7 @@ table td{
 }
 
 table tr{
-    
+        text-transform: uppercase;
     padding: 10px 0px 0px 0px;
     color: aliceblue;
 }
