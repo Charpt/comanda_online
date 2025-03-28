@@ -184,7 +184,9 @@ checkbox_editar.addEventListener('change', function() {
 
             btn_deletar.onclick= function(){
                if(form.uid().innerHTML != ''){
-                Deseja_Deletar_Produto_carrinho_de_compras('lista_de_compra',dados.uid,uid);
+                
+                Deseja_Deletar_Produto_carrinho_de_compras('lista_de_compra',dados.uid);
+                
                }
             }
             
@@ -286,22 +288,24 @@ removeLoading();
 }
 
 // funcao para perguntar se deseja deletar produtotos do carrinho
-function Deseja_Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove)
+function Deseja_Deletar_Produto_carrinho_de_compras(colecao,dados)
 {
+    
     const desejaDeletarProduto = confirm('DESEJA DELETAR O PRODUTO');
     if(desejaDeletarProduto == true){
-        Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove);
+        Deletar_Produto_carrinho_de_compras(colecao,dados);
     }
 
 }
 
-function Deletar_Produto_carrinho_de_compras(colecao,dados,elemento_remove){
+function Deletar_Produto_carrinho_de_compras(colecao,dados){
     ShowLoading();
+    
 
     dados_servicos.Delete_item(colecao,dados)
    .then(snapshot =>{
 
-    document.getElementById(elemento_remove).remove();
+    document.getElementById(dados).remove();
     form.item_nome().value ='';
     form.item_quant().value ='';
     form.uid().innerHTML ='';

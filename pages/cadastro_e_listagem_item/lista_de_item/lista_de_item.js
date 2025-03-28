@@ -31,6 +31,30 @@ function CadastrarProdutoPage(){
 }
 
 
+const input_selecao = document.getElementById('selecao_status_lista_de_item_id');
+
+// Recuperar o valor selecionado do localStorage
+var status_selecao = localStorage.getItem('selecao_status_lista_de_item');
+if (status_selecao) {
+    document.getElementById('selecao_status_lista_de_item_id').value = status_selecao;
+}
+input_selecao.addEventListener('change', function() {
+
+
+    localStorage.setItem('selecao_status_lista_de_item', input_selecao.value);
+
+        window.location.href ="lista_de_item.html?status_selecao="+input_selecao.value;
+
+
+});
+
+
+
+function Obter_informacao_url_uid(){
+    const urlParametros = new URLSearchParams(window.location.search);
+    //retorna o parametro da url que seja = uid  ex... pagina.html  ? uid = MvPYiwBPTfT1jwPnLjnw
+    return urlParametros.get('status_selecao');
+}
 
 /******************************************************************************************
 O METODO onAuthStateChanged VERIFICA SE TEVE ALGUMA ALTERAÇÃO NO STATUS DO USUARIO LOGADO
@@ -41,7 +65,7 @@ firebase.auth().onAuthStateChanged(user =>{
     if(user){
 
         ShowLoading();
-        dados_servicos.Buscar_Item('itens',user,'ativo','codigo','asc')
+        dados_servicos.Buscar_Item('itens',user,Obter_informacao_url_uid(),'codigo','asc')
         .then(dados =>
          {
              removeLoading();
