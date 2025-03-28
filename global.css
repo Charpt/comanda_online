@@ -5,14 +5,15 @@ padding: 0;}
 
 /*************************************/
   /* CONFIGURACAO DO CORPO DA PAGINA */
-/*************************************/
-
 body{
-  justify-items: center;
+  
   background-color: #c5e0c2;
   height: 100vh;
-  gap: 16px;
+  
 }
+
+por que o meu header nao ocupa o wedth 100% do body
+
 
 /*************************************/
   /* CONFIGURACAO DA ANIMACAO DE CARREGAMENTO*/
