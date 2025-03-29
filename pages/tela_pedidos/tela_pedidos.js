@@ -35,15 +35,21 @@ firebase.auth().onAuthStateChanged(user =>{
     }
 })
 
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA O FILTRO DE PESQUISA DOS ITENS *****************************************/
+/*******************************************************************************************/
 const status_selecao = document.getElementById('selecao_status_pedidos_id');
 
 // Recuperar o valor selecionado do localStorage
-var selecao = localStorage.getItem('selecao');
-if (selecao) {
-    document.getElementById('selecao_status_pedidos_id').value = selecao;
+
+var valor_localStorage = localStorage.getItem('valor_localStorage_status_tela_pedido');
+if(Obter_informacao_url_uid()){
+
+    status_selecao.value = Obter_informacao_url_uid();
 }
+
 status_selecao.addEventListener('change', function() {
-    localStorage.setItem('selecao', status_selecao.value);
+    localStorage.setItem('valor_localStorage_status_tela_pedido', status_selecao.value);
     window.location.href ="tela_pedidos.html?status_selecao="+status_selecao.value;
 });
 
@@ -130,7 +136,7 @@ orderList.innerHTML = "";
         
         for (i=0;i<dados.quantidade_de_item_na_comanda;i++) {
             
-            li.appendChild(criar_elemento_p_com_o_valor('<b class=item_info_pedidos><br>'+dados['quantidade'+(i+1)]+' - ' +'<b class=item_info_pedidos>'+ dados['item_nome'+(i+1)]+'<br><b class=color_observacao>'+dados['observacao'+(i+1)]+'</b>'),'item_info_pedidos');
+            li.appendChild(criar_elemento_p_com_o_valor('<b class=item_info_pedidos><br>'+dados['quantidade'+(i+1)]+' - ' +'<b class=item_info_pedidos>'+ dados['item_nome'+(i+1)]+'<br><b class=color_observacao>'+substituirVirgulasPorBR(dados['observacao'+(i+1)])+'</b>'),'item_info_pedidos');
                 
             
         }
@@ -303,9 +309,9 @@ if(tela == 'preparando'){
     
 
 
-function removerAspasDuplas(str) {
-    // Remove todas as aspas duplas da string
-    return str.replace(/"/g, '-');
+function substituirVirgulasPorBR(str) {
+    // Substitui todas as vírgulas por <br>
+    return str.replace(/,/g, '<br>');
 }
 
 function extrairPalavrasEntreAspas(str) {

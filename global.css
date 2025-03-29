@@ -12,7 +12,7 @@ body{
   
 }
 
-por que o meu header nao ocupa o wedth 100% do body
+/*por que o meu header nao ocupa o wedth 100% do body
 
 
 /*************************************/
@@ -20,9 +20,10 @@ por que o meu header nao ocupa o wedth 100% do body
 /*************************************/
 .loading{
   
-  background: rgba(0,0,0,0.5);
+  background: rgba(255, 255, 255, 0.5);
   position: fixed;
   color:#fff;
+
   width: 100%;
   height: 100%;
   top: 0;

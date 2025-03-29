@@ -30,22 +30,24 @@ function CadastrarProdutoPage(){
     window.location.href ="../cadastrar_item/cadastrar_item.html";
 }
 
-
-const input_selecao = document.getElementById('selecao_status_lista_de_item_id');
+/*******************************************************************************************/
+/****************** FUNÇÃO PARA O FILTRO DE PESQUISA DOS ITENS *****************************************/
+/*******************************************************************************************/
+const status_selecao = document.getElementById('selecao_status_lista_de_item_id');
 
 // Recuperar o valor selecionado do localStorage
-var status_selecao = localStorage.getItem('selecao_status_lista_de_item');
-if (status_selecao) {
-    document.getElementById('selecao_status_lista_de_item_id').value = status_selecao;
-}
-input_selecao.addEventListener('change', function() {
+
+var valor_localStorage = localStorage.getItem('valor_localStorage_status_lista_de_item');
 
 
-    localStorage.setItem('selecao_status_lista_de_item', input_selecao.value);
+    if(Obter_informacao_url_uid()){
 
-        window.location.href ="lista_de_item.html?status_selecao="+input_selecao.value;
+        status_selecao.value = Obter_informacao_url_uid();
+    }
 
-
+status_selecao.addEventListener('change', function() {
+    localStorage.setItem('valor_localStorage_status_lista_de_item', status_selecao.value);
+    window.location.href ="lista_de_item.html?status_selecao="+status_selecao.value;
 });
 
 

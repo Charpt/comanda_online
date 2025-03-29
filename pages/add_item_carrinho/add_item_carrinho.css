@@ -56,3 +56,6 @@ ul  {
 #item_uid_principal_id{
     display: none;
 }
+#item_quantidade_id{
+    text-align: end;
+}

@@ -204,6 +204,8 @@ recordar_dados_formulario('nao_limpar_dados');
  
     const total_carrinho = document.getElementById('total_carrinho');    
     total_carrinho.innerHTML = somar_Colunas("carrinho",4).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+
+    
 }
 
 
@@ -221,7 +223,7 @@ recordar_dados_formulario('nao_limpar_dados');
     for(let i =1; i< tabela.rows.length;i++){
 
         const valorCelula = String(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
-console.log(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
+//console.log(formatarDinheiro(tabela.rows[i].cells[indice_Coluna].innerHTML));
 
         soma+= parseFloat(valorCelula) || 0;
         //console.log(parseFloat(valorCelula).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
@@ -575,4 +577,58 @@ function recordar_dados_formulario(limpar){
     recordar_dados('apartamento_id',limpar);
     recordar_dados('nome_cliente_id',limpar);
 
+}
+
+// FUNCAO PARA CRIAR UMA MASCARA MONETARIA NO CAMPO PREÇO, EM UM INPUT DO TIPO TEXT, VOCE SO PRECISA PASSAR O ID DO ELEMENTO INPUT TEXT
+// A FUNCAO COMPLETA ESTA NO ARQUIVO serviços_dados_produtos.js
+Mascara_monetaria_input('input_troco_id');
+
+
+
+const input_troco = document.getElementById('input_troco_id');
+const label_troco = document.getElementById('label_troco_id');
+
+// Função para converter string monetária para número
+function parseDinheiro(valor) {
+    if (typeof valor === 'number') return valor;
+    if (!valor) return 0;
+    
+    // Remove tudo exceto números, vírgula e ponto
+    const numeroString = valor.replace(/[^\d,]/g, '').replace(',', '.');
+    return parseFloat(numeroString) || 0;
+}
+
+// Evento de digitação no campo de troco
+input_troco.addEventListener('input', (e) => {
+    // Obtém valores numéricos
+    const valorRecebido = parseDinheiro(input_troco.value);
+    const totalCarrinho = somar_Colunas("carrinho", 4); // Assumindo que já retorna número
+    
+    // Calcula a diferença
+    const diferenca = valorRecebido - totalCarrinho;
+    
+    // Formata a mensagem conforme o valor
+    if (diferenca >= 0) {
+        // Troco positivo (valor a devolver)
+        label_troco.textContent = `Troco: ${formatarDinheiro(diferenca)}`;
+        label_troco.style.color = '#0f5c0c'; // Verde
+    } else {
+        // Troco negativo (valor que falta)
+        label_troco.textContent = `Faltam: ${formatarDinheiro(Math.abs(diferenca))}`;
+        label_troco.style.color = '#860202'; // Vermelho
+    }
+    
+    // Para debug (opcional)
+    console.log(`Recebido: ${formatarDinheiro(valorRecebido)}`);
+    console.log(`Total: ${formatarDinheiro(totalCarrinho)}`);
+    console.log(`Diferença: ${formatarDinheiro(diferenca)}`);
+});
+
+// Função de formatação (exemplo)
+function formatarDinheiro(valor) {
+    return valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    });
 }

@@ -1,3 +1,5 @@
+
+
 /*******************************************************************************************/
 /****************** FUNÇÃO PARA ENVIAR USUARIOS NAO AUTENTICADOS PARA A PAGINA INICIAL DE LOGIN */
 /*******************************************************************************************/
@@ -118,7 +120,8 @@ const checkbox_editar = document.getElementById('checkbox_editar_id');
 const btn_deletar = document.getElementById('btn_deletar_id');
 function add_item_lista_de_compras(lista_compras, dados,numero_item){
     
-     uid = dados.uid;
+     var uid = dados.uid;
+     
 
 
     
@@ -159,75 +162,75 @@ function add_item_lista_de_compras(lista_compras, dados,numero_item){
     td_item_checkbox.classList.add('td_item_checkbox');
     td_item_checkbox.id ='item_checkbox_id'+numero_item;
     
-var editar_desativado = true;
-    
-// se a opçao deletar checkbox estiver ativa 
-checkbox_editar.addEventListener('change', function() {
-    if (this.checked) { // Verifica se a checkbox está marcada
+    var editar_desativado = true;
         
-        
-        
-        document.getElementById('btn_deletar_id').style.display = 'inline';
-
-        td_item_nome.style.backgroundColor = 'rgb(202, 199, 29)';
-            td_item_quant.style.backgroundColor = 'rgb(202, 199, 29)';
-            td_item_checkbox.style.backgroundColor = 'rgb(202, 199, 29)';
-    
-            input_item_checkbox.style.display = 'none';
-
-        // Função de callback para o evento de clique
-        const handleClick = function(Event) {
+    // se a opçao deletar checkbox estiver ativa 
+    checkbox_editar.addEventListener('change', function() {
+        if (this.checked) { // Verifica se a checkbox está marcada
             
-            form.item_nome().value = document.getElementById('td_item_nome_id'+numero_item).innerHTML;
-            form.item_quant().value = document.getElementById('td_item_quant_id'+numero_item).innerHTML;
-            form.uid().innerHTML = dados.uid;
+            
+            
+            document.getElementById('btn_deletar_id').style.display = 'inline';
 
-            btn_deletar.onclick= function(){
-               if(form.uid().innerHTML != ''){
+            td_item_nome.style.backgroundColor = 'rgb(202, 199, 29)';
+                td_item_quant.style.backgroundColor = 'rgb(202, 199, 29)';
+                td_item_checkbox.style.backgroundColor = 'rgb(202, 199, 29)';
+        
+                input_item_checkbox.style.display = 'none';
+
+            // Função de callback para o evento de clique
+            const handleClick = function(Event) {
                 
-                Deseja_Deletar_Produto_carrinho_de_compras('lista_de_compra',dados.uid);
+                form.item_nome().value = document.getElementById('td_item_nome_id'+numero_item).innerHTML;
+                form.item_quant().value = document.getElementById('td_item_quant_id'+numero_item).innerHTML;
+                form.uid().innerHTML = dados.uid;
+
+                btn_deletar.onclick= function(){
+                if(form.uid().innerHTML != ''){
+                    
+                    Deseja_Deletar_Produto_carrinho_de_compras('lista_de_compra',dados.uid);
+                    
+                }
+                }
                 
-               }
-            }
-            
-                      ToggleCadastrarItemButton();
-                      atualizar_ou_cadastrar =false;
-            
-        };
+                        ToggleCadastrarItemButton();
+                        atualizar_ou_cadastrar =false;
+                
+            };
 
-        // Adiciona o listener de clique
-        td_item_nome.addEventListener('click', handleClick);
+            // Adiciona o listener de clique
+            td_item_nome.addEventListener('click', handleClick);
 
-        // Armazena a função de callback para poder removê-la depois
-        td_item_nome._handleClick = handleClick;
+            // Armazena a função de callback para poder removê-la depois
+            td_item_nome._handleClick = handleClick;
 
-    } else {
+        } else {
 
 
 
-                    input_item_checkbox.style.display = '';
-                // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
-    setTimeout(() => {
+                        input_item_checkbox.style.display = '';
+                    // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
+        setTimeout(() => {
 
-        location.reload();
+            location.reload();
 
-    }, 1000); // 1000 milissegundos = 1 segundos
+        }, 1000); // 1000 milissegundos = 1 segundos
 
+        }
+    });
+
+
+    if(dados.item_checkbox == true){
+        input_item_checkbox.checked =true;
+        td_item_nome.style.backgroundColor = 'rgb(44, 155, 53)';
+                td_item_quant.style.backgroundColor = 'rgb(44, 155, 53)';
+                td_item_checkbox.style.backgroundColor = 'rgb(44, 155, 53)';
+    }else{
+        input_item_checkbox.checked =false;
+        td_item_nome.style.backgroundColor = 'rgb(247, 247, 247)';
+                td_item_quant.style.backgroundColor = 'rgb(255, 255, 255)';
+                td_item_checkbox.style.backgroundColor = 'rgb(255, 255, 255)';
     }
- });
-
-
-if(dados.item_checkbox == true){
-    input_item_checkbox.checked =true;
-    td_item_nome.style.backgroundColor = 'rgb(44, 155, 53)';
-            td_item_quant.style.backgroundColor = 'rgb(44, 155, 53)';
-            td_item_checkbox.style.backgroundColor = 'rgb(44, 155, 53)';
-}else{
-    input_item_checkbox.checked =false;
-    td_item_nome.style.backgroundColor = 'rgb(247, 247, 247)';
-            td_item_quant.style.backgroundColor = 'rgb(255, 255, 255)';
-            td_item_checkbox.style.backgroundColor = 'rgb(255, 255, 255)';
-}
     
  
     input_item_checkbox.addEventListener('change', function() {
@@ -244,7 +247,7 @@ if(dados.item_checkbox == true){
                 item_checkbox: true
             };
     
-            
+            console.log(uid);
             atualizar_check_box('lista_de_compra',uid,dados);
 
         } else {
@@ -329,10 +332,6 @@ function Deletar_Produto_carrinho_de_compras(colecao,dados){
 // botao para cadastrar item no banco de dados
 const btn_add = document.getElementById('botao_colocar_na_lista_id');
 btn_add.onclick = function() {
-
-
-
-
     ShowLoading();
     if(atualizar_ou_cadastrar){
 
@@ -345,15 +344,7 @@ btn_add.onclick = function() {
         };
         
         Atualizar_dados_do_item('lista_de_compra', form.uid().innerHTML,dados);
-    }
-
-    // faz esperar um tempo antes de execultar o codigo dentro dele no caso ele espera um tempo antes de ir apra a proxima pagina
-    setTimeout(() => {
-
-        location.reload();
-
-    }, 1000); // 1000 milissegundos = 1 segundos
-    
+    }  
   
 }
 
@@ -398,7 +389,8 @@ function Obter_dados_Lista_de_compras() {
 function Cadastrar_Pedido(dados){
     dados_servicos.Salvar_no_Banco_Dados(dados,"lista_de_compra")
     .then(()=>{
-        removeLoading();
+        location.reload();
+       
     }).catch(()=>{
        removeLoading();
        alert("Erro ao salvar Item");
@@ -413,6 +405,8 @@ function Atualizar_dados_do_item(colecao,doc,dados){
     ShowLoading();
     dados_servicos.Atualizar_dados(colecao,doc,dados)
      .then(()=>{
+
+        location.reload();
 
      }).catch(()=>{
         removeLoading();
